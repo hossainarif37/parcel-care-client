@@ -1,8 +1,9 @@
+import { Outlet } from "react-router-dom";
 
 const App = () => {
   return (
     <div>
-      Parcel Delivery Management
+      <Outlet />
     </div>
   );
 };
