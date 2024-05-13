@@ -19,9 +19,9 @@ const Banner = () => {
                 <Button>
                     <Link to='#'>Contact Us</Link>
                 </Button>
-                <CircleShape width="w-10" height="h-10" bottom="bottom-40" right="right-0" />
-                <CircleShape width="w-5" height="h-5" bottom="bottom-20" right="right-5" />
-                <CircleShape width="w-20" height="h-20" bottom="bottom-0" right="right-10" />
+                <CircleShape width="w-8" height="h-8" bottom="bottom-60" right="right-10" />
+                <CircleShape width="w-5" height="h-5" bottom="bottom-40" right="right-32" />
+                <CircleShape width="w-16" height="h-16" bottom="bottom-10" right="right-40" />
 
             </div>
 
