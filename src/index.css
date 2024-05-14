@@ -9,7 +9,7 @@ body {
 
 @layer utilities{
     .btn-primary{
-        @apply text-white bg-gradient-to-r from-secondary to-primary border-0 rounded-lg focus:outline-none transition duration-150 ease-in-out;
+        @apply text-white bg-gradient-to-r from-secondary to-primary border-0 rounded-lg focus:outline-none transition duration-150 ease-in-out active:scale-90;
     }
     .gradient{
         @apply bg-gradient-to-r from-secondary to-primary;

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import banner from "../../../../assets/images/banner.jpg"
-import Button from "../../../../components/common/Buttons/Button";
-import CircleShape from "../../../../components/common/CircleShape";
+import CircleShape from "../../../../components/CircleShape";
+import Button from "../../../../components/Buttons/Button";
 
 const Banner = () => {
     return (
@@ -17,7 +17,7 @@ const Banner = () => {
                     Deliver fastest across 25000+ pin codes in world with real time shipment tracking feature. Get best international courier services. we are the best courier service provider in world.Get best international.courier services at zero subscription fees.
                 </p>
                 <Button>
-                    <Link to='#'>Contact Us</Link>
+                    <Link to='#'>Book a parcel</Link>
                 </Button>
                 <CircleShape width="w-8" height="h-8" bottom="bottom-60" right="right-10" />
                 <CircleShape width="w-5" height="h-5" bottom="bottom-40" right="right-32" />

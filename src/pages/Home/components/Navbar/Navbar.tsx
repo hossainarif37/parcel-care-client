@@ -1,4 +1,7 @@
 import { Link } from "react-router-dom";
+import { navLinks } from "../../../../constants/navLinks";
+import ActiveLink from "./ActiveLink";
+import UserImage from "../../../../components/UserImage";
 
 const Navbar = () => {
     return (
@@ -10,11 +13,18 @@ const Navbar = () => {
 
             {/* NavLinks */}
             <ul className="md:text-white hidden  font-semibold md:flex justify-center items-center gap-x-10">
-                <li>Home</li>
-                <li>Services</li>
-                <li>Contact Us</li>
-                <li>About Us</li>
-                <li>Login</li>
+                {
+                    navLinks?.map((link, i) => (
+                        <ActiveLink
+                            key={i}
+                            path={link.path}
+                            title={link.title}
+                        />
+                    ))
+                }
+
+                {/* User Dropdown */}
+                <UserImage customWidth="w-10" isProfileDropdownBtn={true} />
             </ul>
         </div>
     );
