@@ -2,8 +2,11 @@ import { Link } from "react-router-dom";
 import { navLinks } from "../../../../constants/navLinks";
 import ActiveLink from "./ActiveLink";
 import UserImage from "../../../../components/UserImage";
+import { useSelector } from "react-redux";
+import { IRootState } from "../../../../types/types";
 
 const Navbar = () => {
+    const { user } = useSelector((state: IRootState) => state.userSlice);
     return (
         <div className="w-full absolute md:px-28 py-5 flex md:justify-between z-10 bg-transparent">
             {/* Logo */}
@@ -23,8 +26,18 @@ const Navbar = () => {
                     ))
                 }
 
+                {
+                    user ?
+                        <UserImage customWidth="w-10" isProfileDropdownBtn={true} /> :
+                        <li >
+                            <Link
+                                className={`'bg-gray-200 rounded py-2 block w-full'}`} to='/login'>
+                                Login
+                            </Link>
+                        </li>
+
+                }
                 {/* User Dropdown */}
-                <UserImage customWidth="w-10" isProfileDropdownBtn={true} />
             </ul>
         </div>
     );
