@@ -1,4 +1,4 @@
-import { ChildrenType } from "../../../types/types";
+import { ChildrenType } from "../../types/types";
 
 const Button = ({ children }: ChildrenType) => {
     return (

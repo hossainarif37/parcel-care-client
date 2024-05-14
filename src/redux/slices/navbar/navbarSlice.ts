@@ -1,5 +1,5 @@
-import { INavbar } from "@/types/types";
 import { createSlice } from "@reduxjs/toolkit"
+import { INavbar } from "../../../types/types"
 
 const initialState: INavbar = {
     isNavToggle: false,

@@ -1,0 +1,10 @@
+.userProfileDropdown{
+    @apply w-48 rounded-lg p-2 absolute top-16 bg-white shadow right-0
+}
+
+
+.userProfileDropdown a,
+.userProfileDropdown button{
+    @apply border-black flex items-center justify-start gap-2 w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 rounded-lg
+}
+

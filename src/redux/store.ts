@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import navbarSlice from './slices/navbar/navbarSlice';
+import userSlice from './slices/user/userSlice';
 
 
 export const store = configureStore({
     reducer: {
-        navbarSlice
+        navbarSlice,
+        userSlice
     },
 })
 

@@ -1,4 +1,8 @@
+import { useDispatch, useSelector } from "react-redux";
 import profile_blank_image from "../assets/icons/profile_blank_image.png"
+import { IRootState } from "../types/types";
+import UserMenuDropdown from "../pages/Home/components/Navbar/UserMenuDropDown/UserMenuDropdown";
+import { toggleProfileDropdown } from "../redux/slices/navbar/navbarSlice";
 
 type UserImagePropsTypes = {
     profilePicture?: string;
@@ -8,25 +12,27 @@ type UserImagePropsTypes = {
 
 const UserImage = ({ profilePicture, customWidth, isProfileDropdownBtn }: UserImagePropsTypes) => {
 
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-    // const { isProfileDropdown } = useSelector((state: IRootState) => state.navbarSlice);
+    const { isProfileDropdown } = useSelector((state: IRootState) => state.navbarSlice);
 
-    // const handleProfileDropdown = () => {
-    //     isProfileDropdownBtn && dispatch(toggleProfileDropdown());
-    // }
+    const handleProfileDropdown = () => {
+        isProfileDropdownBtn && dispatch(toggleProfileDropdown());
+    }
 
 
     return (
         <>
             <div
-                // onClick={handleProfileDropdown}
-                className="relative cursor-pointer group rounded-full ring-4 ring-secondary" title="Account"
+                onClick={handleProfileDropdown}
+                className="relative cursor-pointer group" title="Account"
             >
 
-                <img className={`${customWidth} relative cursor-pointer group`} src={profilePicture ? profilePicture : profile_blank_image} alt="" />
+                <div className="rounded-full ring-4 ring-secondary">
+                    <img className={`${customWidth} relative cursor-pointer group`} src={profilePicture ? profilePicture : profile_blank_image} alt="" />
+                </div>
 
-                {/* {(isProfileDropdown && isProfileDropdownBtn) && <UserMenuDropdown />} */}
+                {(isProfileDropdown && isProfileDropdownBtn) && <UserMenuDropdown />}
             </div>
 
 
