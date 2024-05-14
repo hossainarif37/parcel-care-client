@@ -1,6 +1,5 @@
 import userDropdownStyles from "./userMenuDropdown.module.css"
-import { useDispatch, useSelector } from "react-redux";
-import { IRootState } from "../../../../../types/types";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { Icon } from "@iconify/react"
@@ -8,9 +7,6 @@ import { removeUser } from "../../../../../redux/slices/user/userSlice";
 
 const UserMenuDropdown = () => {
     const dispatch = useDispatch();
-    const { user } = useSelector((state: IRootState) => state.userSlice);
-
-
 
     return (
         <>
@@ -39,7 +35,6 @@ const UserMenuDropdown = () => {
                 <li>
                     <button
                         type="button"
-                        // id="logout-button"
                         title="Logout"
                         onClick={() => {
                             Cookies.remove('authToken');
