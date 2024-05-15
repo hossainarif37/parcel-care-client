@@ -16,7 +16,9 @@ const Banner = () => {
                 <p className="pr-48 text-xl text-accent mt-10 leading-8 mb-14">
                     Deliver fastest across 25000+ pin codes in world with real time shipment tracking feature. Get best international courier services. we are the best courier service provider in world.Get best international.courier services at zero subscription fees.
                 </p>
-                <Button>
+                <Button
+                    type="button"
+                >
                     <Link to='#'>Book a parcel</Link>
                 </Button>
                 <CircleShape width="w-8" height="h-8" bottom="bottom-60" right="right-10" />

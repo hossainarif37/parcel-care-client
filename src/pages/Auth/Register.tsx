@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import Input from "../../components/Inputs/Input";
 import Button from "../../components/Buttons/Button";
 import { Link } from "react-router-dom";
+import InputWithLabel from "../../components/Inputs/InputWithLabel";
 
 interface IFormInput {
     name: string;
@@ -25,7 +25,7 @@ const Register = () => {
 
                 {/*//* Name */}
                 <div>
-                    <Input
+                    <InputWithLabel
                         label='Name'
                         type='name'
                         id='name'
@@ -49,7 +49,7 @@ const Register = () => {
 
                 {/*//* Email */}
                 <div>
-                    <Input
+                    <InputWithLabel
                         label='Email'
                         type='email'
                         id='email'
@@ -68,7 +68,7 @@ const Register = () => {
 
                 {/*//* Password */}
                 <div>
-                    <Input
+                    <InputWithLabel
                         label='Password'
                         type='password'
                         id='password'

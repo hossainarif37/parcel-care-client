@@ -2,14 +2,14 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { useState } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
-interface InputProps {
+interface InputWithLabelPropsTypes {
     label: string;
     type: string;
     register: UseFormRegisterReturn
     id: string;
 }
 
-const Input = ({ label, type, register, id }: InputProps) => {
+const InputWithLabel = ({ label, type, register, id }: InputWithLabelPropsTypes) => {
     const [inputFocus, setInputFocus] = useState(false);
     const [eyeToggle, setEyeToggle] = useState(false);
 
@@ -57,4 +57,4 @@ const Input = ({ label, type, register, id }: InputProps) => {
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
-export default Input;
+export default InputWithLabel;
