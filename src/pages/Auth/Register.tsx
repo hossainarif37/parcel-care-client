@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import Input from "../../components/Inputs/Input";
 import Button from "../../components/Buttons/Button";
+import { Link } from "react-router-dom";
 
 interface IFormInput {
     name: string;
@@ -95,9 +96,10 @@ const Register = () => {
 
             {/*//* Navigate to Register page */}
             <p className="text-center">
-                <span>Already have an account? <button
-                    type="button"
-                    className="text-primary underline">Login</button></span>
+                <span>Already have an account? <Link
+                    to="/login"
+                    className="text-primary underline">Login
+                </Link></span>
             </p>
 
         </form>
