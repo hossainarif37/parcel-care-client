@@ -1,8 +1,16 @@
-import { ChildrenType } from "../../types/types";
+import { ReactNode } from "react";
 
-const Button = ({ children }: ChildrenType) => {
+interface ButtonProps {
+    children: ReactNode;
+    type: "submit" | "reset" | "button"; // Restrict the type to the allowed values
+}
+
+const Button = ({ children, type }: ButtonProps) => {
     return (
-        <button className="btn-primary py-4 px-14">
+        <button
+            type={type}
+            className="btn-primary py-4 px-14"
+        >
             {children}
         </button>
     );
