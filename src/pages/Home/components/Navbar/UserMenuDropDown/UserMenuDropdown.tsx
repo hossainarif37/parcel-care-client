@@ -13,7 +13,7 @@ const UserMenuDropdown = () => {
             <div>
 
             </div>
-            <ul className={`${userDropdownStyles.userProfileDropdown} `}>
+            <ul className={`${userDropdownStyles.userProfileDropdown}`}>
                 <li>
                     <Link
                         to={`#`}

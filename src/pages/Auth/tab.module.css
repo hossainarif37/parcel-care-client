@@ -1,0 +1,7 @@
+.tab{
+    @apply h-10 md:h-12 flex justify-center bg-transparent items-center font-bold mb-10 text-center duration-200 rounded  z-10
+}
+
+.activeTab {
+    @apply bg-secondary duration-200 h-10 md:h-12 w-1/2 text-white rounded
+}
