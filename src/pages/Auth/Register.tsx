@@ -13,7 +13,7 @@ interface IFormInput {
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
-    const [registerUser, { isLoading, isError, error }] = useRegisterMutation();
+    const [registerUser] = useRegisterMutation();
     const navigate = useNavigate();
     const handleRegister = (data: IFormInput) => {
         const registerResponse = registerUser({ name: data.name, email: data.email, password: data.password }).unwrap();
@@ -35,9 +35,6 @@ const Register = () => {
         <form
             onSubmit={handleSubmit(handleRegister)}
         >
-            {/*//* Title */}
-            {/* <h1 className="text-3xl lg:text-4xl font-bold mb-10 text-gray-700 text-center">Register</h1> */}
-
             <div className="flex flex-col gap-y-7 mb-5">
 
                 {/*//* Name */}

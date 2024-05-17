@@ -3,8 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import InputWithLabel from "../../components/Inputs/InputWithLabel";
 import Button from "../../components/Buttons/Button";
 import { useLoginMutation } from "../../redux/api/endpoints/authApi";
-import { useDispatch, useSelector } from "react-redux";
-import { IRootState } from "../../types/types";
+import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/slices/user/userSlice";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
@@ -15,7 +14,7 @@ interface IFormInput {
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
-    const [login, { isLoading, isError, error }] = useLoginMutation();
+    const [login] = useLoginMutation();
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
