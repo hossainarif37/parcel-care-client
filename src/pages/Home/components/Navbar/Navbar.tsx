@@ -8,7 +8,7 @@ import { IRootState } from "../../../../types/types";
 const Navbar = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
     return (
-        <div className="w-full absolute md:px-28 py-5 flex md:justify-between z-10 bg-transparent">
+        <div className="w-full absolute px-5 md:px-28 py-5 flex md:justify-between z-10 bg-transparent">
             {/* Logo */}
             <div>
                 <Link to='/' className="text-4xl font-bold"><span className="text-primary">Parcel</span><span className="text-secondary">Care</span></Link>
