@@ -10,7 +10,7 @@ const Banner = () => {
         >
             {/* Left Side */}
             <div className="w-full md:w-1/2 mt-20 md:pl-28  px-5 md:px-0 md:pt-40 relative">
-                <h1 className="text-2xl md:text-6xl font-semibold text-black-50 md:flex md:flex-col gap-y-0 md:gap-y-4">
+                <h1 className="text-3xl md:text-6xl font-semibold text-black-50 md:flex md:flex-col gap-y-0 md:gap-y-4">
                     <span>The Best Ever Courier</span> <span>Service In The World</span>
                 </h1>
                 <p className="md:pr-48 text-xl text-accent mt-5 md:mt-10 leading-8 mb-5 md:mb-14">

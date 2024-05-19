@@ -8,6 +8,13 @@ body {
 }
 
 @layer utilities{
+    .btn {
+        @apply lg:px-10 px-5 py-2.5 active:scale-95 duration-300 rounded border border-accent 
+    }
+
+    .btn-disabled{
+        @apply bg-accent border-none text-white active:scale-100 cursor-not-allowed
+    }
     .btn-primary{
         @apply text-white bg-gradient-to-r from-secondary to-primary border-0 rounded-lg focus:outline-none transition duration-150 ease-in-out active:scale-90;
     }
