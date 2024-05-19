@@ -10,6 +10,7 @@ export const store = configureStore({
         navbarSlice,
         userSlice
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware),
 })
 
 
