@@ -1,7 +1,9 @@
 import { useForm } from "react-hook-form";
 import Button from "../../components/Buttons/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InputWithLabel from "../../components/Inputs/InputWithLabel";
+import { useRegisterMutation } from "../../redux/api/endpoints/authApi";
+import toast from "react-hot-toast";
 
 interface IFormInput {
     name: string;
@@ -11,16 +13,28 @@ interface IFormInput {
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+    const [registerUser] = useRegisterMutation();
+    const navigate = useNavigate();
     const handleRegister = (data: IFormInput) => {
-        console.log(data);
+        const registerResponse = registerUser({ name: data.name, email: data.email, password: data.password }).unwrap();
+
+        toast.promise(registerResponse, {
+            loading: 'Loading',
+            success: ({ message }) => {
+                navigate('/login');
+                return message;
+
+            },
+            error: ({ data }) => {
+                return data?.message || 'Registration failed';
+            },
+        });
+
     }
     return (
         <form
             onSubmit={handleSubmit(handleRegister)}
         >
-            {/*//* Title */}
-            {/* <h1 className="text-3xl lg:text-4xl font-bold mb-10 text-gray-700 text-center">Register</h1> */}
-
             <div className="flex flex-col gap-y-7 mb-5">
 
                 {/*//* Name */}

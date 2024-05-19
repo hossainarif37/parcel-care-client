@@ -1,7 +1,12 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InputWithLabel from "../../components/Inputs/InputWithLabel";
 import Button from "../../components/Buttons/Button";
+import { useLoginMutation } from "../../redux/api/endpoints/authApi";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/slices/user/userSlice";
+import Cookies from "js-cookie";
+import toast from "react-hot-toast";
 interface IFormInput {
     email: string;
     password: string;
@@ -9,9 +14,28 @@ interface IFormInput {
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+    const [login] = useLoginMutation();
+    const navigate = useNavigate();
+
+    const dispatch = useDispatch();
+
     const handleLogin = (data: IFormInput) => {
-        console.log(data);
+        const loginResponse = login({ email: data.email, password: data.password }).unwrap();
+
+        toast.promise(loginResponse, {
+            loading: 'Loading',
+            success: ({ user, message, token }) => {
+                dispatch(setUser({ user: user, isAuthenticated: true }));
+                Cookies.set('authToken', token);
+                navigate('/');
+                return message;
+            },
+            error: ({ data }) => {
+                return data?.message || 'Login failed';
+            },
+        });
     }
+
     return (
         <form
             onSubmit={handleSubmit(handleLogin)}
