@@ -22,7 +22,6 @@ const Login = () => {
     const handleLogin = (data: IFormInput) => {
         const loginResponse = login({ email: data.email, password: data.password }).unwrap();
 
-
         toast.promise(loginResponse, {
             loading: 'Loading',
             success: ({ user, message, token }) => {
