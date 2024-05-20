@@ -22,14 +22,10 @@ const App = () => {
   const getCurrentUserMemoized = useCallback(getCurrentUser, [getCurrentUser]);
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      getCurrentUserMemoized(undefined);
-    }
-    if (userData?.success && token) {
-      dispatch(setUser({ user: userData.user, isAuthenticated: true }));
-    }
+    getCurrentUserMemoized(undefined);
+    dispatch(setUser({ user: userData?.user, isAuthenticated: true }));
 
-  }, [getCurrentUserMemoized, userData, token, isAuthenticated, dispatch]);
+  }, [getCurrentUserMemoized, userData?.user, dispatch]);
 
   return (
     <div className="max-w-[1920px] mx-auto">

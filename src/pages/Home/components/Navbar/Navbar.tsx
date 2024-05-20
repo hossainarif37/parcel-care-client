@@ -16,6 +16,7 @@ const Navbar = () => {
     const dispatch = useDispatch();
 
     const location = useLocation();
+
     const isDashboardPage = location.pathname.includes('/dashboard');
 
 

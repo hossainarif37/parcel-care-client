@@ -37,6 +37,8 @@ export const router = createBrowserRouter([
 
                 ]
             },
+
+            // User Dashboard
             {
                 path: '',
                 element: <UserDashboard />,
@@ -55,6 +57,8 @@ export const router = createBrowserRouter([
                     }
                 ]
             },
+
+            // Agent Dashboard
             {
                 path: '',
                 element: <AgentDashboard />,
@@ -65,6 +69,8 @@ export const router = createBrowserRouter([
                     }
                 ]
             },
+
+            // Admin Dashboard
             {
                 path: '',
                 element: <AdminDashboard />,
