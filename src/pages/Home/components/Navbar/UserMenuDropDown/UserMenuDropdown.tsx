@@ -1,12 +1,17 @@
 import userDropdownStyles from "./userMenuDropdown.module.css"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { Icon } from "@iconify/react"
 import { removeUser } from "../../../../../redux/slices/user/userSlice";
+import { IRootState } from "../../../../../types/types";
 
 const UserMenuDropdown = () => {
     const dispatch = useDispatch();
+    const { user } = useSelector((state: IRootState) => state.userSlice);
+    const isAgentUser = user?.role === 'agent';
+    const isAdminUser = user?.role === 'admin';
+    const isNormalUser = user?.role === 'user';
 
     return (
         <>
@@ -25,7 +30,9 @@ const UserMenuDropdown = () => {
                 </li>
                 <li>
                     <Link
-                        to="#"
+                        to={
+                            `/dashboard${isNormalUser && '/user/my-parcels' || isAdminUser && '/admin/overview' || isAgentUser && '/agent/delivery-list'}`
+                        }
                         title="Settings"
                     >
                         <span><Icon icon="material-symbols:dashboard" /></span>

@@ -33,7 +33,7 @@ const Banner = () => {
 
             {/* Right Side */}
             <img
-                className="md:w-[900px]"
+                className="md:w-[900px] -z-10"
                 src={banner} alt="" />
 
         </div>

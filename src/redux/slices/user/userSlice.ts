@@ -3,7 +3,7 @@ import { IUser } from "../../../types/types";
 
 const initialState: IUser = {
     isAuthenticated: false,
-    user: null,
+    user: null
 }
 
 
@@ -18,7 +18,7 @@ export const usersSlice = createSlice({
         removeUser: (state) => {
             state.user = null;
             state.isAuthenticated = false;
-        },
+        }
     }
 })
 

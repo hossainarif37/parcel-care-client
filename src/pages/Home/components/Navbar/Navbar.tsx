@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { navLinks } from "../../../../constants/navLinks";
 import ActiveLink from "./ActiveLink";
 import UserImage from "../../../../components/UserImage";
@@ -14,8 +14,14 @@ const Navbar = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
     const { isNavToggle } = useSelector((state: IRootState) => state.navbarSlice);
     const dispatch = useDispatch();
+
+    const location = useLocation();
+
+    const isDashboardPage = location.pathname.includes('/dashboard');
+
+
     return (
-        <div className="w-full absolute px-5 md:px-28 py-5 flex justify-between items-center z-10 bg-transparent">
+        <div className={`w-full ${isDashboardPage && 'hidden'} absolute px-5 md:px-28 py-5 flex justify-between items-center z-10 bg-transparent`}>
             {/* Logo */}
             <div>
                 <Link to='/' className="text-3xl md:text-4xl font-bold"><span className="text-primary">Parcel</span><span className="text-secondary">Care</span></Link>
@@ -42,7 +48,6 @@ const Navbar = () => {
                                 Login
                             </Link>
                         </li>
-
                 }
             </ul>
 
