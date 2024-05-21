@@ -11,6 +11,9 @@ import UserProfile from "../pages/Dashboard/User/components/UserProfile";
 import AgentDashboard from "../pages/Dashboard/Agent/AgentDashboard";
 import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
 import Overview from "../pages/Dashboard/Admin/components/Overview";
+import RequireAuth from "../pages/Auth/RequireAuth";
+import RequireAgent from "../pages/Auth/RequireAgent";
+import RequireAdmin from "../pages/Auth/RequireAdmin";
 
 
 export const router = createBrowserRouter([
@@ -41,7 +44,7 @@ export const router = createBrowserRouter([
             // User Dashboard
             {
                 path: '',
-                element: <UserDashboard />,
+                element: <RequireAuth><UserDashboard /></RequireAuth>,
                 children: [
                     {
                         path: '/dashboard/user/my-parcels',
@@ -61,7 +64,7 @@ export const router = createBrowserRouter([
             // Agent Dashboard
             {
                 path: '',
-                element: <AgentDashboard />,
+                element: <RequireAgent><AgentDashboard /></RequireAgent>,
                 children: [
                     {
                         path: '/dashboard/agent/delivery-list',
@@ -73,7 +76,7 @@ export const router = createBrowserRouter([
             // Admin Dashboard
             {
                 path: '',
-                element: <AdminDashboard />,
+                element: <RequireAdmin><AdminDashboard /></RequireAdmin>,
                 children: [
                     {
                         path: '/dashboard/admin/overview',
