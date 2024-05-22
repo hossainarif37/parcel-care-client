@@ -7,28 +7,26 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
 
 const RequireAuth = ({ children }: { children: ReactNode }) => {
-    const { user, isAuthenticated } = useSelector((state: IRootState) => state.userSlice);
+    const { user, isAuthenticated, userLoading } = useSelector((state: IRootState) => state.userSlice);
     const location = useLocation();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!isAuthenticated) {
+        if (!isAuthenticated && !userLoading) {
             navigate("/login", { state: { from: location }, replace: true });
-        } else if (user?.role !== 'user') {
+        } else if (!userLoading && user && user?.role !== 'user') {
             toast.error("You don't have permission to navigate to this location");
             navigate('/');
         }
-    }, [isAuthenticated, user, location, navigate]);
+    }, [isAuthenticated, user, location, navigate, userLoading]);
 
-    if (!isAuthenticated) {
+    console.log(userLoading);
+    if (userLoading) {
         return <Loading paddingY="py-20 md:py-40" textColor="text-primary" textSize="text-4xl" />
     }
-
-    if (user?.role !== 'user') {
-        return <Loading paddingY="py-20 md:py-40" textColor="text-primary" textSize="text-4xl" />
+    if (user?.role === 'user') {
+        return children;
     }
-
-    return children;
 };
 
 export default RequireAuth;
