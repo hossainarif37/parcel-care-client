@@ -2,17 +2,17 @@ export const userMenuLinks = [
     {
         title: "My Parcels",
         path: "/dashboard/user/my-parcels",
-        icon: '',
+        icon: "lucide:package",
     },
     {
         title: "Book Parcel",
         path: "/dashboard/user/book-parcel",
-        icon: '',
+        icon: "lucide:package-plus",
     },
     {
         title: "Profile",
         path: "/dashboard/user/profile",
-        icon: '',
+        icon: "mage:user",
     },
 ]
 export const agentMenuLinks = [
