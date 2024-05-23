@@ -28,6 +28,11 @@ body {
     .error {
         @apply text-red-500 mt-2
     }
+
+    .logoutButton{
+        @apply w-full border-black flex items-center justify-center gap-2 px-4 py-3 text-sm text-gray-700 bg-gray-100 rounded-lg
+    }
+    
 }
 
 
