@@ -14,6 +14,7 @@ interface IFormInput {
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+
     const [login] = useLoginMutation();
     const navigate = useNavigate();
 
