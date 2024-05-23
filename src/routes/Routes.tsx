@@ -10,12 +10,16 @@ import UserDashboard from "../pages/Dashboard/User/UserDashboard";
 import UserProfile from "../pages/Dashboard/User/components/UserProfile";
 import AgentDashboard from "../pages/Dashboard/Agent/AgentDashboard";
 import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
-import Overview from "../pages/Dashboard/Admin/components/Overview";
+import Overview from "../pages/Dashboard/Admin/Overview/Overview";
 import RequireAuth from "../pages/Auth/RequireAuth";
 import RequireAgent from "../pages/Auth/RequireAgent";
 import RequireAdmin from "../pages/Auth/RequireAdmin";
 import AuthenticatedWrapper from "../pages/Auth/AuthenticatedWrapper";
 import ErrorPage from "../components/ErrorPage";
+import AllParcels from "../pages/Dashboard/Admin/AllParcels/AllParcels";
+import AllUsers from "../pages/Dashboard/Admin/AllUsers/AllUsers";
+import AllAgents from "../pages/Dashboard/Admin/AllAgents/AllAgents";
+import AdminProfile from "../pages/Dashboard/Admin/AdminProfile/AdminProfile";
 
 
 export const router = createBrowserRouter([
@@ -84,7 +88,23 @@ export const router = createBrowserRouter([
                     {
                         path: '/dashboard/admin/overview',
                         element: <Overview />
-                    }
+                    },
+                    {
+                        path: '/dashboard/admin/all-parcels',
+                        element: <AllParcels />
+                    },
+                    {
+                        path: '/dashboard/admin/all-users',
+                        element: <AllUsers />
+                    },
+                    {
+                        path: '/dashboard/admin/all-agents',
+                        element: <AllAgents />
+                    },
+                    {
+                        path: '/dashboard/admin/profile',
+                        element: <AdminProfile />
+                    },
                 ]
             },
         ]
