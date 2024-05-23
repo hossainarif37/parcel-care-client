@@ -7,9 +7,7 @@ const AuthLayout = () => {
         <div>
             <div className="my-20 md:my-40">
                 <div className="w-full md:w-[450px] mx-auto rounded md:shadow-lg px-5 md:p-10">
-
                     <LoginRegisterTab />
-
                     <Outlet />
                 </div>
             </div>

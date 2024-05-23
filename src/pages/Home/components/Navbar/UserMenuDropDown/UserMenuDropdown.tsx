@@ -1,13 +1,11 @@
 import userDropdownStyles from "./userMenuDropdown.module.css"
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Cookies from "js-cookie";
 import { Icon } from "@iconify/react"
-import { removeUser } from "../../../../../redux/slices/user/userSlice";
 import { IRootState } from "../../../../../types/types";
+import LogoutButton from "../../../../../components/Buttons/LogoutButton";
 
 const UserMenuDropdown = () => {
-    const dispatch = useDispatch();
     const { user } = useSelector((state: IRootState) => state.userSlice);
     const isAgentUser = user?.role === 'agent';
     const isAdminUser = user?.role === 'admin';
@@ -40,18 +38,7 @@ const UserMenuDropdown = () => {
                     </Link>
                 </li>
                 <li>
-                    <button
-                        type="button"
-                        title="Logout"
-                        onClick={() => {
-                            Cookies.remove('authToken');
-                            dispatch(removeUser());
-                        }}
-
-                    >
-                        <Icon icon="material-symbols:logout" />
-                        <span>Logout</span>
-                    </button>
+                    <LogoutButton />
                 </li>
 
             </ul>

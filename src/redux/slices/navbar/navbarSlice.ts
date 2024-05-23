@@ -1,5 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { INavbar } from "../../../types/types"
+
 
 const initialState: INavbar = {
     isNavToggle: false,
@@ -14,8 +15,12 @@ const navbarSlice = createSlice({
         toggleNav: (state) => {
             state.isNavToggle = !state.isNavToggle
         },
-        toggleProfileDropdown: (state) => {
-            state.isProfileDropdown = !state.isProfileDropdown
+        toggleProfileDropdown: (state, action: PayloadAction<boolean | undefined>) => {
+            if (typeof action.payload === 'boolean') {
+                state.isProfileDropdown = action.payload;
+            } else {
+                state.isProfileDropdown = !state.isProfileDropdown;
+            }
         },
     },
 })

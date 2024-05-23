@@ -1,9 +1,9 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 type LoadingPropsType = {
-    paddingY: string; // Example: 'py-2'
-    textSize?: string; // Example: 'text-lg'
-    textColor?: string; // Example: 'text-blue-500'
+    paddingY: string;
+    textSize?: string;
+    textColor?: string;
 }
 
 const Loading = ({ paddingY, textColor, textSize }: LoadingPropsType) => {

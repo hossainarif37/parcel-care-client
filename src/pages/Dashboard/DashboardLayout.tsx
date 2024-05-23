@@ -3,13 +3,11 @@ import Sidebar from "./components/Sidebar";
 
 const DashboardLayout = () => {
     return (
-        <div className="flex">
+        <div className="relative flex">
             <Sidebar />
-
-            {/* Children */}
-            <div className="flex-1 bg-primary">
+            <main className="ml-72 flex-1 min-h-screen w-full bg-white-50 px-5 py-7">
                 <Outlet />
-            </div>
+            </main>
         </div>
     );
 };
