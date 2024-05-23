@@ -3,6 +3,7 @@ import { IRootState } from "../../../types/types";
 import { adminMenuLinks, agentMenuLinks, userMenuLinks } from "../../../constants/dashboardMenuLinks";
 import { Link } from "react-router-dom";
 import UserImage from "../../../components/UserImage";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 const Sidebar = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
@@ -23,15 +24,18 @@ const Sidebar = () => {
             <div className="flex gap-x-4 items-center my-5">
                 <UserImage customWidth="w-10" />
                 <div className="text-black-50">
-                    <p className="font-semibold">{user?.name}</p>
-                    <p>{user?.role}</p>
+                    <p>{user?.name}</p>
+                    <p className="font-semibold text-xs">{user?.role}</p>
                 </div>
             </div>
+
+            <hr className="mb-5" />
+
             <ul>
                 {menuLinks.map((category) => (
                     <li key={category.title} className='mb-4'>
-                        <Link to={category.path}>
-                            <span>{category.icon}</span>
+                        <Link to={category.path} className="flex gap-x-2 items-center">
+                            <span><Icon icon={category.icon} /></span>
                             <span>{category.title}</span>
                         </Link>
                     </li>

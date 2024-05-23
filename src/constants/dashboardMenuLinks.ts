@@ -41,26 +41,26 @@ export const adminMenuLinks = [
     {
         title: "Overview",
         path: "/dashboard/admin/overview",
-        icon: '',
+        icon: "carbon:home",
     },
     {
         title: "All Parcels",
         path: "/dashboard/admin/all-parcels",
-        icon: '',
+        icon: "lucide:package",
     },
     {
         title: "All Users",
         path: "/dashboard/admin/all-users",
-        icon: '',
+        icon: "mynaui:users",
     },
     {
         title: "All Agents",
         path: "/dashboard/admin/all-agents",
-        icon: '',
+        icon: "mynaui:users",
     },
     {
         title: "Profile",
         path: "/dashboard/admin/profile",
-        icon: '',
+        icon: "mage:user",
     },
 ]
