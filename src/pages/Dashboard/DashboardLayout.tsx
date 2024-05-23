@@ -4,10 +4,12 @@ import Sidebar from "./components/Sidebar";
 const DashboardLayout = () => {
     return (
         <div className="flex">
-            <Sidebar />
+            <div className="min-h-screen">
+                <Sidebar />
+            </div>
 
             {/* Children */}
-            <div className="flex-1 bg-primary">
+            <div className="flex-1 min-h-screen bg-white-50">
                 <Outlet />
             </div>
         </div>

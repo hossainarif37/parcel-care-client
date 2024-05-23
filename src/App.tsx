@@ -12,7 +12,7 @@ const App = () => {
 
 
   return (
-    <div className="max-w-[1920px] mx-auto">
+    <div>
       {!isAuthPage && <Navbar />}
       <main>
         <Outlet />

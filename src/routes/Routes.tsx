@@ -15,12 +15,14 @@ import RequireAuth from "../pages/Auth/RequireAuth";
 import RequireAgent from "../pages/Auth/RequireAgent";
 import RequireAdmin from "../pages/Auth/RequireAdmin";
 import AuthenticatedWrapper from "../pages/Auth/AuthenticatedWrapper";
+import ErrorPage from "../components/ErrorPage";
 
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <App />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 index: true,

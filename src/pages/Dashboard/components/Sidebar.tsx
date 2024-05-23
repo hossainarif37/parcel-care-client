@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { IRootState } from "../../../types/types";
 import { adminMenuLinks, agentMenuLinks, userMenuLinks } from "../../../constants/dashboardMenuLinks";
 import { Link } from "react-router-dom";
+import UserImage from "../../../components/UserImage";
 
 const Sidebar = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
@@ -13,7 +14,19 @@ const Sidebar = () => {
             isAdmin ? adminMenuLinks : [];
 
     return (
-        <aside className="w-48 bg-secondary h-screen text-white">
+        <aside className="w-72 h-screen border border-r p-5 border-white-100">
+            {/* Logo */}
+            <div>
+                <Link to='/' className="text-3xl md:text-4xl font-bold"><span className="text-primary">Parcel</span><span className="text-secondary">Care</span></Link>
+            </div>
+
+            <div className="flex gap-x-4 items-center my-5">
+                <UserImage customWidth="w-10" />
+                <div className="text-black-50">
+                    <p className="font-semibold">{user?.name}</p>
+                    <p>{user?.role}</p>
+                </div>
+            </div>
             <ul>
                 {menuLinks.map((category) => (
                     <li key={category.title} className='mb-4'>
