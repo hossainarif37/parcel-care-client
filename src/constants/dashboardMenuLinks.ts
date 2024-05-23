@@ -19,22 +19,22 @@ export const agentMenuLinks = [
     {
         title: "Delivery List",
         path: "/dashboard/agent/delivery-list",
-        icon: '',
+        icon: "hugeicons:truck-delivery",
     },
     {
         title: "Pickup List",
         path: "/dashboard/agent/pickup-list",
-        icon: '',
+        icon: "carbon:delivery-add",
     },
     {
         title: "My Reviews",
         path: "/dashboard/agent/my-reviews",
-        icon: '',
+        icon: 'ic:round-reviews',
     },
     {
         title: "Profile",
         path: "/dashboard/agent/profile",
-        icon: '',
+        icon: "mage:user",
     },
 ]
 export const adminMenuLinks = [
