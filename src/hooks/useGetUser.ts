@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLazyCurrentUserQuery } from "../redux/api/endpoints/userApi";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
-import { setUser } from "../redux/slices/user/userSlice";
+import { setLoading, setUser } from "../redux/slices/user/userSlice";
 
 
 const useGetUser = () => {
@@ -17,6 +17,8 @@ const useGetUser = () => {
 
         if (token) {
             dispatch(setUser({ user: userData?.user, isAuthenticated: true }));
+        } else {
+            dispatch(setLoading())
         }
 
     }, [userData?.user, dispatch, getCurrentUser, token]);

@@ -8,7 +8,8 @@ export type UserType = {
 
 export interface IUser {
     isAuthenticated: boolean;
-    user: UserType | null
+    user: UserType | null,
+    userLoading: boolean;
 }
 export interface IRootState {
     navbarSlice: INavbar;
