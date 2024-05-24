@@ -19,11 +19,13 @@ const DashboardLayout = () => {
             <main
                 className="md:ml-72 flex-1 min-h-screen w-full bg-white-50 px-5 py-7">
                 {/* Dashboard Toggle Button */}
-                <button className="block md:hidden text-primary text-2xl" onClick={handleDashboardToggle}>
-                    <Icon icon="material-symbols-light:dashboard-customize-rounded" />
-                </button>
+                <div className="block md:hidden">
+                    <button className="text-black-50 text-4xl" onClick={handleDashboardToggle}>
+                        <Icon icon="bx:menu-alt-left" />
+                    </button>
 
-                <hr className="my-2" />
+                    <hr className="my-2" />
+                </div>
                 <Outlet />
             </main>
 
