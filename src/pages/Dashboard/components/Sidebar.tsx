@@ -6,6 +6,7 @@ import UserImage from "../../../components/UserImage";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import LogoutButton from "../../../components/Buttons/LogoutButton";
 import { toggleDashboard } from "../../../redux/slices/navbar/navbarSlice";
+import Logo from "../../Home/components/Navbar/Logo";
 
 const Sidebar = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
@@ -24,7 +25,7 @@ const Sidebar = () => {
         <aside className="fixed inset-y-0 left-0  max-w-72 min-w-72 flex flex-col w-full h-screen overflow-hidden border-r py-5 px-7 bg-white border-white-100">
             {/* Logo */}
             <div className="flex justify-between items-center">
-                <Link to='/' className="text-2xl md:text-4xl font-bold"><span className="text-primary">Parcel</span><span className="text-secondary">Care</span></Link>
+                <Logo />
 
                 {/* Dashboard Toggle Close Button */}
                 <button className="block md:hidden text-2xl" onClick={() => dispatch(toggleDashboard(false))}>
@@ -34,16 +35,18 @@ const Sidebar = () => {
 
             <hr className="my-5" />
 
-            <ul className="flex flex-col gap-y-3">
+            {/* Dashboard Sidebar Menu Links */}
+            <ul className="flex flex-col gap-y-2">
                 {menuLinks.map((category) => (
                     <li key={category.title} >
-                        <Link to={category.path} className={`flex p-2 rounded-lg gap-x-2 items-center ${category.path === path && 'bg-white-50'}`}>
-                            <span><Icon icon={category.icon} /></span>
+                        <Link to={category.path} className={`flex p-3 rounded-lg gap-x-2 items-center ${category.path === path && 'gradient text-white'}`}>
+                            <span className="text-2xl"><Icon icon={category.icon} /></span>
                             <span>{category.title}</span>
                         </Link>
                     </li>
                 ))}
             </ul>
+
             <div className="mt-auto">
                 <hr className="py-3" />
                 <div className="flex gap-x-4 items-center mb-5">

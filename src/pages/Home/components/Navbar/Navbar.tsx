@@ -5,6 +5,7 @@ import UserImage from "../../../../components/UserImage";
 import { useSelector } from "react-redux";
 import { IRootState } from "../../../../types/types";
 import MobileNav from "./MobileNav";
+import Logo from "./Logo";
 
 const Navbar = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
@@ -16,9 +17,7 @@ const Navbar = () => {
     return (
         <div className={`w-full ${isDashboardPage && 'hidden'} absolute px-5 md:px-28 py-5 flex justify-between items-center z-10 bg-transparent`}>
             {/* Logo */}
-            <div>
-                <Link to='/' className="text-3xl md:text-4xl font-bold"><span className="text-primary">Parcel</span><span className="text-secondary">Care</span></Link>
-            </div>
+            <Logo />
 
             {/* Desktop */}
             <ul className="md:text-white hidden  font-semibold md:flex justify-center items-center gap-x-10">
