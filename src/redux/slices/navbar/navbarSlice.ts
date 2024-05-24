@@ -13,8 +13,12 @@ const navbarSlice = createSlice({
     name: "navbar",
     initialState,
     reducers: {
-        toggleNav: (state) => {
-            state.isNavToggle = !state.isNavToggle
+        toggleNav: (state, action: PayloadAction<boolean | undefined>) => {
+            if (typeof action.payload === 'boolean') {
+                state.isNavToggle = action.payload
+            } else {
+                state.isNavToggle = !state.isNavToggle
+            }
         },
         toggleProfileDropdown: (state, action: PayloadAction<boolean | undefined>) => {
             if (typeof action.payload === 'boolean') {
@@ -34,6 +38,6 @@ const navbarSlice = createSlice({
 })
 
 
-export const { toggleNav, toggleProfileDropdown } = navbarSlice.actions;
+export const { toggleNav, toggleProfileDropdown, toggleDashboard } = navbarSlice.actions;
 
 export default navbarSlice.reducer;

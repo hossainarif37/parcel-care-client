@@ -1,13 +1,15 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../../types/types";
 import { adminMenuLinks, agentMenuLinks, userMenuLinks } from "../../../constants/dashboardMenuLinks";
 import { Link, useLocation } from "react-router-dom";
 import UserImage from "../../../components/UserImage";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import LogoutButton from "../../../components/Buttons/LogoutButton";
+import { toggleDashboard } from "../../../redux/slices/navbar/navbarSlice";
 
 const Sidebar = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
+    const dispatch = useDispatch();
     const isNormalUser = user?.role === 'user';
     const isAgent = user?.role === 'agent';
     const isAdmin = user?.role === 'admin';
@@ -21,8 +23,13 @@ const Sidebar = () => {
     return (
         <aside className="fixed inset-y-0 left-0  max-w-72 min-w-72 flex flex-col w-full h-screen overflow-hidden border-r py-5 px-7 bg-white border-white-100">
             {/* Logo */}
-            <div>
-                <Link to='/' className="text-3xl md:text-4xl font-bold"><span className="text-primary">Parcel</span><span className="text-secondary">Care</span></Link>
+            <div className="flex justify-between items-center">
+                <Link to='/' className="text-2xl md:text-4xl font-bold"><span className="text-primary">Parcel</span><span className="text-secondary">Care</span></Link>
+
+                {/* Dashboard Toggle Close Button */}
+                <button className="block md:hidden text-2xl" onClick={() => dispatch(toggleDashboard(false))}>
+                    <Icon icon="material-symbols:close" />
+                </button>
             </div>
 
             <hr className="my-5" />
