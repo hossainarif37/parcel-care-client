@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { IRootState } from "../../../types/types";
 import { adminMenuLinks, agentMenuLinks, userMenuLinks } from "../../../constants/dashboardMenuLinks";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import UserImage from "../../../components/UserImage";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import LogoutButton from "../../../components/Buttons/LogoutButton";
@@ -15,21 +15,22 @@ const Sidebar = () => {
         isAgent ? agentMenuLinks :
             isAdmin ? adminMenuLinks : [];
 
+    const location = useLocation();
+    const path = location.pathname;
+
     return (
-        <aside className="fixed inset-y-0 left-0 max-w-72 min-w-72 flex flex-col w-full h-screen overflow-hidden border-r p-5 bg-white border-white-100">
+        <aside className="fixed inset-y-0 right-0 md:left-0  max-w-72 min-w-72 flex flex-col w-full h-screen overflow-hidden border-r py-5 px-7 bg-white border-white-100">
             {/* Logo */}
             <div>
                 <Link to='/' className="text-3xl md:text-4xl font-bold"><span className="text-primary">Parcel</span><span className="text-secondary">Care</span></Link>
             </div>
 
-
-
             <hr className="my-5" />
 
-            <ul className="flex flex-col gap-y-5">
+            <ul className="flex flex-col gap-y-3">
                 {menuLinks.map((category) => (
                     <li key={category.title} >
-                        <Link to={category.path} className="flex gap-x-2 items-center">
+                        <Link to={category.path} className={`flex p-2 rounded-lg gap-x-2 items-center ${category.path === path && 'bg-white-50'}`}>
                             <span><Icon icon={category.icon} /></span>
                             <span>{category.title}</span>
                         </Link>
