@@ -12,7 +12,7 @@ export const navLinks = [
         path: "#",
     },
     {
-        title: 'About Us',
+        title: 'Become an agent',
         path: "#",
-    }
+    },
 ]
