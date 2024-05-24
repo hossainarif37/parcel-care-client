@@ -18,5 +18,6 @@ export interface IRootState {
 export interface INavbar {
     isNavToggle: boolean,
     isProfileDropdown: boolean;
+    isDashboardToggle: boolean
 }
 

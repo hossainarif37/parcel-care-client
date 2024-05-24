@@ -5,6 +5,7 @@ import { INavbar } from "../../../types/types"
 const initialState: INavbar = {
     isNavToggle: false,
     isProfileDropdown: false,
+    isDashboardToggle: false,
 }
 
 
@@ -22,6 +23,13 @@ const navbarSlice = createSlice({
                 state.isProfileDropdown = !state.isProfileDropdown;
             }
         },
+        toggleDashboard: (state, action: PayloadAction<boolean | undefined>) => {
+            if (typeof action.payload === 'boolean') {
+                state.isDashboardToggle = action.payload;
+            } else {
+                state.isDashboardToggle = !state.isDashboardToggle;
+            }
+        }
     },
 })
 
