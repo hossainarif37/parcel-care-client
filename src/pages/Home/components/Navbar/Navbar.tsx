@@ -2,19 +2,12 @@ import { Link, useLocation } from "react-router-dom";
 import { navLinks } from "../../../../constants/navLinks";
 import ActiveLink from "./ActiveLink";
 import UserImage from "../../../../components/UserImage";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { IRootState } from "../../../../types/types";
-import OpenMenuButton from "../../../../components/Buttons/OpenMenuButton";
-import CloseMenuButton from "../../../../components/Buttons/CloseMenuButton";
-import Cookies from "js-cookie";
-import { Icon } from "@iconify/react/dist/iconify.js";
-import { removeUser } from "../../../../redux/slices/user/userSlice";
+import MobileNav from "./MobileNav";
 
 const Navbar = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
-    const { isNavToggle } = useSelector((state: IRootState) => state.navbarSlice);
-    const dispatch = useDispatch();
-
     const location = useLocation();
 
     const isDashboardPage = location.pathname.includes('/dashboard');
@@ -52,52 +45,8 @@ const Navbar = () => {
             </ul>
 
             {/* Mobile */}
-            <div className="block lg:hidden">
+            <MobileNav />
 
-                {/* Navbar Menu Button */}
-                {!isNavToggle && <OpenMenuButton />}
-
-                {/* Navbar Close Button */}
-                <ul className={`shadow-xl bg-white absolute text-center border-t rounded-md w-full flex flex-col gap-y-3 p-5 duration-300 h-screen top-0 right-0 origin-right ${isNavToggle ? 'scale-x-100' : 'scale-x-0'}`}>
-
-                    {/* Navbar Menu Button */}
-                    <div className="w-full text-right">
-                        <CloseMenuButton />
-                    </div>
-
-                    <hr />
-
-                    {/* Navlinks */}
-                    {
-                        navLinks?.map((link, i) => (
-                            <ActiveLink
-                                key={i}
-                                path={link.path}
-                                title={link.title}
-                            />
-                        ))
-                    }
-
-                    {
-                        user ?
-
-                            <button
-                                type="button"
-                                title="Logout"
-                                className="btn flex w-full items-center justify-center gap-2"
-                                onClick={() => {
-                                    Cookies.remove('authToken');
-                                    dispatch(removeUser());
-                                }}
-
-                            >
-                                <Icon icon="material-symbols:logout" />
-                                <span>Logout</span>
-                            </button> :
-                            <Link to='/login'>Login</Link>
-                    }
-                </ul>
-            </div>
         </div>
     );
 };

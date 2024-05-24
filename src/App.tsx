@@ -2,7 +2,8 @@ import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "./pages/Home/components/Navbar/Navbar";
 import useGetUser from "./hooks/useGetUser";
 import { useDispatch } from "react-redux";
-import { toggleProfileDropdown } from "./redux/slices/navbar/navbarSlice";
+import { toggleDashboard, toggleNav, toggleProfileDropdown } from "./redux/slices/navbar/navbarSlice";
+import { useEffect } from "react";
 
 
 const App = () => {
@@ -10,8 +11,17 @@ const App = () => {
   const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
   const dispatch = useDispatch();
 
+
   // Get the current user
   useGetUser();
+
+  useEffect(() => {
+    dispatch(toggleDashboard(false));
+    dispatch(toggleProfileDropdown(false));
+    dispatch(toggleNav(false));
+  }, [dispatch, location])
+
+
 
   const handleProfileDropdown = () => {
     dispatch(toggleProfileDropdown(false));

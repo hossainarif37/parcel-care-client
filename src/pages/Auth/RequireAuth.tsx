@@ -20,7 +20,6 @@ const RequireAuth = ({ children }: { children: ReactNode }) => {
         }
     }, [isAuthenticated, user, location, navigate, userLoading]);
 
-    console.log(userLoading);
     if (userLoading) {
         return <Loading paddingY="py-20 md:py-40" textColor="text-primary" textSize="text-4xl" />
     }

@@ -4,18 +4,23 @@ import Home from "../pages/Home/Home";
 import AuthLayout from "../pages/Auth/AuthLayout";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
-import MyParcels from "../pages/Dashboard/User/components/MyParcels";
-import BookParcel from "../pages/Dashboard/User/components/BookParcel";
+import MyParcels from "../pages/Dashboard/User/MyParcels/MyParcels";
+import BookParcel from "../pages/Dashboard/User/BookParcel/BookParcel";
 import UserDashboard from "../pages/Dashboard/User/UserDashboard";
-import UserProfile from "../pages/Dashboard/User/components/UserProfile";
+import UserProfile from "../pages/Dashboard/User/UserProfile/UserProfile";
 import AgentDashboard from "../pages/Dashboard/Agent/AgentDashboard";
 import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
-import Overview from "../pages/Dashboard/Admin/components/Overview";
+import Overview from "../pages/Dashboard/Admin/Overview/Overview";
 import RequireAuth from "../pages/Auth/RequireAuth";
 import RequireAgent from "../pages/Auth/RequireAgent";
 import RequireAdmin from "../pages/Auth/RequireAdmin";
 import AuthenticatedWrapper from "../pages/Auth/AuthenticatedWrapper";
 import ErrorPage from "../components/ErrorPage";
+import AllParcels from "../pages/Dashboard/Admin/AllParcels/AllParcels";
+import AllUsers from "../pages/Dashboard/Admin/AllUsers/AllUsers";
+import AllAgents from "../pages/Dashboard/Admin/AllAgents/AllAgents";
+import AdminProfile from "../pages/Dashboard/Admin/AdminProfile/AdminProfile";
+import MyDeliveryList from "../pages/Dashboard/Agent/MyDeliveryList/MyDeliveryList";
 
 
 export const router = createBrowserRouter([
@@ -71,7 +76,7 @@ export const router = createBrowserRouter([
                 children: [
                     {
                         path: '/dashboard/agent/delivery-list',
-                        element: <MyParcels />
+                        element: <MyDeliveryList />
                     }
                 ]
             },
@@ -84,7 +89,23 @@ export const router = createBrowserRouter([
                     {
                         path: '/dashboard/admin/overview',
                         element: <Overview />
-                    }
+                    },
+                    {
+                        path: '/dashboard/admin/all-parcels',
+                        element: <AllParcels />
+                    },
+                    {
+                        path: '/dashboard/admin/all-users',
+                        element: <AllUsers />
+                    },
+                    {
+                        path: '/dashboard/admin/all-agents',
+                        element: <AllAgents />
+                    },
+                    {
+                        path: '/dashboard/admin/profile',
+                        element: <AdminProfile />
+                    },
                 ]
             },
         ]
