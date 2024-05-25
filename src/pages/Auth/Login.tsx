@@ -27,7 +27,7 @@ const Login = () => {
             loading: 'Loading',
             success: ({ user, message, token }) => {
                 dispatch(setUser({ user: user, isAuthenticated: true }));
-                Cookies.set('authToken', token);
+                Cookies.set('authToken', token, { expires: 30 });
                 navigate('/');
                 return message;
             },

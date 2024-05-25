@@ -16,6 +16,7 @@ const DashboardLayout = () => {
             <div className={`${isDashboardToggle ? 'scale-x-100' : 'scale-x-0'} md:scale-x-100 duration-300 z-10`}>
                 <Sidebar />
             </div>
+
             <main
                 className="md:ml-72 flex-1 min-h-screen w-full bg-white-50 px-5 py-7">
                 {/* Dashboard Toggle Button */}
