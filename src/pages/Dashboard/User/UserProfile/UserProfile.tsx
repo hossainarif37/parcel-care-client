@@ -1,8 +1,9 @@
+import Profile from "../../components/Profile";
 
 const UserProfile = () => {
     return (
         <div>
-            UserProfile
+            <Profile />
         </div>
     );
 };
