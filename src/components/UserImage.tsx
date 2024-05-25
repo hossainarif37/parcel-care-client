@@ -25,7 +25,7 @@ const UserImage = ({ profilePicture, customWidth, isProfileDropdownBtn }: UserIm
         <>
             <div
                 onClick={handleProfileDropdown}
-                className="relative cursor-pointer group" title="Account"
+                className="relative cursor-pointer group" title="Profile"
             >
 
                 <div className="rounded-full ring-4 ring-secondary">

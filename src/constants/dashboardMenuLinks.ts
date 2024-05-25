@@ -2,12 +2,12 @@ export const userMenuLinks = [
     {
         title: "My Parcels",
         path: "/dashboard/user/my-parcels",
-        icon: "material-symbols-light:package-2-outline",
+        icon: "ph:package",
     },
     {
         title: "Book Parcel",
         path: "/dashboard/user/book-parcel",
-        icon: "lucide:package-plus",
+        icon: "hugeicons:package-add",
     },
     {
         title: "Profile",
@@ -46,7 +46,7 @@ export const adminMenuLinks = [
     {
         title: "All Parcels",
         path: "/dashboard/admin/all-parcels",
-        icon: "material-symbols-light:package-2-outline",
+        icon: "ph:package",
     },
     {
         title: "All Users",

@@ -10,9 +10,5 @@ export const navLinks = [
     {
         title: 'Contact Us',
         path: "#",
-    },
-    {
-        title: 'Become an agent',
-        path: "#",
-    },
+    }
 ]
