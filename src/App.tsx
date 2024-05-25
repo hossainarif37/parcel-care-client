@@ -5,12 +5,10 @@ import { useDispatch } from "react-redux";
 import { toggleDashboard, toggleNav, toggleProfileDropdown } from "./redux/slices/navbar/navbarSlice";
 import { useEffect } from "react";
 
-
 const App = () => {
   const location = useLocation();
   const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
   const dispatch = useDispatch();
-
 
   // Get the current user
   useGetUser();
@@ -20,7 +18,6 @@ const App = () => {
     dispatch(toggleProfileDropdown(false));
     dispatch(toggleNav(false));
   }, [dispatch, location])
-
 
 
   const handleProfileDropdown = () => {
