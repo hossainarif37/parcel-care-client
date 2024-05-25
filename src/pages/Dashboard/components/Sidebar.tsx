@@ -52,8 +52,8 @@ const Sidebar = () => {
                 <div className="flex gap-x-4 items-center mb-5">
                     <UserImage customWidth="w-10" />
                     <div className="text-black-50">
-                        <p className="text-secondary">{user?.name}</p>
-                        <p className="font-semibold text-xs">{user?.role}</p>
+                        <p className="text-secondary font-semibold">{user?.name}</p>
+                        <p className="font-semibold text-sm">{user?.role}</p>
                     </div>
                 </div>
 
