@@ -1,5 +1,3 @@
-import { Icon } from "@iconify/react/dist/iconify.js";
-import { useState } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
 interface InputWithLabelPropsTypes {
@@ -7,54 +5,26 @@ interface InputWithLabelPropsTypes {
     type: string;
     register: UseFormRegisterReturn
     id: string;
+    placeholder: string;
 }
-
-const InputWithLabel = ({ label, type, register, id }: InputWithLabelPropsTypes) => {
-    const [inputFocus, setInputFocus] = useState(false);
-    const [eyeToggle, setEyeToggle] = useState(false);
-
+const InputWithLabel = ({ label, type, register, id, placeholder }: InputWithLabelPropsTypes) => {
     return (
-        <div className="relative">
-
-            {/*//* Input */}
-            <input
-                id={id}
-                {...register}
-                type={eyeToggle ? 'text' : type}
-                className={`input ${inputFocus ? 'border-primary' : 'border-gray-400'} `}
-                onFocus={() => setInputFocus(true)}
-                onBlur={(e) => {
-                    if (e.target.value) {
-                        return;
-                    }
-                    setInputFocus(false);
-                }}
-            />
-
-            {/*//* Label */}
+        <div className="space-y-2">
             <label
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 htmlFor={id}
-                onClick={() => setInputFocus(true)}
-                className={`bg-white px-2 cursor-text text-center absolute left-2 duration-200 transform
-                ${inputFocus ? ' -translate-y-1/2 scale-90 text-primary' : 'translate-y-1/2 text-gray-600'} rounded-lg`
-                }
             >
                 {label}
             </label>
-
-            {/*//* Password Show Eye Button */}
-            {
-                type === 'password' &&
-                <span
-                    onClick={() => setEyeToggle(eyeToggle ? false : true)}
-                    className="absolute top-2 right-3 p-2 cursor-pointer select-none hover:bg-gray-100 rounded-full"
-                >
-                    {eyeToggle ? <Icon icon="fa6-solid:eye" /> : <Icon icon="fa-solid:eye-slash" />}
-                </span>
-            }
+            <input
+                {...register}
+                type={type}
+                className="flex h-10 w-full rounded-md border focus:ring-2 focus:ring-secondary focus:ring-offset-2 px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-50 outline-none"
+                id={id}
+                placeholder={`Enter your ${placeholder}`}
+            />
         </div>
     );
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export default InputWithLabel;
