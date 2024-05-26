@@ -1,12 +1,12 @@
-import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import InputWithLabel from "../../components/Inputs/InputWithLabel";
 import Button from "../../components/Buttons/Button";
 import { useLoginMutation } from "../../redux/api/endpoints/authApi";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/slices/user/userSlice";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
+import Input from "../../components/Inputs/Input";
+import { useForm } from "react-hook-form";
 interface IFormInput {
     email: string;
     password: string;
@@ -45,7 +45,7 @@ const Login = () => {
             <div className="flex flex-col gap-y-7 mb-5">
                 {/*//* Email */}
                 <div>
-                    <InputWithLabel
+                    <Input
                         label='Email'
                         type='email'
                         id='email'
@@ -64,7 +64,7 @@ const Login = () => {
 
                 {/*//* Password */}
                 <div>
-                    <InputWithLabel
+                    <Input
                         label='Password'
                         type='password'
                         id='password'
@@ -84,6 +84,7 @@ const Login = () => {
                 {/* //*Submit Button */}
                 <Button
                     type="submit"
+                    styles="btn-primary"
                 >
                     Login
                 </Button>

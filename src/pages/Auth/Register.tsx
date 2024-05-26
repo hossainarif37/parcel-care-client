@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
-import Button from "../../components/Buttons/Button";
 import { Link, useNavigate } from "react-router-dom";
-import InputWithLabel from "../../components/Inputs/InputWithLabel";
 import { useRegisterMutation } from "../../redux/api/endpoints/authApi";
 import toast from "react-hot-toast";
+import Input from "../../components/Inputs/Input";
+import Button from "../../components/Buttons/Button";
 
 interface IFormInput {
     name: string;
@@ -39,7 +39,7 @@ const Register = () => {
 
                 {/*//* Name */}
                 <div>
-                    <InputWithLabel
+                    <Input
                         label='Name'
                         type='name'
                         id='name'
@@ -63,7 +63,7 @@ const Register = () => {
 
                 {/*//* Email */}
                 <div>
-                    <InputWithLabel
+                    <Input
                         label='Email'
                         type='email'
                         id='email'
@@ -82,7 +82,7 @@ const Register = () => {
 
                 {/*//* Password */}
                 <div>
-                    <InputWithLabel
+                    <Input
                         label='Password'
                         type='password'
                         id='password'
@@ -102,6 +102,7 @@ const Register = () => {
                 {/* //*Submit Button */}
                 <Button
                     type="submit"
+                    styles="btn-primary"
                 >
                     Register
                 </Button>

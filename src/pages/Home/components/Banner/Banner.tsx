@@ -18,6 +18,7 @@ const Banner = () => {
                 </p>
                 <Button
                     type="button"
+                    styles="btn-primary"
                 >
                     <Link to='#'>Book a parcel</Link>
                 </Button>
