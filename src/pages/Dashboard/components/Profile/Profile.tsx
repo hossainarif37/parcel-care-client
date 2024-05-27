@@ -32,10 +32,10 @@ const Profile = () => {
             {/* Profile Info Area*/}
             <div className="max-w-4xl mx-auto py-10 px-5 md:px-20 border rounded-md  mb-5">
                 {/* Image area */}
-                <div className="flex flex-col md:flex-row items-center justify-center gap-x-5">
-                    <img className="w-28 shadow ring-4 ring-secondary ring-opacity-60 ring-offset-2 h-28 md:w-40 md:h-40 object-cover rounded-full" alt="user image" src={blank_avatar} />
-                    <div className="flex justify-start items-center flex-col gap-3">
+                <div className="flex flex-col gap-y-5 md:gap-y-0 mb-5 md:flex-row items-center justify-center gap-x-5">
+                    <img className="w-28 md:w-40 md:h-40 shadow ring-4 ring-secondary ring-opacity-60 ring-offset-2 h-28  object-cover rounded-full" alt="user image" src={blank_avatar} />
 
+                    <div className="flex justify-start items-center flex-col gap-3">
                         {/* Upload Image Button */}
                         <button
                             type='button'
