@@ -19,7 +19,7 @@ const InputWithLabel = ({ label, type, register, id, placeholder }: InputWithLab
             <input
                 {...register}
                 type={type}
-                className="flex h-10 w-full rounded-md border focus:ring-2 focus:ring-secondary focus:ring-offset-2 px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-50 outline-none"
+                className="flex w-full rounded-md border focus:ring-2 focus:ring-secondary focus:ring-offset-2 px-3 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-50 outline-none"
                 id={id}
                 placeholder={`Enter your ${placeholder}`}
             />

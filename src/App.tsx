@@ -7,6 +7,7 @@ import { useEffect } from "react";
 
 const App = () => {
   const location = useLocation();
+  const isDashboardPage = location.pathname.includes('/dashboard');
   const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
   const dispatch = useDispatch();
 
@@ -14,10 +15,10 @@ const App = () => {
   useGetUser();
 
   useEffect(() => {
-    dispatch(toggleDashboard(false));
+    !isDashboardPage && dispatch(toggleDashboard(false));
     dispatch(toggleProfileDropdown(false));
     dispatch(toggleNav(false));
-  }, [dispatch, location])
+  }, [dispatch, location, isDashboardPage])
 
 
   const handleProfileDropdown = () => {

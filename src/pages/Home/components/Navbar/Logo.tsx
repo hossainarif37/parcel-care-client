@@ -7,7 +7,7 @@ const Logo = () => {
     return (
         <div>
             <Link to='/' className={`text-2xl md:text-${isDashboardPage ? 3 : 4}xl font-bold flex items-center gap-x-1`}>
-                <div className="text-secondary text-5xl">
+                <div className="text-secondary text-3xl md:text-5xl">
                     <Icon icon="hugeicons:delivery-truck-02" />
                 </div>
                 <div>

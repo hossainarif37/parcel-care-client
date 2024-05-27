@@ -20,6 +20,8 @@ const Profile = () => {
     const [isEditClicked, setIsEditClicked] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
 
+
+
     const handleUpdateProfileInfo = (data: IFormInput) => {
         console.log(data);
         setIsEditClicked(false);
