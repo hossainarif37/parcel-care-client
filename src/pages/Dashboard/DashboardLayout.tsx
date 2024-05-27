@@ -13,12 +13,12 @@ const DashboardLayout = () => {
     }
     return (
         <div className="relative flex">
-            <div className={`${isDashboardToggle ? 'scale-x-100' : 'scale-x-0'} md:scale-x-100 duration-300 z-10`}>
+            <div className={`${isDashboardToggle ? 'translate-x-0' : '-translate-x-80'} md:translate-x-0 duration-300 z-10`}>
                 <Sidebar />
             </div>
 
-            <main
-                className="flex-1 min-h-screen w-full bg-white-50 px-5 py-7">
+            {/* Children */}
+            <main className="flex-1 min-h-screen w-full bg-white-50 px-5 py-7">
                 {/* Dashboard Toggle Button */}
                 <div className="block md:hidden">
                     <button className="text-black-50 text-4xl" onClick={handleDashboardToggle}>
@@ -27,13 +27,14 @@ const DashboardLayout = () => {
 
                     <hr className="my-2" />
                 </div>
+
                 <Outlet />
             </main>
 
             {/* Overlay */}
             {isDashboardToggle && <div
                 onClick={() => dispatch(toggleDashboard(false))}
-                className={`absolute bg-opacity-50 backdrop-blur-sm w-full h-screen top-0 transition-opacity duration-500 ease-in-out`}
+                className={`absolute bg-opacity-50 backdrop-blur-sm w-full h-full top-0 transition-opacity duration-500 ease-in-out`}
             ></div>}
         </div>
     );
