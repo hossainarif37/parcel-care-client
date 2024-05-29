@@ -4,6 +4,8 @@ import { useState } from "react";
 import InputWithLabel from "../../../../components/Inputs/InputWithLabel";
 import { useForm } from "react-hook-form";
 import UpdatePasswordArea from "./UpdatePasswordArea";
+import Select, { ActionMeta, MultiValue, SingleValue, StylesConfig } from "react-select";
+import { districtsData } from "../../../../constants/districtsData";
 
 type IFormInput = {
     name: string;
@@ -15,27 +17,78 @@ type IFormInput = {
     district?: string;
 }
 
+// Define types for district and sub-district data
+type OptionType = {
+    value: string;
+    label: string;
+};
+
 
 const Profile = () => {
     const [isEditClicked, setIsEditClicked] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+    const [selectedDistrict, setSelectedDistrict] = useState<SingleValue<OptionType>>(null);
+    const [selectedSubDistrict, setSelectedSubDistrict] = useState<SingleValue<OptionType>>(null);
 
 
+    // Adjusted handleDistrictChange function
+    const handleDistrictChange = (
+        newValue: SingleValue<OptionType> | MultiValue<OptionType>,
+        actionMeta: ActionMeta<OptionType>
+    ): void => {
+        // Since we're only interested in single selections, cast newValue to SingleValue
+        const selectedOption = newValue as SingleValue<OptionType>;
+
+        setSelectedDistrict(selectedOption);
+        setSelectedSubDistrict(null);
+    };
+
+    // Filter sub-district options based on selected district
+    const subDistrictOptions: OptionType[] = selectedDistrict
+        ? districtsData.find((district) => district.district === selectedDistrict.value)?.subDistricts.map((subDistrict) => ({
+            value: subDistrict,
+            label: subDistrict,
+        })) || []
+        : [];
+
+    console.log(districtsData.length);
 
     const handleUpdateProfileInfo = (data: IFormInput) => {
         console.log(data);
         setIsEditClicked(false);
     }
 
+
+    // Custom styles for react-select
+    const customStyles: StylesConfig<OptionType> = {
+        control: (provided, state) => ({
+            ...provided,
+            padding: "3.5px", // Add padding
+            outline: state.isFocused ? "1px solid #7D82FF" : "none", // Add outline color on focus
+            // boxShadow: state.isFocused ? "0 0 0 2px #7D82FF" : "none", // Optional: Add box-shadow for better focus visibility
+            borderColor: state.isFocused ? "#7D82FF" : '#ddd', // Change border color on focus
+            "&:hover": {
+                borderColor: state.isFocused ? "#7D82FF" : '#ddd',
+            },
+        }),
+        placeholder: (provided) => ({
+            ...provided,
+            color: "#9FA9B4", // Change placeholder color
+        })
+    };
+
+    console.log('subDistrictOptions', subDistrictOptions);
+    console.log('selectedDistrict', selectedDistrict);
+
     return (
         <div className="py-10">
             {/* Profile Info Area*/}
             <div className="max-w-4xl mx-auto py-10 px-5 md:px-20 border rounded-md  mb-5">
                 {/* Image area */}
-                <div className="flex flex-col md:flex-row items-center justify-center gap-x-5">
-                    <img className="w-28 shadow ring-4 ring-secondary ring-opacity-60 ring-offset-2 h-28 md:w-40 md:h-40 object-cover rounded-full" alt="user image" src={blank_avatar} />
-                    <div className="flex justify-start items-center flex-col gap-3">
+                <div className="flex flex-col gap-y-5 md:gap-y-0 mb-5 md:flex-row items-center justify-center gap-x-5">
+                    <img className="w-28 md:w-40 md:h-40 shadow ring-4 ring-secondary ring-opacity-60 ring-offset-2 h-28  object-cover rounded-full" alt="user image" src={blank_avatar} />
 
+                    <div className="flex justify-start items-center flex-col gap-3">
                         {/* Upload Image Button */}
                         <button
                             type='button'
@@ -94,6 +147,43 @@ const Profile = () => {
                                 })
                             }}
                         />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* District Select */}
+                        <div className="space-y-2">
+                            <label
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                                District
+                            </label>
+                            <Select
+                                value={selectedDistrict}
+                                onChange={handleDistrictChange}
+                                options={districtsData.map((district) => ({
+                                    value: district.district,
+                                    label: district.district,
+                                }))}
+                                placeholder="Select District"
+                                styles={customStyles}
+                            />
+                        </div>
+
+                        {/* Sub-district Select */}
+                        <div className="space-y-2">
+                            <label
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                                Sub-District
+                            </label>
+                            <Select
+                                value={selectedSubDistrict}
+                                onChange={(option) => setSelectedSubDistrict(option as SingleValue<OptionType>)}
+                                options={subDistrictOptions}
+                                placeholder="Select Sub-district"
+                                styles={customStyles}
+                            />
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
