@@ -2,7 +2,7 @@
 const MyParcels = () => {
     return (
         <div>
-            MyParcels
+            My Parcels
         </div>
     );
 };
