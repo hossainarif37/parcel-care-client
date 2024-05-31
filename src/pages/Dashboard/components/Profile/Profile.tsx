@@ -77,8 +77,6 @@ const Profile = () => {
         })
     };
 
-    console.log('subDistrictOptions', subDistrictOptions);
-    console.log('selectedDistrict', selectedDistrict);
 
     return (
         <div className="py-10">
