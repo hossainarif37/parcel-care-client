@@ -8,6 +8,7 @@ interface InputWithLabelPropsTypes {
     placeholder: string;
 }
 const InputWithLabel = ({ label, type, register, id, placeholder }: InputWithLabelPropsTypes) => {
+
     return (
         <div className="space-y-2">
             <label
@@ -19,7 +20,7 @@ const InputWithLabel = ({ label, type, register, id, placeholder }: InputWithLab
             <input
                 {...register}
                 type={type}
-                className="flex w-full rounded-md border border-[#ddd] focus:ring-2 focus:ring-secondary px-3 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-50 outline-none"
+                className={"flex w-full rounded-md border border-[#ddd] focus:ring-2 focus:ring-secondary px-3 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-50 outline-none"}
                 id={id}
                 placeholder={`Enter your ${placeholder}`}
             />

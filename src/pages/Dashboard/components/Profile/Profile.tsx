@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import UpdatePasswordArea from "./UpdatePasswordArea";
 import Select, { ActionMeta, MultiValue, SingleValue, StylesConfig } from "react-select";
 import { districtsData } from "../../../../constants/districtsData";
+import { IRootState } from "../../../../types/types";
+import { useSelector } from "react-redux";
 
 type IFormInput = {
     name: string;
@@ -25,6 +27,8 @@ type OptionType = {
 
 
 const Profile = () => {
+    const { user } = useSelector((state: IRootState) => state.userSlice);
+    console.log(user);
     const [isEditClicked, setIsEditClicked] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const [selectedDistrict, setSelectedDistrict] = useState<SingleValue<OptionType>>(null);
@@ -51,10 +55,15 @@ const Profile = () => {
         })) || []
         : [];
 
-    console.log(districtsData.length);
 
     const handleUpdateProfileInfo = (data: IFormInput) => {
-        console.log(data);
+        // Check if selectedDistrict and selectedSubDistrict are defined and add them to the data object
+        const updatedData = {
+            ...data,
+            ...(selectedDistrict && { district: selectedDistrict.value }),
+            ...(selectedSubDistrict && { subDistrict: selectedSubDistrict.value }),
+        };
+
         setIsEditClicked(false);
     }
 
