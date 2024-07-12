@@ -6,8 +6,8 @@ import { useForm } from "react-hook-form";
 import UpdatePasswordArea from "./UpdatePasswordArea";
 import Select, { ActionMeta, MultiValue, SingleValue, StylesConfig } from "react-select";
 import { districtsData } from "../../../../constants/districtsData";
-import { IRootState } from "../../../../types/types";
 import { useSelector } from "react-redux";
+import { IRootState } from "../../../../types/types";
 
 type IFormInput = {
     name: string;
@@ -145,6 +145,7 @@ const Profile = () => {
                             id="email"
                             label="Email"
                             placeholder="email"
+                            value={user?.email}
                             register={{
                                 ...register('email', {
                                     required: 'Email is required', pattern: {

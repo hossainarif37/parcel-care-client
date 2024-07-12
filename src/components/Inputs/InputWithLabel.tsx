@@ -6,8 +6,10 @@ interface InputWithLabelPropsTypes {
     register: UseFormRegisterReturn
     id: string;
     placeholder: string;
+    value?: string
 }
-const InputWithLabel = ({ label, type, register, id, placeholder }: InputWithLabelPropsTypes) => {
+const InputWithLabel = ({ label, type, register, id, placeholder, value }: InputWithLabelPropsTypes) => {
+    console.log(value);
 
     return (
         <div className="space-y-2">
@@ -20,9 +22,11 @@ const InputWithLabel = ({ label, type, register, id, placeholder }: InputWithLab
             <input
                 {...register}
                 type={type}
-                className={"flex w-full rounded-md border border-[#ddd] focus:ring-2 focus:ring-secondary px-3 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-50 outline-none"}
+                className={"flex w-full rounded-md border border-[#ddd] focus:ring-2 focus:ring-secondary px-3 py-3 text-sm disabled:cursor-not-allowed  outline-none"}
+                disabled={type === 'email'}
                 id={id}
                 placeholder={`Enter your ${placeholder}`}
+                value={value}
             />
         </div>
     );
