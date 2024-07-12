@@ -74,7 +74,6 @@ const Profile = () => {
             ...provided,
             padding: "3.5px", // Add padding
             outline: state.isFocused ? "1px solid #7D82FF" : "none", // Add outline color on focus
-            // boxShadow: state.isFocused ? "0 0 0 2px #7D82FF" : "none", // Optional: Add box-shadow for better focus visibility
             borderColor: state.isFocused ? "#7D82FF" : '#ddd', // Change border color on focus
             "&:hover": {
                 borderColor: state.isFocused ? "#7D82FF" : '#ddd',

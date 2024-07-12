@@ -22,7 +22,7 @@ const InputWithLabel = ({ label, type, register, id, placeholder, value }: Input
             <input
                 {...register}
                 type={type}
-                className={"flex w-full rounded-md border border-[#ddd] focus:ring-2 focus:ring-secondary px-3 py-3 text-sm disabled:cursor-not-allowed  outline-none"}
+                className={"flex w-full rounded-md border border-[#ddd] focus:ring-2 focus:ring-secondary px-3 py-3 text-sm   outline-none"}
                 disabled={type === 'email'}
                 id={id}
                 placeholder={`Enter your ${placeholder}`}
