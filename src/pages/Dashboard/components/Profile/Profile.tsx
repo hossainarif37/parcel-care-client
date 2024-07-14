@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import blank_avatar from "../../../../assets/icons/profile_blank_image.png"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputWithLabel from "../../../../components/Inputs/InputWithLabel";
 import { useForm } from "react-hook-form";
 import UpdatePasswordArea from "./UpdatePasswordArea";
@@ -69,6 +69,8 @@ const Profile = () => {
         } : null
     );
 
+    const [subDistrictError, setSubDistrictError] = useState<string>('');
+
 
     const defaultSubDistrict: OptionType = {
         value: '',
@@ -80,11 +82,14 @@ const Profile = () => {
         if (!selectedSubDistrict) {
             return defaultSubDistrict;
         }
+
         return {
             value: selectedSubDistrict.value ?? '',
             label: selectedSubDistrict.label ?? '',
         };
     };
+
+
 
     // Adjusted handleDistrictChange function
     const handleDistrictChange = (
@@ -111,6 +116,13 @@ const Profile = () => {
     const handleUpdateProfileInfo = (data: IFormInput) => {
         // Check if selectedDistrict and selectedSubDistrict are defined and add them to the data object
         console.log('Clicked');
+        // Check if a district is selected but no sub-district is selected
+        if (selectedDistrict && !selectedSubDistrict) {
+            // Set an error for the sub-district field
+            setSubDistrictError('Please select a sub-district.');
+            return;
+        }
+
         const updatedData = {
             ...data,
             ...(selectedDistrict && { district: selectedDistrict.value }),
@@ -131,6 +143,15 @@ const Profile = () => {
 
         setIsEditClicked(false);
     }
+
+    useEffect(() => {
+        if (selectedSubDistrict) {
+            // Set an error for the sub-district field
+            setSubDistrictError('');
+        }
+
+    }, [selectedSubDistrict])
+
 
 
     // Custom styles for react-select
@@ -252,6 +273,8 @@ const Profile = () => {
                                 placeholder="Select Sub-district"
                                 styles={customStyles}
                             />
+
+                            {subDistrictError && <p className="error">{subDistrictError}</p>}
                         </div>
                     </div>
 
