@@ -1,14 +1,18 @@
 import { UseFormRegisterReturn } from "react-hook-form";
 
+type ValueType = string | number;
+type DefaultValueType = string | number;
+
 interface InputWithLabelPropsTypes {
     label: string;
     type: string;
     register?: UseFormRegisterReturn
     id: string;
     placeholder: string;
-    value?: string
+    value?: ValueType;
+    defaultValue?: DefaultValueType;
 }
-const InputWithLabel = ({ label, type, register, id, placeholder, value }: InputWithLabelPropsTypes) => {
+const InputWithLabel = ({ label, type, register, id, placeholder, value, defaultValue }: InputWithLabelPropsTypes) => {
 
     return (
         <div className="space-y-2">
@@ -26,6 +30,7 @@ const InputWithLabel = ({ label, type, register, id, placeholder, value }: Input
                 id={id}
                 placeholder={`Enter your ${placeholder}`}
                 value={value}
+                defaultValue={defaultValue}
             />
         </div>
     );

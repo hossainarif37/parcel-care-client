@@ -14,11 +14,8 @@ import toast from "react-hot-toast";
 type IFormInput = {
     name: string;
     email: string;
-    profilePicture?: string;
     phoneNumber?: number;
-    fullAddress?: string;
-    subDistrict?: string;
-    district?: string;
+    fullAddress?: string
 }
 
 // Define types for district and sub-district data
@@ -121,17 +118,16 @@ const Profile = () => {
         };
         console.log('Updated Data', updatedData);
 
-        // const updatedResponse = updateUserInfo({ userId: user?._id, body: updatedData }).unwrap();
+        const updatedResponse = updateUserInfo({ userId: user?._id, body: updatedData }).unwrap();
 
 
-        // console.log(updatedResponse);
+        console.log(updatedResponse);
 
-        // toast.promise(updatedResponse, {
-        //     loading: 'Loading',
-        //     success: ({ message }) => message,
-        //     error: ({ data }) => data?.message || 'Update failed'
-        // });
-
+        toast.promise(updatedResponse, {
+            loading: 'Loading',
+            success: ({ message }) => message,
+            error: ({ data }) => data?.message || 'Update failed'
+        });
 
         setIsEditClicked(false);
     }
@@ -187,25 +183,29 @@ const Profile = () => {
                 <form onSubmit={handleSubmit(handleUpdateProfileInfo)} className="flex flex-col gap-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Name */}
-                        <InputWithLabel
-                            type="text"
-                            id="name"
-                            label="Name"
-                            placeholder="name"
-                            register={{
-                                ...register('name', {
-                                    required: 'Name is required',
-                                    maxLength: {
-                                        value: 20,
-                                        message: 'Maximum length 20 characters'
-                                    },
-                                    minLength: {
-                                        value: 3,
-                                        message: 'Minimum length 3 characters'
-                                    }
-                                })
-                            }}
-                        />
+                        <div>
+                            <InputWithLabel
+                                type="text"
+                                id="name"
+                                label="Name"
+                                placeholder="name"
+                                defaultValue={user?.name}
+                                register={{
+                                    ...register('name', {
+                                        maxLength: {
+                                            value: 20,
+                                            message: 'Maximum length 20 characters'
+                                        },
+                                        minLength: {
+                                            value: 3,
+                                            message: 'Minimum length 3 characters'
+                                        }
+                                    })
+                                }}
+                            />
+
+                            {errors?.name?.message && <p className="error">{errors?.name?.message}</p>}
+                        </div>
 
                         {/* Email */}
                         <InputWithLabel
@@ -235,6 +235,7 @@ const Profile = () => {
                                 placeholder="Select District"
                                 styles={customStyles}
                             />
+
                         </div>
 
                         {/* Sub-district Select */}
@@ -256,45 +257,54 @@ const Profile = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Full Address */}
-                        <InputWithLabel
-                            type="text"
-                            id="full-address"
-                            label="Full Address"
-                            placeholder="full address"
-                            register={{
-                                ...register('fullAddress', {
-                                    required: 'Address is required',
-                                    maxLength: {
-                                        value: 100,
-                                        message: 'Maximum length 100 characters'
-                                    },
-                                    minLength: {
-                                        value: 10,
-                                        message: 'Minimum length 10 characters'
-                                    }
-                                })
-                            }}
-                        />
+                        <div>
+                            <InputWithLabel
+                                type="text"
+                                id="full-address"
+                                label="Full Address"
+                                placeholder="full address"
+                                defaultValue={user?.fullAddress}
+                                register={{
+                                    ...register('fullAddress', {
+                                        maxLength: {
+                                            value: 100,
+                                            message: 'Maximum length 100 characters'
+                                        },
+                                        minLength: {
+                                            value: 10,
+                                            message: 'Minimum length 10 characters'
+                                        }
+                                    })
+                                }}
+                            />
+
+                            {errors?.fullAddress?.message && <p className="error">{errors?.fullAddress?.message}</p>}
+                        </div>
 
                         {/* Phone Number */}
-                        <InputWithLabel
-                            type="number"
-                            id="phone-number"
-                            label="Phone Number"
-                            placeholder="phone number"
-                            register={{
-                                ...register('phoneNumber', {
-                                    maxLength: {
-                                        value: 20,
-                                        message: 'Maximum length 20 digit'
-                                    },
-                                    minLength: {
-                                        value: 11,
-                                        message: 'Minimum length 11 digit'
-                                    }
-                                })
-                            }}
-                        />
+                        <div>
+                            <InputWithLabel
+                                type="number"
+                                id="phone-number"
+                                label="Phone Number"
+                                placeholder="phone number"
+                                defaultValue={user?.phoneNumber}
+                                register={{
+                                    ...register('phoneNumber', {
+                                        maxLength: {
+                                            value: 20,
+                                            message: 'Maximum length 20 digit'
+                                        },
+                                        minLength: {
+                                            value: 10,
+                                            message: 'Minimum length 10 digit'
+                                        }
+                                    })
+                                }}
+                            />
+
+                            {errors?.phoneNumber?.message && <p className="error">{errors?.phoneNumber?.message}</p>}
+                        </div>
                     </div>
 
                     {
