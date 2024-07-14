@@ -3,13 +3,12 @@ import { UseFormRegisterReturn } from "react-hook-form";
 interface InputWithLabelPropsTypes {
     label: string;
     type: string;
-    register: UseFormRegisterReturn
+    register?: UseFormRegisterReturn
     id: string;
     placeholder: string;
     value?: string
 }
 const InputWithLabel = ({ label, type, register, id, placeholder, value }: InputWithLabelPropsTypes) => {
-    console.log(value);
 
     return (
         <div className="space-y-2">

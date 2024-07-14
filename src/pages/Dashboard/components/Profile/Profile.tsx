@@ -8,6 +8,8 @@ import Select, { ActionMeta, MultiValue, SingleValue, StylesConfig } from "react
 import { districtsData } from "../../../../constants/districtsData";
 import { useSelector } from "react-redux";
 import { IRootState } from "../../../../types/types";
+import { useUpdateUserInfoMutation } from "../../../../redux/api/endpoints/userApi";
+import toast from "react-hot-toast";
 
 type IFormInput = {
     name: string;
@@ -28,12 +30,64 @@ type OptionType = {
 
 const Profile = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
-    console.log(user);
+    const [updateUserInfo, { data, isError, isLoading }] = useUpdateUserInfoMutation();
     const [isEditClicked, setIsEditClicked] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
-    const [selectedDistrict, setSelectedDistrict] = useState<SingleValue<OptionType>>(null);
-    const [selectedSubDistrict, setSelectedSubDistrict] = useState<SingleValue<OptionType>>(null);
 
+    //------------- District Functionality Area -------------//
+    // Find initial selected district from districtsData based on user's district
+    const userDistrict = districtsData.find(district => district.district === user?.district);
+
+    // District Functionality Area
+    const [selectedDistrict, setSelectedDistrict] = useState<SingleValue<OptionType>>(
+        userDistrict ? {
+            value: userDistrict.district,
+            label: userDistrict.district,
+        } : null
+    );
+
+    const defaultDistrict: OptionType = {
+        value: '',
+        label: 'Select District',
+    };
+
+    const getValidDistrictSelection = (): OptionType => {
+        if (!selectedDistrict) {
+            return defaultDistrict;
+        }
+        return {
+            value: selectedDistrict.value ?? '',
+            label: selectedDistrict.label ?? '',
+        };
+    };
+
+
+    //------------- Sub-District Functionality Area -------------//
+    const userSubDistrict = userDistrict?.subDistricts?.find(subDistrict => subDistrict === user?.subDistrict);
+    // Correctly initialize selectedSubDistrict with the user's sub-district if available, or null
+    const [selectedSubDistrict, setSelectedSubDistrict] = useState<SingleValue<OptionType>>(
+        userSubDistrict ? {
+            value: userSubDistrict,
+            label: userSubDistrict,
+        } : null
+    );
+
+
+    const defaultSubDistrict: OptionType = {
+        value: '',
+        label: 'Select Sub-District',
+    };
+
+
+    const getValidSubDistrictSelection = (): OptionType => {
+        if (!selectedSubDistrict) {
+            return defaultSubDistrict;
+        }
+        return {
+            value: selectedSubDistrict.value ?? '',
+            label: selectedSubDistrict.label ?? '',
+        };
+    };
 
     // Adjusted handleDistrictChange function
     const handleDistrictChange = (
@@ -56,14 +110,27 @@ const Profile = () => {
         : [];
 
 
+
     const handleUpdateProfileInfo = (data: IFormInput) => {
         // Check if selectedDistrict and selectedSubDistrict are defined and add them to the data object
+        console.log('Clicked');
         const updatedData = {
             ...data,
             ...(selectedDistrict && { district: selectedDistrict.value }),
             ...(selectedSubDistrict && { subDistrict: selectedSubDistrict.value }),
         };
+        console.log('Updated Data', updatedData);
 
+        // const updatedResponse = updateUserInfo({ userId: user?._id, body: updatedData }).unwrap();
+
+
+        // console.log(updatedResponse);
+
+        // toast.promise(updatedResponse, {
+        //     loading: 'Loading',
+        //     success: ({ message }) => message,
+        //     error: ({ data }) => data?.message || 'Update failed'
+        // });
 
 
         setIsEditClicked(false);
@@ -147,14 +214,6 @@ const Profile = () => {
                             label="Email"
                             placeholder="email"
                             value={user?.email}
-                            register={{
-                                ...register('email', {
-                                    required: 'Email is required', pattern: {
-                                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                                        message: 'Provide a valid email'
-                                    }
-                                })
-                            }}
                         />
                     </div>
 
@@ -167,7 +226,7 @@ const Profile = () => {
                                 District
                             </label>
                             <Select
-                                value={selectedDistrict}
+                                value={getValidDistrictSelection()}
                                 onChange={handleDistrictChange}
                                 options={districtsData.map((district) => ({
                                     value: district.district,
@@ -186,7 +245,7 @@ const Profile = () => {
                                 Sub-District
                             </label>
                             <Select
-                                value={selectedSubDistrict}
+                                value={getValidSubDistrictSelection()}
                                 onChange={(option) => setSelectedSubDistrict(option as SingleValue<OptionType>)}
                                 options={subDistrictOptions}
                                 placeholder="Select Sub-district"
