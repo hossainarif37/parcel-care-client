@@ -6,10 +6,11 @@ import { useForm } from "react-hook-form";
 import UpdatePasswordArea from "./UpdatePasswordArea";
 import Select, { ActionMeta, MultiValue, SingleValue, StylesConfig } from "react-select";
 import { districtsData } from "../../../../constants/districtsData";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../../../types/types";
 import { useUpdateUserInfoMutation } from "../../../../redux/api/endpoints/userApi";
 import toast from "react-hot-toast";
+import { updateUser } from "../../../../redux/slices/user/userSlice";
 
 type IFormInput = {
     name: string;
@@ -27,6 +28,7 @@ type OptionType = {
 
 const Profile = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
+    const dispatch = useDispatch();
     const [updateUserInfo, { data, isError, isLoading }] = useUpdateUserInfoMutation();
     const [isEditClicked, setIsEditClicked] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
@@ -132,12 +134,12 @@ const Profile = () => {
 
         const updatedResponse = updateUserInfo({ userId: user?._id, body: updatedData }).unwrap();
 
-
-        console.log(updatedResponse);
-
         toast.promise(updatedResponse, {
             loading: 'Loading',
-            success: ({ message }) => message,
+            success: ({ user, message }) => {
+                dispatch(updateUser({ user: user }));
+                return message;
+            },
             error: ({ data }) => data?.message || 'Update failed'
         });
 
