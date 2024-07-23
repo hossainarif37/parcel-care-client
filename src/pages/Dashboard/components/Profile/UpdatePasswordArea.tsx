@@ -12,7 +12,7 @@ type IFormInput = {
 }
 
 const UpdatePasswordArea = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<IFormInput>();
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
     const [updatePassword, { error, isLoading }] = useUpdatePasswordMutation();
     const handleUpdatePassword = (data: IFormInput) => {
@@ -26,6 +26,7 @@ const UpdatePasswordArea = () => {
         toast.promise(updatePassResponse, {
             loading: 'Loading',
             success: ({ message }) => {
+                reset();
                 return message;
             },
             error: ({ data }) => {
@@ -33,7 +34,6 @@ const UpdatePasswordArea = () => {
             },
         });
     }
-
 
 
 
@@ -96,7 +96,8 @@ const UpdatePasswordArea = () => {
 
             <button
                 type="submit"
-                className="btn-primary w-full mt-5 text-white font-semibold py-3 px-10 rounded-md ml-auto"
+                disabled={isLoading}
+                className={`${isLoading ? 'btn-disabled' : 'btn-primary'} w-full mt-5 text-white font-semibold py-3 px-10 rounded-md ml-auto`}
             >
 
                 Update Password
