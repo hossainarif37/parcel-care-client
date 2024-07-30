@@ -1,8 +1,7 @@
 import { useForm } from "react-hook-form";
 import InputWithLabel from "../../../../components/Inputs/InputWithLabel";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useUpdatePasswordMutation } from "../../../../redux/api/endpoints/authApi";
-import { Icon } from "@iconify/react/dist/iconify.js";
 import toast from "react-hot-toast";
 
 type IFormInput = {

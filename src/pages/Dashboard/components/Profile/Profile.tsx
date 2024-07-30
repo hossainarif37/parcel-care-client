@@ -7,10 +7,11 @@ import UpdatePasswordArea from "./UpdatePasswordArea";
 import Select, { ActionMeta, MultiValue, SingleValue, StylesConfig } from "react-select";
 import { districtsData } from "../../../../constants/districtsData";
 import { useDispatch, useSelector } from "react-redux";
-import { IRootState } from "../../../../types/types";
+import { IRootState, SelectOptionType } from "../../../../types/types";
 import { useUpdateUserInfoMutation } from "../../../../redux/api/endpoints/userApi";
 import toast from "react-hot-toast";
 import { updateUser } from "../../../../redux/slices/user/userSlice";
+import { getValidDistrictSelection, getValidSubDistrictSelection } from "../../../../utils/utils";
 
 type IFormInput = {
     name: string;
@@ -18,12 +19,6 @@ type IFormInput = {
     phoneNumber?: number;
     fullAddress?: string
 }
-
-// Define types for district and sub-district data
-type OptionType = {
-    value: string;
-    label: string;
-};
 
 
 const Profile = () => {
@@ -38,33 +33,23 @@ const Profile = () => {
     const userDistrict = districtsData.find(district => district.district === user?.district);
 
     // District Functionality Area
-    const [selectedDistrict, setSelectedDistrict] = useState<SingleValue<OptionType>>(
+    const [selectedDistrict, setSelectedDistrict] = useState<SingleValue<SelectOptionType>>(
         userDistrict ? {
             value: userDistrict.district,
             label: userDistrict.district,
         } : null
     );
 
-    const defaultDistrict: OptionType = {
+    const defaultDistrict: SelectOptionType = {
         value: '',
         label: 'Select District',
-    };
-
-    const getValidDistrictSelection = (): OptionType => {
-        if (!selectedDistrict) {
-            return defaultDistrict;
-        }
-        return {
-            value: selectedDistrict.value ?? '',
-            label: selectedDistrict.label ?? '',
-        };
     };
 
 
     //------------- Sub-District Functionality Area -------------//
     const userSubDistrict = userDistrict?.subDistricts?.find(subDistrict => subDistrict === user?.subDistrict);
     // Correctly initialize selectedSubDistrict with the user's sub-district if available, or null
-    const [selectedSubDistrict, setSelectedSubDistrict] = useState<SingleValue<OptionType>>(
+    const [selectedSubDistrict, setSelectedSubDistrict] = useState<SingleValue<SelectOptionType>>(
         userSubDistrict ? {
             value: userSubDistrict,
             label: userSubDistrict,
@@ -74,39 +59,27 @@ const Profile = () => {
     const [subDistrictError, setSubDistrictError] = useState<string>('');
 
 
-    const defaultSubDistrict: OptionType = {
+    const defaultSubDistrict: SelectOptionType = {
         value: '',
         label: 'Select Sub-District',
-    };
-
-
-    const getValidSubDistrictSelection = (): OptionType => {
-        if (!selectedSubDistrict) {
-            return defaultSubDistrict;
-        }
-
-        return {
-            value: selectedSubDistrict.value ?? '',
-            label: selectedSubDistrict.label ?? '',
-        };
     };
 
 
 
     // Adjusted handleDistrictChange function
     const handleDistrictChange = (
-        newValue: SingleValue<OptionType> | MultiValue<OptionType>,
-        actionMeta: ActionMeta<OptionType>
+        newValue: SingleValue<SelectOptionType> | MultiValue<SelectOptionType>,
+        actionMeta: ActionMeta<SelectOptionType>
     ): void => {
         // Since we're only interested in single selections, cast newValue to SingleValue
-        const selectedOption = newValue as SingleValue<OptionType>;
+        const selectedOption = newValue as SingleValue<SelectOptionType>;
 
         setSelectedDistrict(selectedOption);
         setSelectedSubDistrict(null);
     };
 
     // Filter sub-district options based on selected district
-    const subDistrictOptions: OptionType[] = selectedDistrict
+    const subDistrictOptions: SelectOptionType[] = selectedDistrict
         ? districtsData.find((district) => district.district === selectedDistrict.value)?.subDistricts.map((subDistrict) => ({
             value: subDistrict,
             label: subDistrict,
@@ -157,7 +130,7 @@ const Profile = () => {
 
 
     // Custom styles for react-select
-    const customStyles: StylesConfig<OptionType> = {
+    const customStyles: StylesConfig<SelectOptionType> = {
         control: (provided, state) => ({
             ...provided,
             padding: "3.5px", // Add padding
@@ -249,7 +222,7 @@ const Profile = () => {
                                 District
                             </label>
                             <Select
-                                value={getValidDistrictSelection()}
+                                value={getValidDistrictSelection(selectedDistrict, defaultDistrict)}
                                 onChange={handleDistrictChange}
                                 options={districtsData.map((district) => ({
                                     value: district.district,
@@ -269,8 +242,8 @@ const Profile = () => {
                                 Sub-District
                             </label>
                             <Select
-                                value={getValidSubDistrictSelection()}
-                                onChange={(option) => setSelectedSubDistrict(option as SingleValue<OptionType>)}
+                                value={getValidSubDistrictSelection(selectedSubDistrict, defaultSubDistrict)}
+                                onChange={(option) => setSelectedSubDistrict(option as SingleValue<SelectOptionType>)}
                                 options={subDistrictOptions}
                                 placeholder="Select Sub-district"
                                 styles={customStyles}

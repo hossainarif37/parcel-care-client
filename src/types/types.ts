@@ -27,3 +27,8 @@ export interface INavbar {
     isDashboardToggle: boolean
 }
 
+// Define types for district and sub-district data
+export type SelectOptionType = {
+    value: string;
+    label: string;
+};
