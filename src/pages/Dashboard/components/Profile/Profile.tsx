@@ -12,6 +12,7 @@ import { useUpdateUserInfoMutation } from "../../../../redux/api/endpoints/userA
 import toast from "react-hot-toast";
 import { updateUser } from "../../../../redux/slices/user/userSlice";
 import { getValidDistrictSelection, getValidSubDistrictSelection } from "../../../../utils/utils";
+import { customSelectStyles } from "../../../../styles/customSelectStyles";
 
 type IFormInput = {
     name: string;
@@ -103,7 +104,6 @@ const Profile = () => {
             ...(selectedDistrict && { district: selectedDistrict.value }),
             ...(selectedSubDistrict && { subDistrict: selectedSubDistrict.value }),
         };
-        console.log('Updated Data', updatedData);
 
         const updatedResponse = updateUserInfo({ userId: user?._id, body: updatedData }).unwrap();
 
@@ -126,25 +126,6 @@ const Profile = () => {
         }
 
     }, [selectedSubDistrict])
-
-
-
-    // Custom styles for react-select
-    const customStyles: StylesConfig<SelectOptionType> = {
-        control: (provided, state) => ({
-            ...provided,
-            padding: "3.5px", // Add padding
-            outline: state.isFocused ? "1px solid #7D82FF" : "none", // Add outline color on focus
-            borderColor: state.isFocused ? "#7D82FF" : '#ddd', // Change border color on focus
-            "&:hover": {
-                borderColor: state.isFocused ? "#7D82FF" : '#ddd',
-            },
-        }),
-        placeholder: (provided) => ({
-            ...provided,
-            color: "#9FA9B4", // Change placeholder color
-        })
-    };
 
 
     return (
@@ -229,9 +210,8 @@ const Profile = () => {
                                     label: district.district,
                                 }))}
                                 placeholder="Select District"
-                                styles={customStyles}
+                                styles={customSelectStyles}
                             />
-
                         </div>
 
                         {/* Sub-district Select */}
@@ -246,7 +226,7 @@ const Profile = () => {
                                 onChange={(option) => setSelectedSubDistrict(option as SingleValue<SelectOptionType>)}
                                 options={subDistrictOptions}
                                 placeholder="Select Sub-district"
-                                styles={customStyles}
+                                styles={customSelectStyles}
                             />
 
                             {subDistrictError && <p className="error">{subDistrictError}</p>}
