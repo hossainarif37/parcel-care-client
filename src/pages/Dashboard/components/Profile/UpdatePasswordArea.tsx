@@ -11,9 +11,9 @@ type IFormInput = {
 }
 
 const UpdatePasswordArea = () => {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<IFormInput>();
+    const { register, handleSubmit, reset } = useForm<IFormInput>();
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
-    const [updatePassword, { error, isLoading }] = useUpdatePasswordMutation();
+    const [updatePassword, { isLoading }] = useUpdatePasswordMutation();
     const handleUpdatePassword = (data: IFormInput) => {
         const { currentPassword, newPassword, confirmPassword } = data;
         if (newPassword !== confirmPassword) {

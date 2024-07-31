@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import InputWithLabel from "../../../../components/Inputs/InputWithLabel";
 import { useForm } from "react-hook-form";
 import UpdatePasswordArea from "./UpdatePasswordArea";
-import Select, { ActionMeta, MultiValue, SingleValue, StylesConfig } from "react-select";
+import Select, { MultiValue, SingleValue } from "react-select";
 import { districtsData } from "../../../../constants/districtsData";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState, SelectOptionType } from "../../../../types/types";
@@ -25,7 +25,7 @@ type IFormInput = {
 const Profile = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
     const dispatch = useDispatch();
-    const [updateUserInfo, { data, isError, isLoading }] = useUpdateUserInfoMutation();
+    const [updateUserInfo] = useUpdateUserInfoMutation();
     const [isEditClicked, setIsEditClicked] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
 
@@ -69,8 +69,7 @@ const Profile = () => {
 
     // Adjusted handleDistrictChange function
     const handleDistrictChange = (
-        newValue: SingleValue<SelectOptionType> | MultiValue<SelectOptionType>,
-        actionMeta: ActionMeta<SelectOptionType>
+        newValue: SingleValue<SelectOptionType> | MultiValue<SelectOptionType>
     ): void => {
         // Since we're only interested in single selections, cast newValue to SingleValue
         const selectedOption = newValue as SingleValue<SelectOptionType>;
@@ -313,16 +312,11 @@ const Profile = () => {
                             </button>
 
                     }
-
-
                 </form>
-
-
             </div>
 
             {/* Update Password Area */}
             <UpdatePasswordArea />
-
         </div>
     );
 };
