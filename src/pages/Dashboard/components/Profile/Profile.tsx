@@ -87,8 +87,6 @@ const Profile = () => {
         })) || []
         : [];
 
-
-
     const handleUpdateProfileInfo = (data: IFormInput) => {
         // Check if selectedDistrict and selectedSubDistrict are defined and add them to the data object
         console.log('Clicked');
