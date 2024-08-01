@@ -188,6 +188,7 @@ const Profile = () => {
                             label="Email"
                             placeholder="email"
                             value={user?.email}
+                            isDisabled={true}
                         />
                     </div>
 
