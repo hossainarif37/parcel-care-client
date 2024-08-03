@@ -14,7 +14,6 @@ interface InputWithLabelPropsTypes {
     isDisabled?: boolean
 }
 const InputWithLabel = ({ label, type, register, id, placeholder, value, defaultValue, isDisabled }: InputWithLabelPropsTypes) => {
-
     return (
         <div className="space-y-2">
             <label
@@ -26,10 +25,10 @@ const InputWithLabel = ({ label, type, register, id, placeholder, value, default
             <input
                 {...register}
                 type={type}
-                className={"flex w-full rounded-md border border-[#ddd] focus:ring-2 focus:ring-secondary px-3 py-3 text-sm outline-none"}
+                className={`flex w-full rounded-md border border-[#ddd] focus:ring-2 focus:ring-secondary px-3 py-3 text-sm outline-none`}
                 disabled={isDisabled}
                 id={id}
-                placeholder={`Enter${type === 'number' || id.includes('fullAddress') ? '' : ' your'} ${placeholder}`}
+                placeholder={`Enter ${placeholder}`}
                 value={value}
                 defaultValue={defaultValue}
             />

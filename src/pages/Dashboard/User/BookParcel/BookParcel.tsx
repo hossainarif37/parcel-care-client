@@ -5,7 +5,7 @@ import InputWithLabel from "../../../../components/Inputs/InputWithLabel";
 import Select, { MultiValue, SingleValue } from 'react-select';
 import { getValidDistrictSelection, getValidSubDistrictSelection } from "../../../../utils/utils";
 import { districtsData } from "../../../../constants/districtsData";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { customSelectStyles } from "../../../../styles/customSelectStyles";
 
 type IFormInput = {
@@ -16,11 +16,55 @@ type IFormInput = {
     receiverEmail: string;
     receiverPhoneNumber: string;
     receiverFullAddress: string;
+    parcelWeight: number;
+    requestedDeliveryDate: Date
 }
 
 const BookParcel = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const { user } = useSelector((state: IRootState) => state.userSlice);
+    const parcelTypeOptions = [
+        { value: 'Document', label: 'Document' },
+        { value: 'Box', label: 'Box' }
+    ];
+    const [selectedParcelType, setSelectedParcelType] = useState<SingleValue<SelectOptionType>>({
+        value: '',
+        label: 'Select Parcel Type'
+    })
+    const [parcelTypeError, setParcelTypeError] = useState<string>('');
+    const [calculatedParcelPrice, setCalculatedPrice] = useState<number>(0);
+    const [parcelWeightError, setParcelWeightError] = useState<string>('');
+
+    const handleParcelPriceCalculate = (e: ChangeEvent<HTMLInputElement>) => {
+        const perKgPrice = 50;
+        const weight = Number(e.target.value);
+        if (weight < 0) {
+            setParcelWeightError('Negative Parcel Weight is not allowed');
+            setCalculatedPrice(0);
+            return;
+        }
+        else if (weight > 10) {
+            setParcelWeightError('Maximum Parcel Weight is 10 kg');
+            setCalculatedPrice(0);
+            return;
+        } else {
+            setParcelWeightError('');
+        }
+
+        setCalculatedPrice(weight * perKgPrice);
+    };
+
+    // Register the field separately
+    const parcelWeightRegister = register('parcelWeight', {
+        required: 'Parcel weight is required'
+    });
+
+    // Create a combined onChange handler
+    const handleCombinedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        handleParcelPriceCalculate(e);
+        parcelWeightRegister.onChange(e);
+
+    };
 
     // Select Error State
     const [senderDistrictError, setSenderDistrictError] = useState<string>('');
@@ -56,7 +100,6 @@ const BookParcel = () => {
         } : null
     );
 
-
     const defaultSubDistrict: SelectOptionType = {
         value: '',
         label: 'Select Sub-District',
@@ -72,6 +115,9 @@ const BookParcel = () => {
         setSelectedSenderDistrict(selectedOption);
         setSelectedSenderSubDistrict(null);
     };
+
+
+    console.log(selectedSenderDistrict);
 
     // Filter sub-district options based on selected district
     const senderSubDistrictOptions: SelectOptionType[] = selectedSenderDistrict
@@ -123,6 +169,12 @@ const BookParcel = () => {
 
     //*---------------- Receiver Functionality Area End ----------------//
 
+    const handleParcelTypeChange = (
+        newValue: SingleValue<SelectOptionType> | MultiValue<SelectOptionType>
+    ): void => {
+        const selectedOption = newValue as SingleValue<SelectOptionType>;
+        setSelectedParcelType(selectedOption);
+    }
 
     const handleBookParcel = (data: IFormInput) => {
         let hasError = false;
@@ -147,6 +199,14 @@ const BookParcel = () => {
             hasError = true;
         }
 
+        if (!selectedParcelType?.value) {
+            setParcelTypeError('Please select parcel type.');
+            hasError = true;
+        }
+        if (parcelWeightError) {
+            hasError = true;
+        }
+
         if (hasError) {
             return;
         }
@@ -167,7 +227,10 @@ const BookParcel = () => {
                 fullAddress: data.receiverFullAddress,
                 district: selectedReceiverDistrict?.value,
                 subDistrict: selectedReceiverSubDistrict?.value
-            }
+            },
+            parcelType: selectedParcelType?.value,
+            parcelWeight: data.parcelWeight,
+            price: calculatedParcelPrice
         }
 
         console.log(parcelBookingData);
@@ -186,7 +249,10 @@ const BookParcel = () => {
         if (selectedReceiverSubDistrict?.value) {
             setReceiverSubDistrictError('');
         }
-    }, [selectedSenderDistrict, selectedSenderSubDistrict, selectedReceiverDistrict, selectedReceiverSubDistrict]);
+        if (selectedParcelType?.value) {
+            setParcelTypeError('');
+        }
+    }, [selectedSenderDistrict, selectedSenderSubDistrict, selectedReceiverDistrict, selectedReceiverSubDistrict, selectedParcelType]);
 
 
 
@@ -490,6 +556,87 @@ const BookParcel = () => {
                             </div>
                         </div>
                     </div>
+
+                    {/* Parcel Details Section */}
+                    <div className="my-7">
+                        <h1 className="text-xl font-semibold text-black-50 mb-3">Parcel Details</h1>
+
+                        <div className="flex flex-col gap-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {/* Parcel Type */}
+                                <div className="space-y-2">
+                                    <label
+                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                    >
+                                        Parcel Type
+                                    </label>
+
+
+                                    <Select
+                                        value={selectedParcelType}
+                                        onChange={handleParcelTypeChange}
+                                        placeholder="Select Parcel Type"
+                                        styles={customSelectStyles}
+                                        options={parcelTypeOptions}
+                                    />
+                                    {parcelTypeError && <p className="error">{parcelTypeError}</p>}
+
+                                </div>
+
+                                {/* Parcel Weight */}
+                                <div className="space-y-2">
+                                    <label
+                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        htmlFor='parcel-weight'
+                                    >
+                                        Parcel Weight
+                                    </label>
+                                    <input
+                                        type="number"
+                                        id="parcel-weight"
+                                        placeholder="Enter parcel weight (kg)"
+                                        className={"flex w-full rounded-md border border-[#ddd] focus:ring-2 focus:ring-secondary px-3 py-3 text-sm outline-none"}
+                                        {...parcelWeightRegister}
+                                        onChange={handleCombinedChange}
+                                    />
+
+                                    {parcelWeightError && <p className="error">{parcelWeightError}</p>}
+
+                                    {errors.parcelWeight?.message && <p className="error">{errors.parcelWeight?.message}</p>}
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {/* Requested Delivery Date */}
+                                <div>
+                                    <InputWithLabel
+                                        type="date"
+                                        id="requested-delivery-date"
+                                        label="Requested Delivery Date"
+                                        placeholder="requested delivery date"
+                                        register={{
+                                            ...register('requestedDeliveryDate', {
+                                                required: 'Requested delivery date is required',
+                                            })
+                                        }}
+                                    />
+                                    {errors?.requestedDeliveryDate?.message && <p className="error">{errors?.requestedDeliveryDate?.message}</p>}
+                                </div>
+
+                                <div>
+                                    <InputWithLabel
+                                        value={calculatedParcelPrice}
+                                        type="number"
+                                        id="price"
+                                        label="Price"
+                                        placeholder="price"
+                                        isDisabled={true}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
                     {/* Submit Button */}
                     <div className="flex justify-end gap-x-3">
