@@ -4,26 +4,27 @@ import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { setLoading, setUser } from "../redux/slices/user/userSlice";
 
-
 const useGetUser = () => {
     const token = Cookies.get('authToken');
     const dispatch = useDispatch();
 
-
-    const [getCurrentUser, { data: userData }] = useLazyCurrentUserQuery();
+    const [getCurrentUser] = useLazyCurrentUserQuery();
 
     useEffect(() => {
-        getCurrentUser(undefined);
-
         if (token) {
-            dispatch(setUser({ user: userData?.user, isAuthenticated: true }));
-        } else {
-            dispatch(setLoading())
+            getCurrentUser(undefined)
+                .unwrap()
+                .then(userData => {
+                    dispatch(setUser({ user: userData.user, isAuthenticated: true }));
+                })
+                .catch(error => {
+                    console.error("Failed to fetch user:", error);
+                    dispatch(setLoading());
+                });
         }
+    }, [dispatch, getCurrentUser, token]);
 
-    }, [userData?.user, dispatch, getCurrentUser, token]);
-
-    return { userData }
+    return {};
 }
 
 export default useGetUser;

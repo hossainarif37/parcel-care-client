@@ -4,6 +4,12 @@ export type UserType = {
     email: string;
     profilePicture?: string;
     role: string;
+    phoneNumber?: number;
+    fullAddress?: string;
+    subDistrict?: string;
+    district?: string;
+    isEmailVerified?: boolean;
+    isProfileComplete?: boolean;
 }
 
 export interface IUser {
@@ -21,3 +27,8 @@ export interface INavbar {
     isDashboardToggle: boolean
 }
 
+// Define types for district and sub-district data
+export type SelectOptionType = {
+    value: string;
+    label: string;
+};

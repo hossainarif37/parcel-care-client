@@ -22,7 +22,7 @@ const Sidebar = () => {
     const path = location.pathname;
 
     return (
-        <aside className="fixed min-h-screen md:sticky md:inset-y-0 left-0 min-w-72 flex flex-col md:h-screen overflow-hidden border-r py-5 px-7 bg-white border-white-100">
+        <aside className="fixed h-full md:sticky inset-y-0 left-0 md:min-w-72 flex flex-col md:h-screen border-r py-5 px-7 bg-white border-white-100">
             {/* Logo */}
             <div className="flex justify-between items-center gap-x-2">
                 <Logo />

@@ -8,7 +8,15 @@ const userApi = baseApi.injectEndpoints({
                 method: 'GET',
             }),
         }),
+
+        updateUserInfo: builder.mutation({
+            query: ({ userId, body }) => ({
+                url: `/users/${userId}/profile`,
+                method: 'PUT',
+                body
+            })
+        })
     })
 })
 
-export const { useCurrentUserQuery, useLazyCurrentUserQuery } = userApi;
+export const { useCurrentUserQuery, useLazyCurrentUserQuery, useUpdateUserInfoMutation } = userApi;

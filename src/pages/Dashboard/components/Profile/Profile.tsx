@@ -1,81 +1,128 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import blank_avatar from "../../../../assets/icons/profile_blank_image.png"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputWithLabel from "../../../../components/Inputs/InputWithLabel";
 import { useForm } from "react-hook-form";
 import UpdatePasswordArea from "./UpdatePasswordArea";
-import Select, { ActionMeta, MultiValue, SingleValue, StylesConfig } from "react-select";
+import Select, { MultiValue, SingleValue } from "react-select";
 import { districtsData } from "../../../../constants/districtsData";
+import { useDispatch, useSelector } from "react-redux";
+import { IRootState, SelectOptionType } from "../../../../types/types";
+import { useUpdateUserInfoMutation } from "../../../../redux/api/endpoints/userApi";
+import toast from "react-hot-toast";
+import { updateUser } from "../../../../redux/slices/user/userSlice";
+import { getValidDistrictSelection, getValidSubDistrictSelection } from "../../../../utils/utils";
+import { customSelectStyles } from "../../../../styles/customSelectStyles";
 
 type IFormInput = {
     name: string;
     email: string;
-    profilePicture?: string;
     phoneNumber?: number;
-    fullAddress?: string;
-    subDistrict?: string;
-    district?: string;
+    fullAddress?: string
 }
-
-// Define types for district and sub-district data
-type OptionType = {
-    value: string;
-    label: string;
-};
 
 
 const Profile = () => {
+    const { user } = useSelector((state: IRootState) => state.userSlice);
+    const dispatch = useDispatch();
+    const [updateUserInfo] = useUpdateUserInfoMutation();
     const [isEditClicked, setIsEditClicked] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
-    const [selectedDistrict, setSelectedDistrict] = useState<SingleValue<OptionType>>(null);
-    const [selectedSubDistrict, setSelectedSubDistrict] = useState<SingleValue<OptionType>>(null);
+
+    //------------- District Functionality Area -------------//
+    // Find initial selected district from districtsData based on user's district
+    const userDistrict = districtsData.find(district => district.district === user?.district);
+
+    // District Functionality Area
+    const [selectedDistrict, setSelectedDistrict] = useState<SingleValue<SelectOptionType>>(
+        userDistrict ? {
+            value: userDistrict.district,
+            label: userDistrict.district,
+        } : null
+    );
+
+    const defaultDistrict: SelectOptionType = {
+        value: '',
+        label: 'Select District',
+    };
+
+
+    //------------- Sub-District Functionality Area -------------//
+    const userSubDistrict = userDistrict?.subDistricts?.find(subDistrict => subDistrict === user?.subDistrict);
+    // Correctly initialize selectedSubDistrict with the user's sub-district if available, or null
+    const [selectedSubDistrict, setSelectedSubDistrict] = useState<SingleValue<SelectOptionType>>(
+        userSubDistrict ? {
+            value: userSubDistrict,
+            label: userSubDistrict,
+        } : null
+    );
+
+    const [subDistrictError, setSubDistrictError] = useState<string>('');
+
+
+    const defaultSubDistrict: SelectOptionType = {
+        value: '',
+        label: 'Select Sub-District',
+    };
+
 
 
     // Adjusted handleDistrictChange function
     const handleDistrictChange = (
-        newValue: SingleValue<OptionType> | MultiValue<OptionType>,
-        actionMeta: ActionMeta<OptionType>
+        newValue: SingleValue<SelectOptionType> | MultiValue<SelectOptionType>
     ): void => {
         // Since we're only interested in single selections, cast newValue to SingleValue
-        const selectedOption = newValue as SingleValue<OptionType>;
+        const selectedOption = newValue as SingleValue<SelectOptionType>;
 
         setSelectedDistrict(selectedOption);
         setSelectedSubDistrict(null);
     };
 
     // Filter sub-district options based on selected district
-    const subDistrictOptions: OptionType[] = selectedDistrict
+    const subDistrictOptions: SelectOptionType[] = selectedDistrict
         ? districtsData.find((district) => district.district === selectedDistrict.value)?.subDistricts.map((subDistrict) => ({
             value: subDistrict,
             label: subDistrict,
         })) || []
         : [];
 
-    console.log(districtsData.length);
-
     const handleUpdateProfileInfo = (data: IFormInput) => {
-        console.log(data);
+        // Check if selectedDistrict and selectedSubDistrict are defined and add them to the data object
+        console.log('Clicked');
+        // Check if a district is selected but no sub-district is selected
+        if (selectedDistrict && !selectedSubDistrict) {
+            // Set an error for the sub-district field
+            setSubDistrictError('Please select a sub-district.');
+            return;
+        }
+
+        const updatedData = {
+            ...data,
+            ...(selectedDistrict && { district: selectedDistrict.value }),
+            ...(selectedSubDistrict && { subDistrict: selectedSubDistrict.value }),
+        };
+
+        const updatedResponse = updateUserInfo({ userId: user?._id, body: updatedData }).unwrap();
+
+        toast.promise(updatedResponse, {
+            loading: 'Loading',
+            success: ({ user, message }) => {
+                dispatch(updateUser({ user: user }));
+                return message;
+            },
+            error: ({ data }) => data?.message || 'Update failed'
+        });
+
         setIsEditClicked(false);
     }
 
+    useEffect(() => {
+        if (selectedSubDistrict) {
+            // Set an error for the sub-district field
+            setSubDistrictError('');
+        }
 
-    // Custom styles for react-select
-    const customStyles: StylesConfig<OptionType> = {
-        control: (provided, state) => ({
-            ...provided,
-            padding: "3.5px", // Add padding
-            outline: state.isFocused ? "1px solid #7D82FF" : "none", // Add outline color on focus
-            // boxShadow: state.isFocused ? "0 0 0 2px #7D82FF" : "none", // Optional: Add box-shadow for better focus visibility
-            borderColor: state.isFocused ? "#7D82FF" : '#ddd', // Change border color on focus
-            "&:hover": {
-                borderColor: state.isFocused ? "#7D82FF" : '#ddd',
-            },
-        }),
-        placeholder: (provided) => ({
-            ...provided,
-            color: "#9FA9B4", // Change placeholder color
-        })
-    };
+    }, [selectedSubDistrict])
 
 
     return (
@@ -110,25 +157,29 @@ const Profile = () => {
                 <form onSubmit={handleSubmit(handleUpdateProfileInfo)} className="flex flex-col gap-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Name */}
-                        <InputWithLabel
-                            type="text"
-                            id="name"
-                            label="Name"
-                            placeholder="name"
-                            register={{
-                                ...register('name', {
-                                    required: 'Name is required',
-                                    maxLength: {
-                                        value: 20,
-                                        message: 'Maximum length 20 characters'
-                                    },
-                                    minLength: {
-                                        value: 3,
-                                        message: 'Minimum length 3 characters'
-                                    }
-                                })
-                            }}
-                        />
+                        <div>
+                            <InputWithLabel
+                                type="text"
+                                id="name"
+                                label="Name"
+                                placeholder="name"
+                                defaultValue={user?.name}
+                                register={{
+                                    ...register('name', {
+                                        maxLength: {
+                                            value: 20,
+                                            message: 'Maximum length 20 characters'
+                                        },
+                                        minLength: {
+                                            value: 3,
+                                            message: 'Minimum length 3 characters'
+                                        }
+                                    })
+                                }}
+                            />
+
+                            {errors?.name?.message && <p className="error">{errors?.name?.message}</p>}
+                        </div>
 
                         {/* Email */}
                         <InputWithLabel
@@ -136,14 +187,8 @@ const Profile = () => {
                             id="email"
                             label="Email"
                             placeholder="email"
-                            register={{
-                                ...register('email', {
-                                    required: 'Email is required', pattern: {
-                                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                                        message: 'Provide a valid email'
-                                    }
-                                })
-                            }}
+                            value={user?.email}
+                            isDisabled={true}
                         />
                     </div>
 
@@ -156,14 +201,14 @@ const Profile = () => {
                                 District
                             </label>
                             <Select
-                                value={selectedDistrict}
+                                value={getValidDistrictSelection(selectedDistrict, defaultDistrict)}
                                 onChange={handleDistrictChange}
                                 options={districtsData.map((district) => ({
                                     value: district.district,
                                     label: district.district,
                                 }))}
                                 placeholder="Select District"
-                                styles={customStyles}
+                                styles={customSelectStyles}
                             />
                         </div>
 
@@ -175,56 +220,67 @@ const Profile = () => {
                                 Sub-District
                             </label>
                             <Select
-                                value={selectedSubDistrict}
-                                onChange={(option) => setSelectedSubDistrict(option as SingleValue<OptionType>)}
+                                value={getValidSubDistrictSelection(selectedSubDistrict, defaultSubDistrict)}
+                                onChange={(option) => setSelectedSubDistrict(option as SingleValue<SelectOptionType>)}
                                 options={subDistrictOptions}
                                 placeholder="Select Sub-district"
-                                styles={customStyles}
+                                styles={customSelectStyles}
                             />
+
+                            {subDistrictError && <p className="error">{subDistrictError}</p>}
                         </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Full Address */}
-                        <InputWithLabel
-                            type="text"
-                            id="full-address"
-                            label="Full Address"
-                            placeholder="full address"
-                            register={{
-                                ...register('fullAddress', {
-                                    required: 'Address is required',
-                                    maxLength: {
-                                        value: 100,
-                                        message: 'Maximum length 100 characters'
-                                    },
-                                    minLength: {
-                                        value: 10,
-                                        message: 'Minimum length 10 characters'
-                                    }
-                                })
-                            }}
-                        />
+                        <div>
+                            <InputWithLabel
+                                type="text"
+                                id="full-address"
+                                label="Full Address"
+                                placeholder="full address"
+                                defaultValue={user?.fullAddress}
+                                register={{
+                                    ...register('fullAddress', {
+                                        maxLength: {
+                                            value: 100,
+                                            message: 'Maximum length 100 characters'
+                                        },
+                                        minLength: {
+                                            value: 10,
+                                            message: 'Minimum length 10 characters'
+                                        }
+                                    })
+                                }}
+                            />
+
+                            {errors?.fullAddress?.message && <p className="error">{errors?.fullAddress?.message}</p>}
+                        </div>
 
                         {/* Phone Number */}
-                        <InputWithLabel
-                            type="number"
-                            id="phone-number"
-                            label="Phone Number"
-                            placeholder="phone number"
-                            register={{
-                                ...register('phoneNumber', {
-                                    maxLength: {
-                                        value: 20,
-                                        message: 'Maximum length 20 digit'
-                                    },
-                                    minLength: {
-                                        value: 11,
-                                        message: 'Minimum length 11 digit'
-                                    }
-                                })
-                            }}
-                        />
+                        <div>
+                            <InputWithLabel
+                                type="number"
+                                id="phone-number"
+                                label="Phone Number"
+                                placeholder="phone number"
+                                defaultValue={user?.phoneNumber}
+                                register={{
+                                    ...register('phoneNumber', {
+                                        maxLength: {
+                                            value: 20,
+                                            message: 'Maximum length 20 digit'
+                                        },
+                                        minLength: {
+                                            value: 10,
+                                            message: 'Minimum length 10 digit'
+                                        }
+                                    })
+                                }}
+                            />
+
+                            {errors?.phoneNumber?.message && <p className="error">{errors?.phoneNumber?.message}</p>}
+                        </div>
                     </div>
 
                     {
@@ -257,16 +313,11 @@ const Profile = () => {
                             </button>
 
                     }
-
-
                 </form>
-
-
             </div>
 
             {/* Update Password Area */}
             <UpdatePasswordArea />
-
         </div>
     );
 };
