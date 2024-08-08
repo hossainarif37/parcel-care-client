@@ -7,6 +7,8 @@ import { getValidDistrictSelection, getValidSubDistrictSelection } from "../../.
 import { districtsData } from "../../../../constants/districtsData";
 import { ChangeEvent, useEffect, useState } from "react";
 import { customSelectStyles } from "../../../../styles/customSelectStyles";
+import { useBookAParcelMutation } from "../../../../redux/api/endpoints/parcelApi";
+import toast from "react-hot-toast";
 
 type IFormInput = {
     senderName: string;
@@ -23,6 +25,9 @@ type IFormInput = {
 const BookParcel = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const { user } = useSelector((state: IRootState) => state.userSlice);
+    const [bookAParcel, { data, isError, error, isLoading }] = useBookAParcelMutation();
+    console.log(isLoading);
+
     const parcelTypeOptions = [
         { value: 'Document', label: 'Document' },
         { value: 'Box', label: 'Box' }
@@ -117,7 +122,6 @@ const BookParcel = () => {
     };
 
 
-    console.log(selectedSenderDistrict);
 
     // Filter sub-district options based on selected district
     const senderSubDistrictOptions: SelectOptionType[] = selectedSenderDistrict
@@ -212,6 +216,7 @@ const BookParcel = () => {
         }
 
         const parcelBookingData = {
+            senderId: user?._id,
             senderName: data.senderName,
             senderEmail: user?.email,
             senderPhoneNumber: data.senderPhoneNumber,
@@ -230,10 +235,23 @@ const BookParcel = () => {
             },
             parcelType: selectedParcelType?.value,
             parcelWeight: data.parcelWeight,
-            price: calculatedParcelPrice
+            price: calculatedParcelPrice,
+            requestedDeliveryDate: data.requestedDeliveryDate
         }
 
-        console.log(parcelBookingData);
+        const bookingResponse = bookAParcel(parcelBookingData).unwrap();
+        toast.promise(bookingResponse, {
+            loading: 'Loading',
+            success: ({ message }) => {
+                console.log(242, bookingResponse);
+                return message;
+            },
+            error: ({ data }) => {
+                console.log(246, bookingResponse);
+                return data.message || 'Parcel booking failed'
+            }
+        });
+
     }
 
     useEffect(() => {
@@ -642,7 +660,8 @@ const BookParcel = () => {
                     <div className="flex justify-end gap-x-3">
                         <button
                             type="submit"
-                            className="btn-primary py-3 px-10 rounded-md"
+                            className={`btn-primary py-3 px-10 rounded-md ${isLoading && 'disabled:btn-disabled'}`}
+                            disabled={isLoading}
                         >
                             Book Parcel
                         </button>
