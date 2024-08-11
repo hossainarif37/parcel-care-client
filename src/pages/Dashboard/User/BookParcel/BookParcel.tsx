@@ -3,12 +3,12 @@ import { useSelector } from "react-redux";
 import { IRootState, SelectOptionType } from "../../../../types/types";
 import InputWithLabel from "../../../../components/Inputs/InputWithLabel";
 import Select, { MultiValue, SingleValue } from 'react-select';
-import { getValidDistrictSelection, getValidSubDistrictSelection } from "../../../../utils/utils";
 import { districtsData } from "../../../../constants/districtsData";
 import { ChangeEvent, useEffect, useState } from "react";
 import { customSelectStyles } from "../../../../styles/customSelectStyles";
 import { useBookAParcelMutation } from "../../../../redux/api/endpoints/parcelApi";
 import toast from "react-hot-toast";
+import { getValidDistrictSelection, getValidSubDistrictSelection } from "@/lib/utils";
 
 type IFormInput = {
     senderName: string;
@@ -25,7 +25,7 @@ type IFormInput = {
 const BookParcel = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const { user } = useSelector((state: IRootState) => state.userSlice);
-    const [bookAParcel, { data, isError, error, isLoading }] = useBookAParcelMutation();
+    const [bookAParcel, { isLoading }] = useBookAParcelMutation();
     console.log(isLoading);
 
     const parcelTypeOptions = [

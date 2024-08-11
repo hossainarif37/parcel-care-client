@@ -8,9 +8,16 @@ const parcelApi = baseApi.injectEndpoints({
                 method: 'POST',
                 body
             })
+        }),
+
+        getBookingParcels: builder.query({
+            query: (userId) => ({
+                url: `/parcel-booking/${userId}`,
+                method: 'GET'
+            })
         })
     })
 })
 
 
-export const { useBookAParcelMutation } = parcelApi;
+export const { useBookAParcelMutation, useGetBookingParcelsQuery } = parcelApi;
