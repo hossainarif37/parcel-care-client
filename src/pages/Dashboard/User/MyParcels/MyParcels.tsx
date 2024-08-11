@@ -2,7 +2,6 @@ import Loading from "@/components/Loading";
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
@@ -11,23 +10,21 @@ import {
 import { useGetBookingParcelsQuery } from "@/redux/api/endpoints/parcelApi";
 import { IParcel, IRootState } from "@/types/types";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import Button from "@/components/Buttons/Button";
 import { formateDate } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 
 const MyParcels = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
-    const { data, isLoading, isError, error } = useGetBookingParcelsQuery(user?._id);
+    const { data, isLoading } = useGetBookingParcelsQuery(user?._id);
 
     if (isLoading) {
         return <Loading paddingY="py-20" textColor="text-primary" textSize="4xl" />
@@ -74,14 +71,19 @@ const MyParcels = () => {
 
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent align="end" className="mt-3">
-                                            <DropdownMenuItem
-                                                onClick={() => navigator.clipboard.writeText(parcel._id)}
-                                            >
-                                                Copy payment ID
+                                            <DropdownMenuItem>
+                                                {
+                                                    parcel.paymentStatus !== 'Unpaid' ?
+                                                        (<Link to={`/dashboard/user/my-parcels/${parcel._id}/payment`}>Proceed to Payment</Link>)
+                                                        :
+                                                        (<Link to={`/dashboard/user/my-parcels/${parcel._id}/transaction-details`}>View Transaction Details</Link>)
+                                                }
                                             </DropdownMenuItem>
                                             <DropdownMenuSeparator />
-                                            <DropdownMenuItem>View customer</DropdownMenuItem>
-                                            <DropdownMenuItem>View payment details</DropdownMenuItem>
+                                            <DropdownMenuItem>Track Your Parcel</DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <Link to={`/dashboard/user/my-parcels/${parcel._id}/parcel-details`}>View & Edit Details</Link>
+                                            </DropdownMenuItem>
                                         </DropdownMenuContent>
                                     </DropdownMenu>
                                 </TableCell>
