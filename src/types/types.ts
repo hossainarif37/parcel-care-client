@@ -35,7 +35,7 @@ export interface IParcel {
     };
     requestedDeliveryDate: Date;
     price: number;
-    paymentStatus: 'pending' | 'paid';
+    paymentStatus: 'Unpaid' | 'Paid';
     deliveryStatus: 'Order Placed' | 'Pickup Agent Assigned' | 'Parcel Collected' | 'In Transit' | 'Delivery Hub Reached' | 'Delivery Agent Assigned' | 'Out For Delivery' | 'Delivered'
     assignedAgentId?: string;
     assignedAgentRole?: 'pickup' | 'delivery';

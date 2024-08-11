@@ -35,7 +35,6 @@ const MyParcels = () => {
 
     return (
         <div>
-
             <div className="h-screen p-5 border rounded-xl">
                 <h1 className="text-2xl font-bold text-black-50 mb-5">My Parcels</h1>
                 <Table className="">
@@ -64,7 +63,7 @@ const MyParcels = () => {
                                     {formateDate(parcel.bookingDate, true)}
                                 </TableCell>
                                 <TableCell className="font-medium">{parcel.deliveryStatus}</TableCell>
-                                <TableCell className="font-medium">{parcel.paymentStatus}</TableCell>
+                                <TableCell className={"font-medium"}><span className={`${parcel.paymentStatus === 'Unpaid' ? 'text-red-500 bg-red-100' : 'text-green-600 bg-green-100'} font-semibold py-1 px-3 rounded-full`}>{parcel.paymentStatus}</span></TableCell>
                                 <TableCell className="font-medium text-center relative overflow-visible">
 
                                     <DropdownMenu>
