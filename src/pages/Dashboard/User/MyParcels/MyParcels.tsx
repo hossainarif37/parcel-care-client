@@ -35,11 +35,12 @@ const MyParcels = () => {
 
     return (
         <div>
-            <div>
-                <Table className="max-w-7xl mx-auto">
-                    <TableCaption>Table</TableCaption>
+
+            <div className="h-screen p-5 border rounded-xl">
+                <h1 className="text-2xl font-bold text-black-50 mb-5">My Parcels</h1>
+                <Table className="">
                     <TableHeader>
-                        <TableRow className="border-none">
+                        <TableRow className="">
                             <TableHead>Parcel ID</TableHead>
                             <TableHead>Sender Name</TableHead>
                             <TableHead>Receiver Name</TableHead>
@@ -53,7 +54,7 @@ const MyParcels = () => {
                     </TableHeader>
                     <TableBody>
                         {data?.parcels?.map((parcel: IParcel) => (
-                            <TableRow key={parcel._id} className="border-none">
+                            <TableRow key={parcel._id} className="text-black-50">
                                 <TableCell className="font-medium">{parcel._id}</TableCell>
                                 <TableCell className="font-medium">{parcel.senderName}</TableCell>
                                 <TableCell className="font-medium">{parcel.receiverName}</TableCell>
@@ -68,7 +69,9 @@ const MyParcels = () => {
 
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
-                                            <button className="outline-none"><Icon icon="tabler:dots" /></button>
+                                            <button className="outline-none p-2 rounded-full border hover:bg-slate-50 text-xl">
+                                                <Icon icon="tabler:dots" />
+                                            </button>
 
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent align="end" className="mt-3">
