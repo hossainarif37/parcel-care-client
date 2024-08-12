@@ -3,14 +3,30 @@ import { loadStripe } from "@stripe/stripe-js"
 import CheckoutForm from "./CheckoutForm";
 import paypal from "../../../../assets/icons/paypal.png"
 import credit_card from "../../../../assets/icons/credit_card.png"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const Payment = () => {
     const [paymentMethod, setPaymentMethod] = useState('');
+    const [clientSecret, setClientSecret] = useState("");
     const { state: { senderName, senderEmail, price, parcelId, parcelType } } = useLocation();
-    console.log(parcelType);
+    const baseUrl = import.meta.env.VITE_SERVER_BASE_URL;
+
+    useEffect(() => {
+        // Create PaymentIntent as soon as the page loads
+        fetch(`${baseUrl}/payment/create-payment-intent`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ price }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(25, data);
+                setClientSecret(data.clientSecret)
+            });
+    }, [baseUrl, price]);
+    console.log(29, clientSecret);
     return (
         <div className="p-5 lg:max-w-[500px]">
             <h1 className="text-2xl font-bold text-black-50">Payment</h1>
