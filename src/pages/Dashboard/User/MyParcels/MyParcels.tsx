@@ -73,8 +73,16 @@ const MyParcels = () => {
                                         <DropdownMenuContent align="end" className="mt-3">
                                             <DropdownMenuItem>
                                                 {
-                                                    parcel.paymentStatus !== 'Unpaid' ?
-                                                        (<Link to={`/dashboard/user/my-parcels/${parcel._id}/payment`}>Proceed to Payment</Link>)
+                                                    parcel.paymentStatus === 'Unpaid' ?
+                                                        (<Link
+                                                            state={{
+                                                                parcelId: parcel._id,
+                                                                senderName: parcel.senderName,
+                                                                senderEmail: parcel.senderEmail,
+                                                                price: parcel.price,
+                                                                parcelType: parcel.parcelType
+                                                            }}
+                                                            to={`/dashboard/user/my-parcels/${parcel._id}/payment`}>Proceed to Payment</Link>)
                                                         :
                                                         (<Link to={`/dashboard/user/my-parcels/${parcel._id}/transaction-details`}>View Transaction Details</Link>)
                                                 }

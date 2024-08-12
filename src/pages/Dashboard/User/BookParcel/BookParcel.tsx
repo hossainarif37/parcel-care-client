@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { IRootState, SelectOptionType } from "../../../../types/types";
+import { EventType, IRootState, SelectOptionType } from "../../../../types/types";
 import InputWithLabel from "../../../../components/Inputs/InputWithLabel";
 import Select, { MultiValue, SingleValue } from 'react-select';
 import { districtsData } from "../../../../constants/districtsData";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { customSelectStyles } from "../../../../styles/customSelectStyles";
 import { useBookAParcelMutation } from "../../../../redux/api/endpoints/parcelApi";
 import toast from "react-hot-toast";
@@ -40,7 +40,7 @@ const BookParcel = () => {
     const [calculatedParcelPrice, setCalculatedPrice] = useState<number>(0);
     const [parcelWeightError, setParcelWeightError] = useState<string>('');
 
-    const handleParcelPriceCalculate = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleParcelPriceCalculate = (e: EventType) => {
         const perKgPrice = 50;
         const weight = Number(e.target.value);
         if (weight < 0) {
@@ -65,7 +65,7 @@ const BookParcel = () => {
     });
 
     // Create a combined onChange handler
-    const handleCombinedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleCombinedChange = (e: EventType) => {
         handleParcelPriceCalculate(e);
         parcelWeightRegister.onChange(e);
 

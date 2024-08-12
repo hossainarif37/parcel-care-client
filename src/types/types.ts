@@ -1,3 +1,8 @@
+import exp from "constants";
+import { ChangeEvent } from "react";
+
+export type EventType = ChangeEvent<HTMLInputElement>;
+
 export type UserType = {
     _id: string;
     name: string;
