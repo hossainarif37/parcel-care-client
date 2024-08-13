@@ -26,7 +26,7 @@ const Payment = () => {
                 setClientSecret(data.clientSecret)
             });
     }, [baseUrl, price]);
-    console.log(29, clientSecret);
+
     return (
         <div className="p-5 lg:max-w-[500px]">
             <h1 className="text-2xl font-bold text-black-50">Payment</h1>
@@ -65,9 +65,13 @@ const Payment = () => {
                     </div>
                 </div>
                 {
-                    paymentMethod === 'Credit Card' &&
+                    (clientSecret && paymentMethod === 'Credit Card') &&
                     <Elements stripe={stripePromise}>
-                        <CheckoutForm />
+                        <CheckoutForm
+                            clientSecret={clientSecret}
+                            senderName={senderName}
+                            senderEmail={senderEmail}
+                        />
                     </Elements>
                 }
                 {

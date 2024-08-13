@@ -1,10 +1,17 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import './checkoutForm.css'
 
-const CheckoutForm = () => {
+type CheckoutFormType = {
+    clientSecret: string;
+    senderName: string;
+    senderEmail: string;
+}
+
+const CheckoutForm = ({ clientSecret, senderName, senderEmail }: CheckoutFormType) => {
     const stripe = useStripe();
     const elements = useElements();
+    const [processing, setProcessing] = useState(false);
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!stripe || !elements) {
@@ -34,7 +41,27 @@ const CheckoutForm = () => {
             console.log('[PaymentMethod]', paymentMethod);
         }
 
+        setProcessing(true);
 
+
+        try {
+            const result = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card,
+                    billing_details: {
+                        name: senderName,
+                        email: senderEmail,
+                    },
+                },
+            });
+            if (result.error) {
+                console.log(result.error);
+            } else {
+                console.log(result.paymentIntent);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
     return (
         <form onSubmit={handleSubmit}>
@@ -54,7 +81,7 @@ const CheckoutForm = () => {
                     },
                 }}
             />
-            <button className="py-3 px-10 btn-primary" type="submit" disabled={!stripe}>
+            <button className="py-3 px-10 btn-primary disabled:btn-disabled" type="submit" disabled={!stripe || processing}>
                 Pay
             </button>
         </form>
