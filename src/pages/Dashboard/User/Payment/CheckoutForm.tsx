@@ -1,17 +1,23 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { FormEvent, useState } from "react";
 import './checkoutForm.css'
+import { useSaveTransactionMutation } from "@/redux/api/endpoints/transactionApi";
 
 type CheckoutFormType = {
     clientSecret: string;
     senderName: string;
     senderEmail: string;
+    senderId: string;
+    parcelId: string;
+    price: number
 }
 
-const CheckoutForm = ({ clientSecret, senderName, senderEmail }: CheckoutFormType) => {
+const CheckoutForm = ({ clientSecret, senderName, senderEmail, senderId, parcelId, price }: CheckoutFormType) => {
     const stripe = useStripe();
     const elements = useElements();
     const [processing, setProcessing] = useState(false);
+    console.log(senderId);
+    const [saveTransaction, { data, isLoading, error: saveError }] = useSaveTransactionMutation();
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!stripe || !elements) {
@@ -57,12 +63,24 @@ const CheckoutForm = ({ clientSecret, senderName, senderEmail }: CheckoutFormTyp
             if (result.error) {
                 console.log(result.error);
             } else {
-                console.log(result.paymentIntent);
+                saveTransaction({
+                    parcel: parcelId,
+                    sender: senderId,
+                    amount: price,
+                    transactionId: result.paymentIntent.id,
+                    paymentMethod: result.paymentIntent.payment_method_types[0]
+                })
             }
         } catch (error) {
             console.log(error);
         }
+        finally {
+            setProcessing(false);
+        }
     }
+
+    console.log(data);
+    console.log(saveError);
     return (
         <form onSubmit={handleSubmit}>
             <CardElement

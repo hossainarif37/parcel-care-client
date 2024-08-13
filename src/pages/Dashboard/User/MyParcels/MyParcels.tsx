@@ -76,6 +76,7 @@ const MyParcels = () => {
                                                     parcel.paymentStatus === 'Unpaid' ?
                                                         (<Link
                                                             state={{
+                                                                senderId: parcel.senderId,
                                                                 parcelId: parcel._id,
                                                                 senderName: parcel.senderName,
                                                                 senderEmail: parcel.senderEmail,

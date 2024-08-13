@@ -10,7 +10,7 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 const Payment = () => {
     const [paymentMethod, setPaymentMethod] = useState('');
     const [clientSecret, setClientSecret] = useState("");
-    const { state: { senderName, senderEmail, price, parcelId, parcelType } } = useLocation();
+    const { state: { senderId, senderName, senderEmail, price, parcelId, parcelType } } = useLocation();
     const baseUrl = import.meta.env.VITE_SERVER_BASE_URL;
 
     useEffect(() => {
@@ -71,6 +71,9 @@ const Payment = () => {
                             clientSecret={clientSecret}
                             senderName={senderName}
                             senderEmail={senderEmail}
+                            parcelId={parcelId}
+                            senderId={senderId}
+                            price={price}
                         />
                     </Elements>
                 }
