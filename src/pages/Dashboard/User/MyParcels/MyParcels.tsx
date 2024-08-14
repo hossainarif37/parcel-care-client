@@ -70,7 +70,7 @@ const MyParcels = () => {
                                             </button>
 
                                         </DropdownMenuTrigger>
-                                        <DropdownMenuContent align="end" className="mt-3">
+                                        <DropdownMenuContent align="end" className="mt-1">
                                             <DropdownMenuItem>
                                                 {
                                                     parcel.paymentStatus === 'Unpaid' ?

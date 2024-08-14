@@ -45,7 +45,7 @@ const Payment = () => {
                         {/* Credit Card */}
                         <div className="flex items-center gap-2 ">
                             <input
-                                className="cursor-pointer"
+                                className="cursor-pointer w-4 h-4"
                                 type="radio" name="payment-option"
                                 id="credit-card" value='Credit Card'
                                 onChange={(e) => setPaymentMethod(e.target.value)}
@@ -55,7 +55,7 @@ const Payment = () => {
                         {/* Paypal */}
                         <div className="flex items-center gap-2 ">
                             <input
-                                className="cursor-pointer"
+                                className="cursor-pointer w-4 h-4"
                                 type="radio" name="payment-option"
                                 id="paypal" value='Paypal'
                                 onChange={(e) => setPaymentMethod(e.target.value)}

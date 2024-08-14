@@ -60,6 +60,7 @@ const CheckoutForm = ({ clientSecret, senderName, senderEmail, senderId, parcelI
                     },
                 },
             });
+            
             if (result.error) {
                 console.log(result.error);
             } else {
