@@ -78,6 +78,10 @@ export const router = createBrowserRouter([
                         element: <ParcelTracking />
                     },
                     {
+                        path: '/dashboard/user/parcel-tracking',
+                        element: <ParcelTracking />
+                    },
+                    {
                         path: '/dashboard/user/profile',
                         element: <UserProfile />
                     }

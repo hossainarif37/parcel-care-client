@@ -2,8 +2,11 @@ import { Link } from "react-router-dom";
 import banner from "../../../../assets/images/banner.jpg"
 import CircleShape from "../../../../components/CircleShape";
 import Button from "../../../../components/Buttons/Button";
+import { useSelector } from "react-redux";
+import { IRootState } from "@/types/types";
 
 const Banner = () => {
+    const { user } = useSelector((state: IRootState) => state.userSlice);
     return (
         <div
             className="h-screen flex flex-col gap-y-10 md:gap-y-0 md:flex-row justify-between"
@@ -16,12 +19,11 @@ const Banner = () => {
                 <p className="md:pr-48 text-xl text-accent mt-5 md:mt-10 leading-8 mb-5 md:mb-14">
                     Deliver fastest across 25000+ pin codes in world with real time shipment tracking feature. Get best international courier services. we are the best courier service provider in world.Get best international.courier services at zero subscription fees.
                 </p>
-                <Button
-                    type="button"
-                    styles="btn-primary"
-                >
-                    <Link to='#'>Book a parcel</Link>
-                </Button>
+
+                {user ? <Link className="py-4 px-12 btn-primary" to='/dashboard/user/book-parcel'>Book a parcel</Link>
+                    :
+                    <Link className="py-4 px-12 btn-primary" to='/register'>Become an Agent</Link>
+                }
 
                 {/* Circle Shapes */}
                 <div className="hidden md:block">
