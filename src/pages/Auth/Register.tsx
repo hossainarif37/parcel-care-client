@@ -16,7 +16,7 @@ const Register = () => {
     const [registerUser] = useRegisterMutation();
     const navigate = useNavigate();
     const handleRegister = (data: IFormInput) => {
-        const registerResponse = registerUser({ name: data.name, email: data.email, password: data.password }).unwrap();
+        const registerResponse = registerUser(data).unwrap();
 
         toast.promise(registerResponse, {
             loading: 'Loading',

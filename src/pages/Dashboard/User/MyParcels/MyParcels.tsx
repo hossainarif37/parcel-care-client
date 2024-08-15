@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { formateDate } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import NotFoundData from "@/components/NotFoundData";
 
 
 const MyParcels = () => {
@@ -28,6 +29,10 @@ const MyParcels = () => {
 
     if (isLoading) {
         return <Loading paddingY="py-20" textColor="text-primary" textSize="4xl" />
+    }
+
+    if (!data) {
+        return <NotFoundData>Parcel not found</NotFoundData>
     }
 
     return (
@@ -89,7 +94,9 @@ const MyParcels = () => {
                                                 }
                                             </DropdownMenuItem>
                                             <DropdownMenuSeparator />
-                                            <DropdownMenuItem>Track Your Parcel</DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <Link to={`/dashboard/user/parcel-tracking/${parcel._id}`}>Track Your Parcel</Link>
+                                            </DropdownMenuItem>
                                             <DropdownMenuItem>
                                                 <Link to={`/dashboard/user/my-parcels/${parcel._id}/parcel-details`}>View & Edit Details</Link>
                                             </DropdownMenuItem>

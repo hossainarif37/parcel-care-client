@@ -74,7 +74,7 @@ export const router = createBrowserRouter([
                         element: <BookParcel />
                     },
                     {
-                        path: '/dashboard/user/parcel-tracking',
+                        path: '/dashboard/user/parcel-tracking/:parcelId',
                         element: <ParcelTracking />
                     },
                     {
