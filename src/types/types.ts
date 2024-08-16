@@ -22,7 +22,7 @@ export interface IParcel {
     senderId: string;
     senderName: string;
     senderEmail: string;
-    senderPhoneNumber: string;
+    senderPhoneNumber: number;
     senderAddress: {
         fullAddress: string;
         subDistrict: string;
@@ -32,7 +32,7 @@ export interface IParcel {
     parcelWeight: number;
     receiverName: string;
     receiverEmail: string;
-    receiverPhoneNumber: string;
+    receiverPhoneNumber: number;
     deliveryAddress: {
         fullAddress: string;
         subDistrict: string;
