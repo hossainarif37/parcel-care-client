@@ -1,7 +1,8 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { SelectOptionType } from "../types/types";
+import { IParcel, SelectOptionType } from "../types/types";
 import { SingleValue } from 'react-select';
+import { trackingData } from "@/constants/trackingData";
 
 
 export function cn(...inputs: ClassValue[]) {
@@ -45,3 +46,13 @@ export const formateDate = (date: Date, isFullMonth = false) => {
   });
   return formattedDate;
 };
+
+export const filteredTrackingData = (parcelData: IParcel) => {
+  const trackingArr = [];
+  for (const item of trackingData) {
+    if (item.title === parcelData?.deliveryStatusHistory[item.id]?.status) {
+      trackingArr.push({ ...item, updatedAt: parcelData?.deliveryStatusHistory[item.id].updatedAt });
+    }
+  }
+  return trackingArr;
+}

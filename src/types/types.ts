@@ -1,4 +1,3 @@
-import exp from "constants";
 import { ChangeEvent } from "react";
 
 export type EventType = ChangeEvent<HTMLInputElement>;
@@ -42,6 +41,10 @@ export interface IParcel {
     price: number;
     paymentStatus: 'Unpaid' | 'Paid';
     deliveryStatus: 'Order Placed' | 'Pickup Agent Assigned' | 'Parcel Collected' | 'In Transit' | 'Delivery Hub Reached' | 'Delivery Agent Assigned' | 'Out For Delivery' | 'Delivered'
+    deliveryStatusHistory: Array<{
+        status: 'Order Placed' | 'Pickup Agent Assigned' | 'Parcel Collected' | 'In Transit' | 'Delivery Hub Reached' | 'Delivery Agent Assigned' | 'Out For Delivery' | 'Delivered';
+        updatedAt: Date;
+    }>,
     assignedAgentId?: string;
     assignedAgentRole?: 'pickup' | 'delivery';
     bookingDate: Date;

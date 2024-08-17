@@ -1,4 +1,3 @@
-import Loading from "@/components/Loading";
 import NotFoundData from "@/components/NotFoundData";
 import { useLazyGetABookedParcelByIdQuery } from "@/redux/api/endpoints/parcelApi";
 import { IParcel } from "@/types/types";
@@ -6,16 +5,18 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
+import TrackingDetails from "./TrackingDetails";
 
 interface IFormInput {
     parcelId: string
 }
 
 const ParcelTracking = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
-    const [getABookedParcelById, { error, isLoading }] = useLazyGetABookedParcelByIdQuery();
+    const { register, handleSubmit } = useForm<IFormInput>();
+    const [getABookedParcelById, { error }] = useLazyGetABookedParcelByIdQuery();
     const [searchParams, setSearchParams] = useSearchParams();
     const [parcel, setParcel] = useState<IParcel | null>();
+
 
 
     // const { data: parcelResponse, isLoading } = useGetABookedParcelByIdQuery(parcelId);
@@ -38,7 +39,7 @@ const ParcelTracking = () => {
             })
 
         }
-    }, [searchParams]);
+    });
 
     return (
         <div className="py-10">
@@ -64,9 +65,9 @@ const ParcelTracking = () => {
                 }
                 {
                     parcel && !error &&
-                    <div className="">
+                    <div className="mt-14  max-w-7xl mx-auto space-y-10">
                         {/* Shipment Details */}
-                        <section className="mt-14  max-w-7xl mx-auto">
+                        <section>
                             <h1 className="text-3xl mb-5 font-semibold text-black-100">Shipment Details</h1>
                             <div className="border flex justify-between p-10 rounded-xl">
                                 {/* Pickup Info */}
@@ -74,7 +75,7 @@ const ParcelTracking = () => {
                                     <h2 className="text-2xl font-semibold text-black-100">Pickup Info</h2>
                                     <div className="mt-5 space-y-1">
                                         <p><span className="font-semibold text-black-100">Sender Name:</span> {parcel?.senderName}</p>
-                                        <p><span className="font-semibold text-black-100">Sender Address:</span> {parcel?.senderAddress?.fullAddress}</p>
+                                        <p><span className="font-semibold text-black-100">Sender Address:</span> {parcel?.senderAddress?.fullAddress}, {parcel?.senderAddress?.subDistrict}, {parcel?.senderAddress?.district} </p>
 
                                         <p><span className="font-semibold text-black-100">Sender Phone:</span> +880{parcel?.senderPhoneNumber}</p>
                                     </div>
@@ -96,6 +97,10 @@ const ParcelTracking = () => {
                         {/* Tracking Details */}
                         <section>
                             <h1 className="text-3xl mb-5 font-semibold text-black-100">Tracking Details</h1>
+
+                            <div className="border">
+                                <TrackingDetails parcel={parcel} />
+                            </div>
                         </section>
                     </div>
                 }
