@@ -1,7 +1,11 @@
+import Loading from "@/components/Loading";
 import NotFoundData from "@/components/NotFoundData";
 import { useLazyGetABookedParcelByIdQuery } from "@/redux/api/endpoints/parcelApi";
+import { IParcel } from "@/types/types";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSearchParams } from "react-router-dom";
 
 interface IFormInput {
     parcelId: string
@@ -9,10 +13,32 @@ interface IFormInput {
 
 const ParcelTracking = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
-    const [getABookedParcelById, { data, error }] = useLazyGetABookedParcelByIdQuery();
+    const [getABookedParcelById, { error, isLoading }] = useLazyGetABookedParcelByIdQuery();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [parcel, setParcel] = useState<IParcel | null>();
+
+
+    // const { data: parcelResponse, isLoading } = useGetABookedParcelByIdQuery(parcelId);
     const handleSearch = (data: IFormInput) => {
-        getABookedParcelById(data.parcelId).unwrap();
+        setSearchParams({ parcelId: data.parcelId });
+        getABookedParcelById(data.parcelId)
+            .unwrap()
+            .then(({ parcel: parcelResponse }) => {
+                setParcel(parcelResponse);
+            }).catch(() => {
+                setParcel(null);
+            });
     }
+
+    useEffect(() => {
+        if (searchParams.get('parcelId')) {
+            getABookedParcelById(searchParams.get('parcelId')).unwrap().then(({ parcel: parcelResponse }) => {
+                console.log(35, parcelResponse);
+                setParcel(parcelResponse);
+            })
+
+        }
+    }, [searchParams]);
 
     return (
         <div className="py-10">
@@ -37,33 +63,41 @@ const ParcelTracking = () => {
                     && <NotFoundData>Parcel Not Found</NotFoundData>
                 }
                 {
-                    data &&
-                    <section className="mt-14  max-w-7xl mx-auto">
-                        <h1 className="text-3xl mb-5 font-semibold text-black-100">Shipment Details</h1>
-                        <div className="border flex justify-between p-10 rounded-xl">
-                            {/* Pickup Info */}
-                            <div>
-                                <h2 className="text-2xl font-semibold text-black-100">Pickup Info</h2>
-                                <div className="mt-5 space-y-1">
-                                    <p><span className="font-semibold text-black-100">Sender Name:</span> {data?.parcel?.senderName}</p>
-                                    <p><span className="font-semibold text-black-100">Sender Address:</span> {data?.parcel?.senderAddress?.fullAddress}</p>
+                    parcel && !error &&
+                    <div className="">
+                        {/* Shipment Details */}
+                        <section className="mt-14  max-w-7xl mx-auto">
+                            <h1 className="text-3xl mb-5 font-semibold text-black-100">Shipment Details</h1>
+                            <div className="border flex justify-between p-10 rounded-xl">
+                                {/* Pickup Info */}
+                                <div className="w-1/2">
+                                    <h2 className="text-2xl font-semibold text-black-100">Pickup Info</h2>
+                                    <div className="mt-5 space-y-1">
+                                        <p><span className="font-semibold text-black-100">Sender Name:</span> {parcel?.senderName}</p>
+                                        <p><span className="font-semibold text-black-100">Sender Address:</span> {parcel?.senderAddress?.fullAddress}</p>
 
-                                    <p>Sender Phone: {data?.parcel?.senderPhoneNumber}</p>
+                                        <p><span className="font-semibold text-black-100">Sender Phone:</span> +880{parcel?.senderPhoneNumber}</p>
+                                    </div>
+                                </div>
+
+                                {/* Delivery Info */}
+                                <div className="w-1/2">
+                                    <h2 className="text-2xl font-semibold text-right text-black-100">Delivery Info</h2>
+                                    <div className="mt-5 space-y-1">
+                                        <p><span className="font-semibold text-black-100">Recipient Name:</span> {parcel?.receiverName}</p>
+                                        <p><span className="font-semibold text-black-100">Recipient Address:</span> {parcel?.deliveryAddress?.fullAddress}, {parcel?.deliveryAddress?.subDistrict}, {parcel?.deliveryAddress?.district}</p>
+
+                                        <p><span className="font-semibold text-black-100">Recipient Phone:</span> +880{parcel?.receiverPhoneNumber}</p>
+                                    </div>
                                 </div>
                             </div>
+                        </section>
 
-                            {/* Delivery Info */}
-                            <div>
-                                <h2 className="text-2xl font-semibold text-right text-black-100">Delivery Info</h2>
-                                <div className="mt-5 space-y-1">
-                                    <p><span className="font-semibold text-black-100">Recipient Name:</span> {data?.parcel?.receiverName}</p>
-                                    <p><span className="font-semibold text-black-100">Recipient Address:</span> {data?.parcel?.deliveryAddress?.fullAddress}, {data?.parcel?.deliveryAddress?.subDistrict}, {data?.parcel?.deliveryAddress?.district}</p>
-
-                                    <p>Recipient Phone: {data?.parcel?.receiverPhoneNumber}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+                        {/* Tracking Details */}
+                        <section>
+                            <h1 className="text-3xl mb-5 font-semibold text-black-100">Tracking Details</h1>
+                        </section>
+                    </div>
                 }
             </div>
         </div>

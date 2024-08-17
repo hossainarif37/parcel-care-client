@@ -95,7 +95,7 @@ const MyParcels = () => {
                                             </DropdownMenuItem>
                                             <DropdownMenuSeparator />
                                             <DropdownMenuItem>
-                                                <Link to={`/dashboard/user/parcel-tracking/${parcel._id}`}>Track Your Parcel</Link>
+                                                <Link to={`/dashboard/user/parcel-tracking?parcelId=${parcel._id}`}>Track Your Parcel</Link>
                                             </DropdownMenuItem>
                                             <DropdownMenuItem>
                                                 <Link to={`/dashboard/user/my-parcels/${parcel._id}/parcel-details`}>View & Edit Details</Link>
