@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +13,7 @@ const DashboardLayout = () => {
     const handleDashboardToggle = () => {
         dispatch(toggleDashboard());
     }
+
     return (
         <div className="relative flex">
             <div className={`${isDashboardToggle ? 'translate-x-0' : '-translate-x-80'} md:translate-x-0 duration-300 z-10`}>
@@ -20,21 +21,31 @@ const DashboardLayout = () => {
             </div>
 
             {/* Children */}
-            <main className="flex-1 min-h-screen w-full bg-white px-7 py-7">
-                {/* Dashboard Toggle Button */}
-                <div className="block md:hidden">
-                    <button className="text-black-50 text-4xl" onClick={handleDashboardToggle}>
-                        <Icon icon="bx:menu-alt-left" />
-                    </button>
-
-                    <hr className="my-2" />
-                </div>
-
+            <main className="flex-1 min-h-screen w-full bg-white ">
                 {
-                    user?.agentRequestStatus === 'pending' && pathname !== '/dashboard/agent/profile' ? <h1 className="text-red-400 text-xl text-center mt-10">You don't have permission to navigate to this location!</h1>
-                        :
-                        <Outlet />
+                    (user?.agentRequestStatus === 'pending' && !user.isProfileComplete) &&
+                    <p className="bg-red-400 py-1 text-white text-center">Your agent request is pending due to incomplete profile. Complete all fields to enable processing.</p>
                 }
+                {
+                    (user?.agentRequestStatus === 'pending' && user.isProfileComplete) &&
+                    <p className="bg-blue-400 py-1 text-white text-center">Your agent request is under review for admin approval.</p>
+                }
+                <div className="px-7 py-7">
+                    {/* Dashboard Toggle Button */}
+                    <div className="block md:hidden">
+                        <button className="text-black-50 text-4xl" onClick={handleDashboardToggle}>
+                            <Icon icon="bx:menu-alt-left" />
+                        </button>
+
+                        <hr className="my-2" />
+                    </div>
+
+                    {
+                        user?.agentRequestStatus === 'pending' && pathname !== '/dashboard/agent/profile' ? <h1 className="text-red-400 text-xl text-center mt-10">You don't have permission to navigate to this location!</h1>
+                            :
+                            <Outlet />
+                    }
+                </div>
             </main>
 
             {/* Overlay */}
