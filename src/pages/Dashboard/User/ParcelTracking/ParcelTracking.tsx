@@ -68,11 +68,11 @@ const ParcelTracking = () => {
                     <div className="mt-14  max-w-7xl mx-auto space-y-10">
                         {/* Shipment Details */}
                         <section>
-                            <h1 className="text-3xl mb-5 font-semibold text-black-100">Shipment Details</h1>
+                            <h1 className="text-2xl mb-5 font-semibold text-black-50">Shipment Details</h1>
                             <div className="border flex justify-between p-10 rounded-xl">
                                 {/* Pickup Info */}
                                 <div className="w-1/2">
-                                    <h2 className="text-2xl font-semibold text-black-100">Pickup Info</h2>
+                                    <h2 className="text-xl font-semibold text-black-100">Pickup Info</h2>
                                     <div className="mt-5 space-y-1">
                                         <p><span className="font-semibold text-black-100">Sender Name:</span> {parcel?.senderName}</p>
                                         <p><span className="font-semibold text-black-100">Sender Address:</span> {parcel?.senderAddress?.fullAddress}, {parcel?.senderAddress?.subDistrict}, {parcel?.senderAddress?.district} </p>
@@ -83,7 +83,7 @@ const ParcelTracking = () => {
 
                                 {/* Delivery Info */}
                                 <div className="w-1/2">
-                                    <h2 className="text-2xl font-semibold text-right text-black-100">Delivery Info</h2>
+                                    <h2 className="text-xl font-semibold text-right text-black-100">Delivery Info</h2>
                                     <div className="mt-5 space-y-1">
                                         <p><span className="font-semibold text-black-100">Recipient Name:</span> {parcel?.receiverName}</p>
                                         <p><span className="font-semibold text-black-100">Recipient Address:</span> {parcel?.deliveryAddress?.fullAddress}, {parcel?.deliveryAddress?.subDistrict}, {parcel?.deliveryAddress?.district}</p>
@@ -96,9 +96,9 @@ const ParcelTracking = () => {
 
                         {/* Tracking Details */}
                         <section>
-                            <h1 className="text-3xl mb-5 font-semibold text-black-100">Tracking Details</h1>
+                            <h1 className="text-2xl mb-5 font-semibold text-black-50">Tracking Details</h1>
 
-                            <div className="border">
+                            <div className="border rounded-xl">
                                 <TrackingDetails parcel={parcel} />
                             </div>
                         </section>

@@ -18,7 +18,7 @@ const DashboardLayout = () => {
             </div>
 
             {/* Children */}
-            <main className="flex-1 min-h-screen w-full bg-white-50 px-7 py-7">
+            <main className="flex-1 min-h-screen w-full bg-white px-7 py-7">
                 {/* Dashboard Toggle Button */}
                 <div className="block md:hidden">
                     <button className="text-black-50 text-4xl" onClick={handleDashboardToggle}>

@@ -9,31 +9,30 @@ interface TrackingDetailsProps {
 const TrackingDetails: React.FC<TrackingDetailsProps> = ({ parcel }) => {
     const trackingData = filteredTrackingData(parcel);
     return (
-        <div >
-            <VerticalTimeline>
-                {
-                    trackingData.map((item, i) => {
-                        return (
-                            <VerticalTimelineElement
-                                className="vertical-timeline-element--work"
-                                contentStyle={{ background: 'linear-gradient(to right, #7D82FF, #0665DB)', color: '#fff', borderRadius: '10px' }}
-                                contentArrowStyle={{ borderRight: `7px solid  ${i % 2 !== 0 ? '#7D82FF' : '#0665DB'}` }}
-                                iconStyle={{ background: 'linear-gradient(to right, #7D82FF, #0665DB)', color: '#fff', width: '70px', height: '70px' }}
-                                icon={<Icon icon={item.icon} />}
-                            >
-                                <h3 className="vertical-timeline-element-title text-2xl font-bold">{item.title}</h3>
-                                <p>
-                                    {item.description}
-                                </p>
-                                <p>
-                                    {formateDate(item.updatedAt)}
-                                </p>
-                            </VerticalTimelineElement>
-                        );
-                    })
-                }
-            </VerticalTimeline>
-        </div>
+        <VerticalTimeline>
+            {
+                trackingData.map((item, i) => {
+                    return (
+                        <VerticalTimelineElement
+                            key={i}
+                            className="vertical-timeline-element--work"
+                            contentStyle={{ background: 'linear-gradient(to right, #7D82FF, #0665DB)', color: '#fff', borderRadius: '10px' }}
+                            contentArrowStyle={{ borderRight: `7px solid  ${i % 2 !== 0 ? '#7D82FF' : '#0665DB'}` }}
+                            iconStyle={{ background: 'linear-gradient(to right, #7D82FF, #0665DB)', color: '#fff', width: '70px', height: '70px' }}
+                            icon={<Icon icon={item.icon} />}
+                        >
+                            <h3 className="vertical-timeline-element-title text-2xl font-bold">{item.title}</h3>
+                            <p>
+                                {item.description}
+                            </p>
+                            <p>
+                                {formateDate(item.updatedAt)}
+                            </p>
+                        </VerticalTimelineElement>
+                    );
+                })
+            }
+        </VerticalTimeline>
     );
 };
 
