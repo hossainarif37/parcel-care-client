@@ -39,7 +39,7 @@ const ParcelTracking = () => {
             })
 
         }
-    });
+    }, []);
 
     return (
         <div className="py-10">
