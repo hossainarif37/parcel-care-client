@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +7,9 @@ import { toggleDashboard } from "../../redux/slices/navbar/navbarSlice";
 
 const DashboardLayout = () => {
     const { isDashboardToggle } = useSelector((state: IRootState) => state.navbarSlice);
+    const { user } = useSelector((state: IRootState) => state.userSlice);
     const dispatch = useDispatch();
+    const { pathname } = useLocation();
     const handleDashboardToggle = () => {
         dispatch(toggleDashboard());
     }
@@ -28,7 +30,11 @@ const DashboardLayout = () => {
                     <hr className="my-2" />
                 </div>
 
-                <Outlet />
+                {
+                    user?.agentRequestStatus === 'pending' && pathname !== '/dashboard/agent/profile' ? <h1 className="text-red-400 text-xl text-center mt-10">You don't have permission to navigate to this location!</h1>
+                        :
+                        <Outlet />
+                }
             </main>
 
             {/* Overlay */}

@@ -29,7 +29,7 @@ const UserMenuDropdown = () => {
                 <li>
                     <Link
                         to={
-                            `/dashboard${isNormalUser && '/user/my-parcels' || isAdminUser && '/admin/overview' || isAgentUser && '/agent/delivery-list'}`
+                            `/dashboard${isNormalUser && '/user/my-parcels' || isAdminUser && '/admin/overview' || (isAgentUser && user.agentRequestStatus !== 'pending' ? '/agent/delivery-list' : '/agent/profile')}`
                         }
                         title="Settings"
                     >

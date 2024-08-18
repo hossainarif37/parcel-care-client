@@ -12,6 +12,7 @@ interface IFormInput {
     name: string;
     email: string;
     password: string;
+    agentRequestStatus?: boolean
 }
 
 const Register = () => {
@@ -20,7 +21,13 @@ const Register = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const handleRegister = (data: IFormInput) => {
-        const registerResponse = registerUser(data).unwrap();
+        let registerResponse = null;
+
+        if (data.agentRequestStatus) {
+            registerResponse = registerUser({ ...data, agentRequestStatus: 'pending', role: 'agent' }).unwrap();
+        } else {
+            registerResponse = registerUser(data).unwrap();
+        }
 
         toast.promise(registerResponse, {
             loading: 'Loading',
@@ -102,6 +109,16 @@ const Register = () => {
                     />
                     {/*//! error */}
                     <p className="error">{errors?.password?.message}</p>
+                </div>
+
+                <div className="flex items-center gap-x-2">
+                    <input
+                        {...register('agentRequestStatus')}
+                        className="w-5 h-5 cursor-pointer"
+                        type="checkbox"
+                        id="agentRequestStatus"
+                    />
+                    <label htmlFor="agentRequestStatus" className="cursor-pointer select-none">Become an Agent</label>
                 </div>
 
                 {/* //*Submit Button */}
