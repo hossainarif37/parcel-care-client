@@ -20,7 +20,6 @@ import {
     SelectContent,
     SelectGroup,
     SelectItem,
-    SelectLabel,
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
@@ -28,8 +27,7 @@ import { UserType } from "@/types/types";
 import { Link } from "react-router-dom";
 
 const PendingAgent = () => {
-    const { data, isLoading, error } = useGetPendingAgentsQuery(undefined);
-    console.log(data);
+    const { data } = useGetPendingAgentsQuery(undefined);
     return (
         <div>
             <div className="h-screen p-5 shadow-md rounded-xl">
