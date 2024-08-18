@@ -7,12 +7,13 @@ import UpdatePasswordArea from "./UpdatePasswordArea";
 import Select, { MultiValue, SingleValue } from "react-select";
 import { districtsData } from "../../../../constants/districtsData";
 import { useDispatch, useSelector } from "react-redux";
-import { IRootState, SelectOptionType } from "../../../../types/types";
+import { IRootState, SelectOptionType, UserType } from "../../../../types/types";
 import { useUpdateUserInfoMutation } from "../../../../redux/api/endpoints/userApi";
 import toast from "react-hot-toast";
 import { updateUser } from "../../../../redux/slices/user/userSlice";
 import { customSelectStyles } from "../../../../styles/customSelectStyles";
 import { getValidDistrictSelection, getValidSubDistrictSelection } from "@/lib/utils";
+import { Progress } from "@/components/ui/progress";
 
 type IFormInput = {
     name: string;
@@ -28,6 +29,24 @@ const Profile = () => {
     const [updateUserInfo] = useUpdateUserInfoMutation();
     const [isEditClicked, setIsEditClicked] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+
+    // List of fields considered for profile completion calculation
+    const requiredFields = ['name', 'email', 'profilePicture', 'phoneNumber', 'fullAddress', 'subDistrict', 'district'];
+
+    // Function to check if a field is filled
+    const isFieldFilled = (field: string): boolean => {
+        return field in (user as UserType) ? true : false;
+    };
+
+    // Count the number of filled fields
+    const filledFieldsCount = requiredFields.filter(isFieldFilled).length;
+
+    // Calculate completion percentage
+    const totalFields = requiredFields.length;
+    // Calculate completion percentage and format it as an integer percentage
+    const completionPercentage = Math.round(filledFieldsCount / totalFields * 100);
+
+    console.log(completionPercentage);
 
     //------------- District Functionality Area -------------//
     // Find initial selected district from districtsData based on user's district
@@ -131,7 +150,7 @@ const Profile = () => {
             <div className="max-w-4xl mx-auto py-10 px-5 md:px-20 border rounded-md  mb-5">
                 {/* Image area */}
                 <div className="flex flex-col gap-y-5 md:gap-y-0 mb-5 md:flex-row items-center justify-center gap-x-5">
-                    <img className="w-28 md:w-40 md:h-40 shadow ring-4 ring-secondary ring-opacity-60 ring-offset-2 h-28  object-cover rounded-full" alt="user image" src={blank_avatar} />
+                    <img className="w-28 md:w-40 md:h-40 shadow ring-4 ring-secondary ring-opacity-60 ring-offset-2 h-28  object-cover rounded-full" alt="user image" src={user?.profilePicture ? user.profilePicture : blank_avatar} />
 
                     <div className="flex justify-start items-center flex-col gap-3">
                         {/* Upload Image Button */}
@@ -152,7 +171,12 @@ const Profile = () => {
                     </div>
                 </div>
 
-
+                <div className="space-y-2 my-10">
+                    <p className="text-black-100 font-semibold">
+                        Profile Completion: <span>{completionPercentage}%</span>
+                    </p>
+                    <Progress value={completionPercentage} className="w-full" indicatorColor={"gradient"} />
+                </div>
                 {/* Form Fields */}
                 <form onSubmit={handleSubmit(handleUpdateProfileInfo)} className="flex flex-col gap-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
