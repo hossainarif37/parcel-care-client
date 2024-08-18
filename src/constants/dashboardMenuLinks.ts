@@ -64,6 +64,11 @@ export const adminMenuLinks = [
         icon: "mynaui:users",
     },
     {
+        title: "Pending Agents",
+        path: "/dashboard/admin/pending-agents",
+        icon: "mdi:account-pending-outline",
+    },
+    {
         title: "Profile",
         path: "/dashboard/admin/profile",
         icon: "mage:user",

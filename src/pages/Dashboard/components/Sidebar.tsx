@@ -42,7 +42,7 @@ const Sidebar = () => {
                         className={`${user?.agentRequestStatus === 'pending' && category.title !== 'Profile' && 'hidden '}`}
                         key={category.title}>
                         <Link to={category.path} className={`flex p-3 rounded-lg gap-x-2 items-center ${category.path === path && 'gradient text-white'}`}>
-                            <span className="text-2xl"><Icon icon={category.icon} /></span>
+                            <span className={`text-2xl ${category.title === 'Pending Agents' && category.path !== path && 'text-black-100'}`}><Icon icon={category.icon} /></span>
                             <span>{category.title}</span>
                         </Link>
                     </li>
