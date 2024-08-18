@@ -37,7 +37,7 @@ const MyParcels = () => {
 
     return (
         <div>
-            <div className="h-screen p-5 border rounded-xl">
+            <div className="h-screen p-5 shadow-md rounded-xl">
                 <h1 className="text-2xl font-bold text-black-50 mb-5">My Parcels</h1>
                 <Table className="">
                     <TableHeader>
