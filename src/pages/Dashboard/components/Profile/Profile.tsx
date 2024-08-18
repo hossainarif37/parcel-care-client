@@ -11,8 +11,8 @@ import { IRootState, SelectOptionType } from "../../../../types/types";
 import { useUpdateUserInfoMutation } from "../../../../redux/api/endpoints/userApi";
 import toast from "react-hot-toast";
 import { updateUser } from "../../../../redux/slices/user/userSlice";
-import { getValidDistrictSelection, getValidSubDistrictSelection } from "../../../../utils/utils";
 import { customSelectStyles } from "../../../../styles/customSelectStyles";
+import { getValidDistrictSelection, getValidSubDistrictSelection } from "@/lib/utils";
 
 type IFormInput = {
     name: string;

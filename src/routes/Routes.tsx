@@ -21,6 +21,9 @@ import AllUsers from "../pages/Dashboard/Admin/AllUsers/AllUsers";
 import AllAgents from "../pages/Dashboard/Admin/AllAgents/AllAgents";
 import AdminProfile from "../pages/Dashboard/Admin/AdminProfile/AdminProfile";
 import MyDeliveryList from "../pages/Dashboard/Agent/MyDeliveryList/MyDeliveryList";
+import Payment from "@/pages/Dashboard/User/Payment/Payment";
+import TransactionDetails from "@/pages/Dashboard/User/Payment/TransactionDetails";
+import ParcelTracking from "@/pages/Dashboard/User/ParcelTracking/ParcelTracking";
 
 
 export const router = createBrowserRouter([
@@ -59,8 +62,24 @@ export const router = createBrowserRouter([
                         element: <MyParcels />
                     },
                     {
+                        path: '/dashboard/user/my-parcels/:parcelId/payment',
+                        element: <Payment />
+                    },
+                    {
+                        path: '/dashboard/user/my-parcels/:parcelId/transaction-details',
+                        element: <TransactionDetails />
+                    },
+                    {
                         path: '/dashboard/user/book-parcel',
                         element: <BookParcel />
+                    },
+                    {
+                        path: '/dashboard/user/parcel-tracking/:parcelId',
+                        element: <ParcelTracking />
+                    },
+                    {
+                        path: '/dashboard/user/parcel-tracking',
+                        element: <ParcelTracking />
                     },
                     {
                         path: '/dashboard/user/profile',

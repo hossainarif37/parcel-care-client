@@ -39,7 +39,7 @@ body {
     }
 
     .logoutButton{
-        @apply w-full border-black flex items-center justify-center gap-2 px-4 py-3 text-sm text-gray-700 bg-gray-100 hover:bg-white-100 rounded-lg
+        @apply w-full flex  items-center justify-center gap-2 px-4 py-3 text-sm text-gray-700 bg-gray-100 hover:bg-black-50 hover:text-white duration-150 rounded-lg shadow
     }
     
 }

@@ -10,6 +10,11 @@ export const userMenuLinks = [
         icon: "hugeicons:package-add",
     },
     {
+        title: "Tracking",
+        path: "/dashboard/user/parcel-tracking",
+        icon: "carbon:delivery-parcel",
+    },
+    {
         title: "Profile",
         path: "/dashboard/user/profile",
         icon: "mage:user",

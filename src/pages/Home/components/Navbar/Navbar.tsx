@@ -13,9 +13,6 @@ const Navbar = () => {
 
     const isDashboardPage = location.pathname.includes('/dashboard');
 
-    // Check if the user role is 'agent'
-    const isNormalUser = user?.role === 'user';
-
 
     return (
         <div className={`w-full ${isDashboardPage && 'hidden'} absolute px-5 md:px-28 py-5 flex justify-between items-center z-10 bg-transparent`}>
@@ -35,7 +32,7 @@ const Navbar = () => {
                 }
 
                 {/* Conditionally render the "Become an Agent" link only if the user is not an agent */}
-                {(!user || isNormalUser) && (
+                {(!user) && (
                     <ActiveLink
                         path='#'
                         title="Become an agent"

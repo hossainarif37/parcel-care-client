@@ -20,7 +20,9 @@ const useGetUser = () => {
                 .catch(error => {
                     console.error("Failed to fetch user:", error);
                     dispatch(setLoading());
-                });
+                })
+        } else {
+            dispatch(setLoading());
         }
     }, [dispatch, getCurrentUser, token]);
 
