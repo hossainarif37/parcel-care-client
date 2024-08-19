@@ -53,7 +53,7 @@ const PendingAgent = () => {
                                 <TableCell className="font-medium">{agent.district ?? 'N/A'}</TableCell>
                                 <TableCell className="font-medium">{agent.subDistrict ?? 'N/A'}</TableCell>
                                 <TableCell className="font-medium">{agent.phoneNumber ?? 'N/A'}</TableCell>
-                                <TableCell className="font-medium">{agent.isProfileComplete?.toString()}</TableCell>
+                                <TableCell className={`font-medium`}><span className={`py-1 px-5 rounded-md  ${agent.isProfileComplete ? 'bg-green-100 text-green-500' : 'bg-red-100 text-red-500'}`}>{agent.isProfileComplete?.toString()}</span></TableCell>
                                 <TableCell className="font-medium">
                                     <Select>
                                         <SelectTrigger className="w-[180px]">
