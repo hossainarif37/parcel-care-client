@@ -32,6 +32,7 @@ const Profile = () => {
     const [image, setImage] = useState<File | null>(null);
     const [imageUrl, setImageUrl] = useState("");
     const [tempImageUrl, setTempImageUrl] = useState('');
+    const [imageUploadLoading, setImageUploadLoading] = useState(false);
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files![0];
         console.log('file', file);
@@ -47,6 +48,42 @@ const Profile = () => {
         };
         reader.readAsDataURL(file);
     };
+
+    const handleUploadImage = async () => {
+        try {
+            setImageUploadLoading(true);
+            const cloudName = 'dhtilaehp';
+            const uploadPreset = 'xjvhtoge';
+            // Create a FormData object
+            const formData = new FormData();
+            formData.append('file', image!);
+            formData.append('upload_preset', uploadPreset); // Replace with your upload preset
+            formData.append('cloud_name', cloudName); // Replace with your cloud name
+
+            // Make a POST request to Cloudinary's upload API
+            const response = await fetch(
+                `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+                {
+                    method: 'POST',
+                    body: formData
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(75, data);
+            // Return the secure URL of the uploaded image
+            setImageUrl(data.secure_url);
+        } catch (error) {
+            console.error('Error uploading image to Cloudinary:', error);
+        }
+        finally {
+            setImageUploadLoading(false);
+        }
+    }
 
     const handleRemoveFile = () => {
         setTempImageUrl('');
@@ -196,11 +233,19 @@ const Profile = () => {
                                 </label>
                                 :
                                 <button
-                                    onClick={() => { }}
+                                    onClick={handleUploadImage}
                                     type="button"
-                                    className={`bg-green-600 rounded-lg text-white w-full py-3 px-14 flex justify-center gap-x-2`}
+                                    className={`btn-green rounded-lg w-full py-3 px-14 flex justify-center gap-x-2`}
                                 >
-                                    Save Changes
+                                    {
+                                        imageUploadLoading ? <Icon className="animate-spin text-2xl" icon="mingcute:loading-fill" /> :
+
+                                            <>
+                                                <span className='text-2xl'><Icon icon="carbon:save" /></span>
+                                                <span> Save Changes</span>
+                                            </>
+                                    }
+
                                 </button>
                         }
 
@@ -209,7 +254,8 @@ const Profile = () => {
                             type="button"
                             className={`btn-delete w-full py-3 px-14 flex justify-center gap-x-2`}
                         >
-                            Remove Picture
+                            <span className='text-2xl'><Icon icon="fluent:delete-20-regular" /></span>
+                            <span> Remove Picture</span>
                         </button>
                     </div>
                 </div>
