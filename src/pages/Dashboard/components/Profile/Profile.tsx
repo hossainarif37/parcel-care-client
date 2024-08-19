@@ -84,14 +84,20 @@ const Profile = () => {
             const data = await response.json();
 
             updateUserInfo({ userId: user?._id, body: { profilePicture: data.secure_url } }).unwrap()
+                .then(({ user }) => {
+                    toast.success('Image uploaded successfully!');
+                    dispatch(updateUser({ user: user }));
 
-            toast.success('Image uploaded successfully!');
-            dispatch(updateUser({ user: { ...user, profilePicture: data.secure_url } }));
+                    handleRemoveFile();
+                    // Return the secure URL of the uploaded image
+                    setImageUrl(data.secure_url);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
 
-            handleRemoveFile();
-            console.log(75, data);
-            // Return the secure URL of the uploaded image
-            setImageUrl(data.secure_url);
+
+
         } catch (error) {
             console.error('Error uploading image to Cloudinary:', error);
         }
