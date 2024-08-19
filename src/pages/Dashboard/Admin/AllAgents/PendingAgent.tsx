@@ -57,7 +57,7 @@ const PendingAgent = () => {
                                 <TableCell className="font-medium">
                                     <Select>
                                         <SelectTrigger className="w-[180px]">
-                                            <SelectValue placeholder="Select Status" />
+                                            <SelectValue placeholder={agent.agentRequestStatus} />
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
