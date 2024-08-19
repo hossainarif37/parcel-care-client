@@ -14,6 +14,7 @@ import { updateUser } from "../../../../redux/slices/user/userSlice";
 import { customSelectStyles } from "../../../../styles/customSelectStyles";
 import { getValidDistrictSelection, getValidSubDistrictSelection } from "@/lib/utils";
 import { Progress } from "@/components/ui/progress";
+import { clear } from "console";
 
 type IFormInput = {
     name: string;
@@ -29,6 +30,27 @@ const Profile = () => {
     const [updateUserInfo] = useUpdateUserInfoMutation();
     const [isEditClicked, setIsEditClicked] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+
+    const [image, setImage] = useState<File | null>(null);
+    const [imageUrl, setImageUrl] = useState("");
+    const [tempImageUrl, setTempImageUrl] = useState('');
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files![0];
+        setImage(file);
+
+        // Convert the image to base64 URL for temporary preview
+        const reader = new FileReader();
+        reader.onload = () => {
+            if (reader.result !== null) {
+                const base64String = reader.result as string;
+                setTempImageUrl(base64String);
+            }
+        };
+        reader.readAsDataURL(file);
+    };
+    console.log('tempImageUrl', tempImageUrl);
+
+
 
     // List of fields considered for profile completion calculation
     const requiredFields = ['name', 'email', 'profilePicture', 'phoneNumber', 'fullAddress', 'subDistrict', 'district'];
@@ -150,19 +172,25 @@ const Profile = () => {
             <div className="max-w-4xl mx-auto py-10 px-5 md:px-20 border rounded-md  mb-5">
                 {/* Image area */}
                 <div className="flex flex-col gap-y-5 md:gap-y-0 mb-5 md:flex-row items-center justify-center gap-x-5">
-                    <img className="w-28 md:w-40 md:h-40 shadow ring-4 ring-secondary ring-opacity-60 ring-offset-2 h-28  object-cover rounded-full" alt="user image" src={user?.profilePicture ? user.profilePicture : blank_avatar} />
+                    <div className="shadow ring-4 ring-secondary ring-opacity-60 ring-offset-2 rounded-full overflow-hidden" >
+                        <img className="w-28 md:w-40 md:h-40  h-28  object-contain scale-125 rounded-full" alt="user image" src={tempImageUrl ? tempImageUrl : blank_avatar} />
+                    </div>
 
                     <div className="flex justify-start items-center flex-col gap-3">
                         {/* Upload Image Button */}
-                        <button
-                            type='button'
+                        <input
+                            onChange={handleImageChange}
+                            className="hidden" type="file" name="upload-image" id="upload-image" />
+                        <label
+                            htmlFor="upload-image"
                             className={`btn-primary w-full py-3 px-14 flex justify-center gap-x-2`}
                         >
                             <span className='text-2xl'><Icon icon="lucide:image-plus" /></span>
                             <span>Upload New Image</span>
-                        </button>
+                        </label>
 
                         <button
+                            onClick={() => { setTempImageUrl('') }}
                             type="button"
                             className={`btn-delete w-full py-3 px-14 flex justify-center gap-x-2`}
                         >
