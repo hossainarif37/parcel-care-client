@@ -33,6 +33,12 @@ const Profile = () => {
     const [imageUrl, setImageUrl] = useState("");
     const [tempImageUrl, setTempImageUrl] = useState('');
     const [imageUploadLoading, setImageUploadLoading] = useState(false);
+
+    const generateUniqueIdentifier = (file: File): string => {
+        // You can use a combination of file properties to create a unique identifier
+        return `${file.name}_${file.size}_${file.lastModified}`;
+    };
+
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files![0];
         console.log('file', file);
@@ -51,6 +57,7 @@ const Profile = () => {
 
     const handleUploadImage = async () => {
         try {
+            const uniqueIdentifier = generateUniqueIdentifier(image!);
             setImageUploadLoading(true);
             const cloudName = 'dhtilaehp';
             const uploadPreset = 'xjvhtoge';
@@ -59,6 +66,7 @@ const Profile = () => {
             formData.append('file', image!);
             formData.append('upload_preset', uploadPreset); // Replace with your upload preset
             formData.append('cloud_name', cloudName); // Replace with your cloud name
+            formData.append('public_id', uniqueIdentifier); // Use the unique identifier as the public_id
 
             // Make a POST request to Cloudinary's upload API
             const response = await fetch(
@@ -74,6 +82,13 @@ const Profile = () => {
             }
 
             const data = await response.json();
+
+            updateUserInfo({ userId: user?._id, body: { profilePicture: data.secure_url } }).unwrap()
+
+            toast.success('Image uploaded successfully!');
+            dispatch(updateUser({ user: { ...user, profilePicture: data.secure_url } }));
+
+            handleRemoveFile();
             console.log(75, data);
             // Return the secure URL of the uploaded image
             setImageUrl(data.secure_url);
@@ -194,7 +209,6 @@ const Profile = () => {
             error: ({ data }) => data?.message || 'Update failed'
         });
 
-        setIsEditClicked(false);
     }
 
     useEffect(() => {
@@ -213,7 +227,7 @@ const Profile = () => {
                 {/* Image area */}
                 <div className="flex flex-col gap-y-5 md:gap-y-0 mb-5 md:flex-row items-center justify-center gap-x-5">
                     <div className="shadow ring-4 ring-secondary ring-opacity-60 ring-offset-2 rounded-full overflow-hidden" >
-                        <img className="w-28 md:w-40 md:h-40  h-28  object-contain scale-125 rounded-full" alt="user image" src={tempImageUrl ? tempImageUrl : blank_avatar} />
+                        <img className="w-28 md:w-40 md:h-40  h-28  object-contain scale-125 rounded-full" alt="user image" src={tempImageUrl ? tempImageUrl : user?.profilePicture || blank_avatar} />
                     </div>
 
                     <div className="flex justify-start items-center flex-col gap-3">

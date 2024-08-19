@@ -7,6 +7,7 @@ const userApi = baseApi.injectEndpoints({
                 url: '/users/current-user',
                 method: 'GET',
             }),
+            providesTags: ['User']
         }),
 
         updateUserInfo: builder.mutation({
@@ -14,7 +15,8 @@ const userApi = baseApi.injectEndpoints({
                 url: `/users/${userId}/profile`,
                 method: 'PUT',
                 body
-            })
+            }),
+            invalidatesTags: ['User']
         }),
 
         getPendingAgents: builder.query({
