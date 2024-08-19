@@ -1,4 +1,4 @@
-import { useGetPendingAgentsQuery } from "@/redux/api/endpoints/userApi";
+import { useGetPendingAgentsQuery, useUpdatedAgentRequestStatusMutation } from "@/redux/api/endpoints/userApi";
 import {
     Table,
     TableBody,
@@ -25,12 +25,26 @@ import {
 } from "@/components/ui/select"
 import { Link } from "react-router-dom";
 import { UserType } from "@/types/types";
+import toast from "react-hot-toast";
 
 const PendingAgent = () => {
     const { data } = useGetPendingAgentsQuery(undefined);
-    const handleAgentRequestStatus = (value: string) => {
-        console.log(value);
-    }
+    const [updateAgentRequestStatus] = useUpdatedAgentRequestStatusMutation();
+    const handleAgentRequestStatus = (value: string, userId: string) => {
+        const updateResponse = updateAgentRequestStatus({ userId, body: { agentRequestStatus: value } }).unwrap();
+
+        toast.promise(updateResponse, {
+            loading: 'Loading',
+            success: ({ message }) => {
+                return message;
+            },
+            error: ({ data }) => {
+                return data?.message || 'Update failed';
+            },
+        })
+    };
+
+
     return (
         <div>
             <div className="h-screen p-5 shadow-md rounded-xl">
@@ -49,24 +63,24 @@ const PendingAgent = () => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {data?.pendingAgents?.map((agent: UserType) => (
-                            <TableRow key={agent._id} className="text-black-50">
-                                <TableCell className="font-medium">{agent.name}</TableCell>
-                                <TableCell className="font-medium">{agent.email}</TableCell>
-                                <TableCell className="font-medium">{agent.district ?? 'N/A'}</TableCell>
-                                <TableCell className="font-medium">{agent.subDistrict ?? 'N/A'}</TableCell>
-                                <TableCell className="font-medium">{agent.phoneNumber ?? 'N/A'}</TableCell>
-                                <TableCell className={`font-medium`}><span className={`py-1 px-5 rounded-md  ${agent.isProfileComplete ? 'bg-green-100 text-green-500' : 'bg-red-100 text-red-500'}`}>{agent.isProfileComplete?.toString()}</span></TableCell>
+                        {data?.pendingAgents?.map((user: UserType) => (
+                            <TableRow key={user._id} className="text-black-50">
+                                <TableCell className="font-medium">{user.name}</TableCell>
+                                <TableCell className="font-medium">{user.email}</TableCell>
+                                <TableCell className="font-medium">{user.district ?? 'N/A'}</TableCell>
+                                <TableCell className="font-medium">{user.subDistrict ?? 'N/A'}</TableCell>
+                                <TableCell className="font-medium">{user.phoneNumber ?? 'N/A'}</TableCell>
+                                <TableCell className={`font-medium`}><span className={`py-1 px-5 rounded-md  ${user.isProfileComplete ? 'bg-green-100 text-green-500' : 'bg-red-100 text-red-500'}`}>{user.isProfileComplete?.toString()}</span></TableCell>
                                 <TableCell className="font-medium">
-                                    <Select onValueChange={handleAgentRequestStatus}>
+                                    <Select onValueChange={(value) => handleAgentRequestStatus(value, user._id)}>
                                         <SelectTrigger className="w-[180px]">
-                                            <SelectValue placeholder={agent.agentRequestStatus} />
+                                            <SelectValue placeholder={user.agentRequestStatus} />
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
                                                 <SelectItem value="pending">Pending</SelectItem>
                                                 <SelectItem value="accepted">Accept</SelectItem>
-                                                <SelectItem value="cancelled">Cancel</SelectItem>
+                                                <SelectItem value="rejected">Reject</SelectItem>
                                             </SelectGroup>
                                         </SelectContent>
                                     </Select>
@@ -82,14 +96,14 @@ const PendingAgent = () => {
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent align="end" className="mt-1">
                                             <DropdownMenuItem>
-                                                <Link to={`/dashboard/agent/parcel-tracking?parcelId=${agent._id}`}>See more details</Link>
+                                                <Link to={`/dashboard/agent/parcel-tracking?parcelId=${user._id}`}>See more details</Link>
                                             </DropdownMenuItem>
                                             <DropdownMenuSeparator />
                                             <DropdownMenuItem>
-                                                <Link to={`/dashboard/agent/parcel-tracking?parcelId=${agent._id}`}>See more details</Link>
+                                                <Link to={`/dashboard/agent/parcel-tracking?parcelId=${user._id}`}>See more details</Link>
                                             </DropdownMenuItem>
                                             <DropdownMenuItem>
-                                                <Link to={`/dashboard/user/my-parcels/${agent._id}/parcel-details`}>View & Edit Details</Link>
+                                                <Link to={`/dashboard/user/my-parcels/${user._id}/parcel-details`}>View & Edit Details</Link>
                                             </DropdownMenuItem>
                                         </DropdownMenuContent>
                                     </DropdownMenu>

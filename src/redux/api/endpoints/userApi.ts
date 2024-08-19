@@ -22,8 +22,16 @@ const userApi = baseApi.injectEndpoints({
                 url: '/users/pending-agents',
                 method: 'GET'
             })
+        }),
+
+        updatedAgentRequestStatus: builder.mutation({
+            query: ({ userId, body }) => ({
+                url: `/users/${userId}/agent-request-status`,
+                method: 'PUT',
+                body
+            })
         })
     })
 })
 
-export const { useCurrentUserQuery, useLazyCurrentUserQuery, useUpdateUserInfoMutation, useGetPendingAgentsQuery } = userApi;
+export const { useCurrentUserQuery, useLazyCurrentUserQuery, useUpdateUserInfoMutation, useGetPendingAgentsQuery, useUpdatedAgentRequestStatusMutation } = userApi;
