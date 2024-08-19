@@ -31,8 +31,15 @@ const userApi = baseApi.injectEndpoints({
                 method: 'PUT',
                 body
             }),
+        }),
+
+        getUsersByRole: builder.query({
+            query: (role) => ({
+                url: `/users?role=${role}`,
+                method: 'GET'
+            }),
         })
     })
 })
 
-export const { useCurrentUserQuery, useLazyCurrentUserQuery, useUpdateUserInfoMutation, useGetPendingAgentsQuery, useUpdatedAgentRequestStatusMutation } = userApi;
+export const { useCurrentUserQuery, useLazyCurrentUserQuery, useUpdateUserInfoMutation, useGetPendingAgentsQuery, useUpdatedAgentRequestStatusMutation, useGetUsersByRoleQuery } = userApi;
