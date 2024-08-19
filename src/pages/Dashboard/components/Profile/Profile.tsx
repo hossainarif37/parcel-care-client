@@ -14,7 +14,6 @@ import { updateUser } from "../../../../redux/slices/user/userSlice";
 import { customSelectStyles } from "../../../../styles/customSelectStyles";
 import { getValidDistrictSelection, getValidSubDistrictSelection } from "@/lib/utils";
 import { Progress } from "@/components/ui/progress";
-import { clear } from "console";
 
 type IFormInput = {
     name: string;
@@ -28,7 +27,6 @@ const Profile = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
     const dispatch = useDispatch();
     const [updateUserInfo] = useUpdateUserInfoMutation();
-    const [isEditClicked, setIsEditClicked] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
 
     const [image, setImage] = useState<File | null>(null);
@@ -36,6 +34,7 @@ const Profile = () => {
     const [tempImageUrl, setTempImageUrl] = useState('');
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files![0];
+        console.log('file', file);
         setImage(file);
 
         // Convert the image to base64 URL for temporary preview
@@ -48,9 +47,13 @@ const Profile = () => {
         };
         reader.readAsDataURL(file);
     };
-    console.log('tempImageUrl', tempImageUrl);
 
-
+    const handleRemoveFile = () => {
+        setTempImageUrl('');
+        setImage(null);
+        // Clear the input value to remove the selected file
+        (document.getElementById("upload-image") as HTMLInputElement).value = '';
+    }
 
     // List of fields considered for profile completion calculation
     const requiredFields = ['name', 'email', 'profilePicture', 'phoneNumber', 'fullAddress', 'subDistrict', 'district'];
@@ -180,17 +183,29 @@ const Profile = () => {
                         {/* Upload Image Button */}
                         <input
                             onChange={handleImageChange}
-                            className="hidden" type="file" name="upload-image" id="upload-image" />
-                        <label
-                            htmlFor="upload-image"
-                            className={`btn-primary w-full py-3 px-14 flex justify-center gap-x-2`}
-                        >
-                            <span className='text-2xl'><Icon icon="lucide:image-plus" /></span>
-                            <span>Upload New Image</span>
-                        </label>
+                            className="hidden" type="file" name="upload-image" id="upload-image"
+                        />
+                        {
+                            !tempImageUrl ?
+                                <label
+                                    htmlFor="upload-image"
+                                    className={`btn-primary cursor-pointer w-full py-3 px-14 flex justify-center gap-x-2`}
+                                >
+                                    <span className='text-2xl'><Icon icon="lucide:image-plus" /></span>
+                                    <span>Choose Photo</span>
+                                </label>
+                                :
+                                <button
+                                    onClick={() => { }}
+                                    type="button"
+                                    className={`bg-green-600 rounded-lg text-white w-full py-3 px-14 flex justify-center gap-x-2`}
+                                >
+                                    Save Changes
+                                </button>
+                        }
 
                         <button
-                            onClick={() => { setTempImageUrl('') }}
+                            onClick={handleRemoveFile}
                             type="button"
                             className={`btn-delete w-full py-3 px-14 flex justify-center gap-x-2`}
                         >
@@ -335,36 +350,15 @@ const Profile = () => {
                         </div>
                     </div>
 
-                    {
-                        isEditClicked ?
-                            <div className="flex justify-end gap-x-3">
-                                <button
-                                    onClick={() => setIsEditClicked(false)}
-                                    type="button"
-                                    className="btn-accent py-3 px-10 rounded-md"
-                                >
-                                    Cancel
-                                </button>
 
-                                <button
-                                    type="submit"
-                                    className="btn-primary py-3 px-10 rounded-md"
-                                >
-                                    Save Changes
-                                </button>
-                            </div>
-
-                            :
-
-                            <button
-                                onClick={() => setIsEditClicked(true)}
-                                type="button"
-                                className="btn-secondary text-white font-semibold py-3 px-10 rounded-md ml-auto"
-                            >
-                                Edit
-                            </button>
-
-                    }
+                    <div className="flex justify-end gap-x-3">
+                        <button
+                            type="submit"
+                            className="btn-primary py-3 px-10 rounded-md"
+                        >
+                            Save Changes
+                        </button>
+                    </div>
                 </form>
             </div>
 
