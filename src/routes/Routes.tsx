@@ -24,6 +24,9 @@ import MyDeliveryList from "../pages/Dashboard/Agent/MyDeliveryList/MyDeliveryLi
 import Payment from "@/pages/Dashboard/User/Payment/Payment";
 import TransactionDetails from "@/pages/Dashboard/User/Payment/TransactionDetails";
 import ParcelTracking from "@/pages/Dashboard/User/ParcelTracking/ParcelTracking";
+import MyReviews from "@/pages/Dashboard/Agent/MyReviews/MyReviews";
+import AgentProfile from "@/pages/Dashboard/Agent/AgentProfile/AgentProfile";
+import PendingAgent from "@/pages/Dashboard/Admin/AllAgents/PendingAgent";
 
 
 export const router = createBrowserRouter([
@@ -96,7 +99,20 @@ export const router = createBrowserRouter([
                     {
                         path: '/dashboard/agent/delivery-list',
                         element: <MyDeliveryList />
+                    },
+                    {
+                        path: '/dashboard/agent/pickup-list',
+                        element: <MyDeliveryList />
+                    },
+                    {
+                        path: '/dashboard/agent/my-reviews',
+                        element: <MyReviews />
+                    },
+                    {
+                        path: '/dashboard/agent/profile',
+                        element: <AgentProfile />
                     }
+
                 ]
             },
 
@@ -120,6 +136,10 @@ export const router = createBrowserRouter([
                     {
                         path: '/dashboard/admin/all-agents',
                         element: <AllAgents />
+                    },
+                    {
+                        path: '/dashboard/admin/pending-agents',
+                        element: <PendingAgent />
                     },
                     {
                         path: '/dashboard/admin/profile',

@@ -7,7 +7,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { useGetBookingParcelsQuery } from "@/redux/api/endpoints/parcelApi";
+import { useGetBookingParcelsByUserIdQuery } from "@/redux/api/endpoints/parcelApi";
 import { IParcel, IRootState } from "@/types/types";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useSelector } from "react-redux";
@@ -25,7 +25,7 @@ import NotFoundData from "@/components/NotFoundData";
 
 const MyParcels = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
-    const { data, isLoading } = useGetBookingParcelsQuery(user?._id);
+    const { data, isLoading } = useGetBookingParcelsByUserIdQuery(user?._id);
 
     if (isLoading) {
         return <Loading paddingY="py-20" textColor="text-primary" textSize="4xl" />
@@ -37,7 +37,7 @@ const MyParcels = () => {
 
     return (
         <div>
-            <div className="h-screen p-5 border rounded-xl">
+            <div className="h-screen p-5 shadow-md rounded-xl">
                 <h1 className="text-2xl font-bold text-black-50 mb-5">My Parcels</h1>
                 <Table className="">
                     <TableHeader>

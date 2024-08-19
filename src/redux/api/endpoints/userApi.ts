@@ -15,8 +15,32 @@ const userApi = baseApi.injectEndpoints({
                 method: 'PUT',
                 body
             })
+        }),
+
+        getPendingAgents: builder.query({
+            query: () => ({
+                url: '/users/pending-agents',
+                method: 'GET'
+            }),
+            providesTags: ['Pending Agent']
+        }),
+
+        updatedAgentRequestStatus: builder.mutation({
+            query: ({ userId, body }) => ({
+                url: `/users/${userId}/agent-request-status`,
+                method: 'PUT',
+                body
+            }),
+        }),
+
+        getUsersByRole: builder.query({
+            query: (role) => ({
+                url: `/users?role=${role}`,
+                method: 'GET'
+            }),
+            providesTags: ['Agent']
         })
     })
 })
 
-export const { useCurrentUserQuery, useLazyCurrentUserQuery, useUpdateUserInfoMutation } = userApi;
+export const { useCurrentUserQuery, useLazyCurrentUserQuery, useUpdateUserInfoMutation, useGetPendingAgentsQuery, useUpdatedAgentRequestStatusMutation, useGetUsersByRoleQuery } = userApi;

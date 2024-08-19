@@ -1,3 +1,4 @@
+import { useGetPendingAgentsQuery, useUpdatedAgentRequestStatusMutation } from "@/redux/api/endpoints/userApi";
 import {
     Table,
     TableBody,
@@ -14,22 +15,46 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 import { Link } from "react-router-dom";
 import { UserType } from "@/types/types";
-import { useGetUsersByRoleQuery } from "@/redux/api/endpoints/userApi";
-import NotFoundData from "@/components/NotFoundData";
-const AllUsers = () => {
-    const { data } = useGetUsersByRoleQuery('user');
+import toast from "react-hot-toast";
+import { baseApi } from "@/redux/api/baseApi";
+import { useDispatch } from "react-redux";
 
-    console.log(data);
+const PendingAgent = () => {
+    const { data } = useGetPendingAgentsQuery(undefined);
+    const [updateAgentRequestStatus] = useUpdatedAgentRequestStatusMutation();
+    const dispatch = useDispatch();
+    const handleAgentRequestStatus = (value: string, userId: string) => {
+        const updateResponse = updateAgentRequestStatus({ userId, body: { agentRequestStatus: value } }).unwrap();
 
-    if (!data) {
-        return <NotFoundData>Users not found</NotFoundData>
-    }
+        toast.promise(updateResponse, {
+            loading: 'Loading',
+            success: ({ message }) => {
+                setTimeout(() => {
+                    dispatch(baseApi.util.invalidateTags(['Pending Agent', 'Agent']));
+                }, 1000);
+                return message;
+            },
+            error: ({ data }) => {
+                return data?.message || 'Update failed';
+            },
+        })
+    };
+
+
     return (
         <div>
             <div className="h-screen p-5 shadow-md rounded-xl">
-                <h1 className="text-2xl font-bold text-black-100 mb-5">Users</h1>
+                <h1 className="text-2xl font-bold text-black-100 mb-5">Pending Agents</h1>
                 <Table className="">
                     <TableHeader>
                         <TableRow className="">
@@ -39,11 +64,12 @@ const AllUsers = () => {
                             <TableHead>Sub District</TableHead>
                             <TableHead>Phone Number</TableHead>
                             <TableHead>Profile Completed</TableHead>
+                            <TableHead>Agent Request Status</TableHead>
                             <TableHead className="text-right">Action</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {data?.users?.map((user: UserType) => (
+                        {data?.pendingAgents?.map((user: UserType) => (
                             <TableRow key={user._id} className="text-black-50">
                                 <TableCell className="font-medium">{user.name}</TableCell>
                                 <TableCell className="font-medium">{user.email}</TableCell>
@@ -51,8 +77,21 @@ const AllUsers = () => {
                                 <TableCell className="font-medium">{user.subDistrict ?? 'N/A'}</TableCell>
                                 <TableCell className="font-medium">{user.phoneNumber ?? 'N/A'}</TableCell>
                                 <TableCell className={`font-medium`}><span className={`py-1 px-5 rounded-md  ${user.isProfileComplete ? 'bg-green-100 text-green-500' : 'bg-red-100 text-red-500'}`}>{user.isProfileComplete?.toString()}</span></TableCell>
-
-                                <TableCell className="font-medium text-right relative overflow-visible">
+                                <TableCell className="font-medium">
+                                    <Select onValueChange={(value) => handleAgentRequestStatus(value, user._id)}>
+                                        <SelectTrigger className="w-[180px]">
+                                            <SelectValue placeholder={user.agentRequestStatus} />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectItem value="pending">Pending</SelectItem>
+                                                <SelectItem value="accepted">Accept</SelectItem>
+                                                <SelectItem value="rejected">Reject</SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                </TableCell>
+                                <TableCell className="font-medium text-center relative overflow-visible">
 
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
@@ -63,11 +102,14 @@ const AllUsers = () => {
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent align="end" className="mt-1">
                                             <DropdownMenuItem>
-                                                <Link to={`#`}>See more details</Link>
+                                                <Link to={`/dashboard/agent/parcel-tracking?parcelId=${user._id}`}>See more details</Link>
                                             </DropdownMenuItem>
                                             <DropdownMenuSeparator />
                                             <DropdownMenuItem>
-                                                <Link to={`#`}>View & Edit Details</Link>
+                                                <Link to={`/dashboard/agent/parcel-tracking?parcelId=${user._id}`}>See more details</Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <Link to={`/dashboard/user/my-parcels/${user._id}/parcel-details`}>View & Edit Details</Link>
                                             </DropdownMenuItem>
                                         </DropdownMenuContent>
                                     </DropdownMenu>
@@ -81,4 +123,4 @@ const AllUsers = () => {
     );
 };
 
-export default AllUsers;
+export default PendingAgent;

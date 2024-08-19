@@ -4,26 +4,38 @@ import { useRegisterMutation } from "../../redux/api/endpoints/authApi";
 import toast from "react-hot-toast";
 import Input from "../../components/Inputs/Input";
 import Button from "../../components/Buttons/Button";
+import { useDispatch } from "react-redux";
+import Cookies from "js-cookie";
+import { setUser } from "@/redux/slices/user/userSlice";
 
 interface IFormInput {
     name: string;
     email: string;
     password: string;
+    agentRequestStatus?: boolean
 }
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const [registerUser] = useRegisterMutation();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const handleRegister = (data: IFormInput) => {
-        const registerResponse = registerUser(data).unwrap();
+        let registerResponse = null;
+
+        if (data.agentRequestStatus) {
+            registerResponse = registerUser({ ...data, agentRequestStatus: 'pending', role: 'agent' }).unwrap();
+        } else {
+            registerResponse = registerUser(data).unwrap();
+        }
 
         toast.promise(registerResponse, {
             loading: 'Loading',
-            success: ({ message }) => {
-                navigate('/login');
+            success: ({ user, message, token }) => {
+                dispatch(setUser({ user: user, isAuthenticated: true }));
+                Cookies.set('authToken', token, { expires: 30 });
+                navigate('/');
                 return message;
-
             },
             error: ({ data }) => {
                 return data?.message || 'Registration failed';
@@ -97,6 +109,16 @@ const Register = () => {
                     />
                     {/*//! error */}
                     <p className="error">{errors?.password?.message}</p>
+                </div>
+
+                <div className="flex items-center gap-x-2">
+                    <input
+                        {...register('agentRequestStatus')}
+                        className="w-5 h-5 cursor-pointer"
+                        type="checkbox"
+                        id="agentRequestStatus"
+                    />
+                    <label htmlFor="agentRequestStatus" className="cursor-pointer select-none">Become an Agent</label>
                 </div>
 
                 {/* //*Submit Button */}

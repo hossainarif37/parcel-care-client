@@ -14,6 +14,8 @@ export type UserType = {
     district?: string;
     isEmailVerified?: boolean;
     isProfileComplete?: boolean;
+    agentRequestStatus?: 'pending' | 'accepted' | 'rejected';
+    createdAt?: Date;
 }
 
 export interface IParcel {

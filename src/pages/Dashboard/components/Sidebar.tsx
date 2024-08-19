@@ -38,9 +38,11 @@ const Sidebar = () => {
             {/* Dashboard Sidebar Menu Links */}
             <ul className="flex flex-col gap-y-2">
                 {menuLinks.map((category) => (
-                    <li key={category.title} >
+                    <li
+                        className={`${user?.agentRequestStatus === 'pending' && category.title !== 'Profile' && 'hidden '}`}
+                        key={category.title}>
                         <Link to={category.path} className={`flex p-3 rounded-lg gap-x-2 items-center ${category.path === path && 'gradient text-white'}`}>
-                            <span className="text-2xl"><Icon icon={category.icon} /></span>
+                            <span className={`text-2xl ${category.title === 'Pending Agents' && category.path !== path && 'text-black-100'}`}><Icon icon={category.icon} /></span>
                             <span>{category.title}</span>
                         </Link>
                     </li>
@@ -53,7 +55,7 @@ const Sidebar = () => {
                     <UserImage customWidth="w-10" />
                     <div className="text-black-50">
                         <p className="text-secondary font-semibold">{user?.name}</p>
-                        <p className="font-semibold text-sm">{user?.role}</p>
+                        <p className="font-semibold text-sm">{user?.role} {user?.agentRequestStatus === 'pending' && <span className="error">(pending)</span>}</p>
                     </div>
                 </div>
 
