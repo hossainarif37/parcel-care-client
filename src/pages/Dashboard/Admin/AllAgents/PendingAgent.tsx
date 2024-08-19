@@ -26,16 +26,22 @@ import {
 import { Link } from "react-router-dom";
 import { UserType } from "@/types/types";
 import toast from "react-hot-toast";
+import { baseApi } from "@/redux/api/baseApi";
+import { useDispatch } from "react-redux";
 
 const PendingAgent = () => {
     const { data } = useGetPendingAgentsQuery(undefined);
     const [updateAgentRequestStatus] = useUpdatedAgentRequestStatusMutation();
+    const dispatch = useDispatch();
     const handleAgentRequestStatus = (value: string, userId: string) => {
         const updateResponse = updateAgentRequestStatus({ userId, body: { agentRequestStatus: value } }).unwrap();
 
         toast.promise(updateResponse, {
             loading: 'Loading',
             success: ({ message }) => {
+                setTimeout(() => {
+                    dispatch(baseApi.util.invalidateTags(['Agent']));
+                }, 1000);
                 return message;
             },
             error: ({ data }) => {

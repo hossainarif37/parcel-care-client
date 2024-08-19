@@ -21,7 +21,8 @@ const userApi = baseApi.injectEndpoints({
             query: () => ({
                 url: '/users/pending-agents',
                 method: 'GET'
-            })
+            }),
+            providesTags: ['Agent']
         }),
 
         updatedAgentRequestStatus: builder.mutation({
@@ -29,7 +30,7 @@ const userApi = baseApi.injectEndpoints({
                 url: `/users/${userId}/agent-request-status`,
                 method: 'PUT',
                 body
-            })
+            }),
         })
     })
 })
