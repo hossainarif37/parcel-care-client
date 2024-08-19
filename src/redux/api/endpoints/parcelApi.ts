@@ -10,7 +10,7 @@ const parcelApi = baseApi.injectEndpoints({
             })
         }),
 
-        getBookingParcels: builder.query({
+        getBookingParcelsByUserId: builder.query({
             query: (userId) => ({
                 url: `/parcel-booking/${userId}/parcels`,
                 method: 'GET'
@@ -22,9 +22,16 @@ const parcelApi = baseApi.injectEndpoints({
                 url: `/parcel-booking/${parcelId}`,
                 method: 'GET'
             })
+        }),
+
+        getAllParcels: builder.query({
+            query: () => ({
+                url: '/parcel-booking',
+                method: 'GET'
+            })
         })
     })
 })
 
 
-export const { useBookAParcelMutation, useGetBookingParcelsQuery, useGetABookedParcelByIdQuery, useLazyGetABookedParcelByIdQuery } = parcelApi;
+export const { useBookAParcelMutation, useGetBookingParcelsByUserIdQuery, useGetABookedParcelByIdQuery, useLazyGetABookedParcelByIdQuery, useGetAllParcelsQuery } = parcelApi;
