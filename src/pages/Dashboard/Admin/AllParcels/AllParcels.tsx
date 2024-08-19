@@ -19,6 +19,8 @@ import NotFoundData from "@/components/NotFoundData";
 import { IParcel } from "@/types/types";
 import { formateDate } from "@/lib/utils";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { trackingData } from "@/constants/trackingData";
 
 const AllParcels = () => {
     const { data } = useGetAllParcelsQuery(undefined);
@@ -54,7 +56,22 @@ const AllParcels = () => {
                                 <TableCell className="font-medium">
                                     {formateDate(parcel.bookingDate, true)}
                                 </TableCell>
-                                <TableCell className="font-medium">{parcel.deliveryStatus}</TableCell>
+                                <TableCell className="font-medium">
+                                    <Select onValueChange={() => { }}>
+                                        <SelectTrigger className="w-[180px]">
+                                            <SelectValue placeholder={parcel.deliveryStatus} />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                {
+                                                    trackingData.map((item) => (
+                                                        <SelectItem key={item.id} value={item.title}>{item.title}</SelectItem>
+                                                    ))
+                                                }
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                </TableCell>
                                 <TableCell className={"font-medium"}><span className={`${parcel.paymentStatus === 'Unpaid' ? 'text-red-500 bg-red-100' : 'text-green-600 bg-green-100'} font-semibold py-1 px-3 rounded-full`}>{parcel.paymentStatus}</span></TableCell>
                                 <TableCell className="font-medium text-center relative overflow-visible">
 
