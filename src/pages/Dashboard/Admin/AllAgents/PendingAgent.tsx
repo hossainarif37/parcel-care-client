@@ -40,7 +40,7 @@ const PendingAgent = () => {
             loading: 'Loading',
             success: ({ message }) => {
                 setTimeout(() => {
-                    dispatch(baseApi.util.invalidateTags(['Agent']));
+                    dispatch(baseApi.util.invalidateTags(['Pending Agent', 'Agent']));
                 }, 1000);
                 return message;
             },

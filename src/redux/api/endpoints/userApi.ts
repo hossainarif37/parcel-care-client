@@ -22,7 +22,7 @@ const userApi = baseApi.injectEndpoints({
                 url: '/users/pending-agents',
                 method: 'GET'
             }),
-            providesTags: ['Agent']
+            providesTags: ['Pending Agent']
         }),
 
         updatedAgentRequestStatus: builder.mutation({
@@ -38,6 +38,7 @@ const userApi = baseApi.injectEndpoints({
                 url: `/users?role=${role}`,
                 method: 'GET'
             }),
+            providesTags: ['Agent']
         })
     })
 })
