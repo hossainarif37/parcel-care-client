@@ -23,11 +23,14 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { UserType } from "@/types/types";
 import { Link } from "react-router-dom";
+import { UserType } from "@/types/types";
 
 const PendingAgent = () => {
     const { data } = useGetPendingAgentsQuery(undefined);
+    const handleAgentRequestStatus = (value: string) => {
+        console.log(value);
+    }
     return (
         <div>
             <div className="h-screen p-5 shadow-md rounded-xl">
@@ -55,7 +58,7 @@ const PendingAgent = () => {
                                 <TableCell className="font-medium">{agent.phoneNumber ?? 'N/A'}</TableCell>
                                 <TableCell className={`font-medium`}><span className={`py-1 px-5 rounded-md  ${agent.isProfileComplete ? 'bg-green-100 text-green-500' : 'bg-red-100 text-red-500'}`}>{agent.isProfileComplete?.toString()}</span></TableCell>
                                 <TableCell className="font-medium">
-                                    <Select>
+                                    <Select onValueChange={handleAgentRequestStatus}>
                                         <SelectTrigger className="w-[180px]">
                                             <SelectValue placeholder={agent.agentRequestStatus} />
                                         </SelectTrigger>
