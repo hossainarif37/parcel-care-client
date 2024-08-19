@@ -49,17 +49,17 @@ export const adminMenuLinks = [
         icon: "carbon:home",
     },
     {
-        title: "All Parcels",
+        title: "Parcels",
         path: "/dashboard/admin/all-parcels",
         icon: "ph:package",
     },
     {
-        title: "All Users",
+        title: "Users",
         path: "/dashboard/admin/all-users",
         icon: "mynaui:users",
     },
     {
-        title: "All Agents",
+        title: "Agents",
         path: "/dashboard/admin/all-agents",
         icon: "mynaui:users",
     },
