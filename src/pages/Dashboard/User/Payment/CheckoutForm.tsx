@@ -2,6 +2,8 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { FormEvent, useState } from "react";
 import './checkoutForm.css'
 import { useSaveTransactionMutation } from "@/redux/api/endpoints/transactionApi";
+import { useNavigate } from "react-router-dom";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 type CheckoutFormType = {
     clientSecret: string;
@@ -15,9 +17,10 @@ type CheckoutFormType = {
 const CheckoutForm = ({ clientSecret, senderName, senderEmail, senderId, parcelId, price }: CheckoutFormType) => {
     const stripe = useStripe();
     const elements = useElements();
+    const navigate = useNavigate();
     const [processing, setProcessing] = useState(false);
-    console.log(senderId);
     const [saveTransaction, { data, isLoading, error: saveError }] = useSaveTransactionMutation();
+
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!stripe || !elements) {
@@ -34,6 +37,8 @@ const CheckoutForm = ({ clientSecret, senderName, senderEmail, senderId, parcelI
             return;
         }
 
+        setProcessing(true);
+
         // Use your card Element with other Stripe.js APIs
         const { error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
@@ -47,7 +52,7 @@ const CheckoutForm = ({ clientSecret, senderName, senderEmail, senderId, parcelI
             console.log('[PaymentMethod]', paymentMethod);
         }
 
-        setProcessing(true);
+
 
 
         try {
@@ -60,7 +65,7 @@ const CheckoutForm = ({ clientSecret, senderName, senderEmail, senderId, parcelI
                     },
                 },
             });
-            
+
             if (result.error) {
                 console.log(result.error);
             } else {
@@ -71,6 +76,8 @@ const CheckoutForm = ({ clientSecret, senderName, senderEmail, senderId, parcelI
                     transactionId: result.paymentIntent.id,
                     paymentMethod: result.paymentIntent.payment_method_types[0]
                 })
+
+                navigate(`/dashboard/user/my-parcels/${parcelId}/payment-success`);
             }
         } catch (error) {
             console.log(error);
@@ -100,8 +107,10 @@ const CheckoutForm = ({ clientSecret, senderName, senderEmail, senderId, parcelI
                     },
                 }}
             />
-            <button className="py-3 px-10 btn-primary disabled:btn-disabled" type="submit" disabled={!stripe || processing}>
-                Pay
+            <button className="py-3 w-28 flex justify-center btn-primary disabled:btn-disabled" type="submit" disabled={!stripe || processing}>
+                {
+                    processing ? <Icon className="animate-spin text-2xl" icon="mingcute:loading-fill" /> : 'Pay'
+                }
             </button>
         </form>
     );

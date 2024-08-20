@@ -9,7 +9,7 @@ const Banner = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
     return (
         <div
-            className="h-screen flex flex-col gap-y-10 md:gap-y-0 md:flex-row justify-between"
+            className="min-h-screen flex flex-col gap-y-10 md:gap-y-0 md:flex-row justify-between"
         >
             {/* Left Side */}
             <div className="w-full md:w-1/2 mt-20 md:pl-28  px-5 md:px-0 md:pt-40 relative">

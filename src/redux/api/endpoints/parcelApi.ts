@@ -14,7 +14,9 @@ const parcelApi = baseApi.injectEndpoints({
             query: (userId) => ({
                 url: `/parcel-booking/${userId}/parcels`,
                 method: 'GET'
-            })
+            }),
+
+            providesTags: ['Parcel']
         }),
 
         getABookedParcelById: builder.query({

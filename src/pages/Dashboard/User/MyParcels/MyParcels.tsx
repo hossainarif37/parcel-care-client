@@ -21,6 +21,7 @@ import {
 import { formateDate } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import NotFoundData from "@/components/NotFoundData";
+import { useEffect } from "react";
 
 
 const MyParcels = () => {
@@ -35,9 +36,10 @@ const MyParcels = () => {
         return <NotFoundData>Parcel not found</NotFoundData>
     }
 
+
     return (
         <div>
-            <div className="h-screen p-5 shadow-md rounded-xl">
+            <div className="min-h-screen p-5 shadow-md rounded-xl">
                 <h1 className="text-2xl font-bold text-black-50 mb-5">My Parcels</h1>
                 <Table className="">
                     <TableHeader>

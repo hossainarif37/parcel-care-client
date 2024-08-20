@@ -9,6 +9,7 @@ import { customSelectStyles } from "../../../../styles/customSelectStyles";
 import { useBookAParcelMutation } from "../../../../redux/api/endpoints/parcelApi";
 import toast from "react-hot-toast";
 import { getValidDistrictSelection, getValidSubDistrictSelection } from "@/lib/utils";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 type IFormInput = {
     senderName: string;
@@ -660,10 +661,13 @@ const BookParcel = () => {
                     <div className="flex justify-end gap-x-3">
                         <button
                             type="submit"
-                            className={`btn-primary py-3 px-10 rounded-md ${isLoading && 'disabled:btn-disabled'}`}
+                            className={`btn-primary py-3 w-40 flex justify-center rounded-md ${isLoading && 'disabled:btn-disabled'}`}
                             disabled={isLoading}
                         >
-                            Book Parcel
+                            {
+                                isLoading ? <Icon className="animate-spin text-2xl" icon="mingcute:loading-fill" /> : 'Book Parcel'
+                            }
+
                         </button>
                     </div>
                 </form>

@@ -258,7 +258,9 @@ const Profile = () => {
                                     className={`btn-green rounded-lg w-full py-3 px-14 flex justify-center gap-x-2`}
                                 >
                                     {
-                                        imageUploadLoading ? <Icon className="animate-spin text-2xl" icon="mingcute:loading-fill" /> :
+                                        imageUploadLoading
+                                            ? <Icon className="animate-spin text-2xl" icon="mingcute:loading-fill" />
+                                            :
 
                                             <>
                                                 <span className='text-2xl'><Icon icon="carbon:save" /></span>
