@@ -65,11 +65,11 @@ const ParcelTracking = () => {
                 }
                 {
                     parcel && !error &&
-                    <div className="mt-14  max-w-7xl mx-auto space-y-10">
+                    <div className="mt-14  max-w-7xl mx-auto space-y-20">
                         {/* Shipment Details */}
                         <section>
                             <h1 className="text-2xl mb-5 font-semibold text-black-50">Shipment Details</h1>
-                            <div className="border flex flex-col md:flex-row md:justify-between p-10 rounded-xl space-y-7 md:space-y-0">
+                            <div className="border shadow-md flex flex-col md:flex-row md:justify-between p-10 rounded-xl space-y-7 md:space-y-0">
                                 {/* Pickup Info */}
                                 <div className="md:w-1/2">
                                     <h2 className="text-xl font-semibold text-black-100">Pickup Info</h2>
@@ -96,9 +96,9 @@ const ParcelTracking = () => {
 
                         {/* Tracking Details */}
                         <section>
-                            <h1 className="text-2xl mb-5 font-semibold text-black-50">Tracking Details</h1>
+                            <h1 className="text-2xl mb-7 font-semibold text-black-50 text-center">Tracking Details</h1>
 
-                            <div className="shadow-xl rounded-xl">
+                            <div className=" rounded-xl">
                                 <TrackingDetails parcel={parcel} />
                             </div>
                         </section>

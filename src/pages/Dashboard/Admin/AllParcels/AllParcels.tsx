@@ -11,7 +11,6 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Link } from "react-router-dom";
@@ -21,9 +20,14 @@ import { formateDate } from "@/lib/utils";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { trackingData } from "@/constants/trackingData";
+import Loading from "@/components/Loading";
+import { Modal } from "@/components/Modal";
 
 const AllParcels = () => {
-    const { data } = useGetAllParcelsQuery(undefined);
+    const { data, isLoading } = useGetAllParcelsQuery(undefined);
+    if (isLoading) {
+        return <Loading paddingY="py-40" textColor="text-primary" textSize="text-4xl" />
+    }
     if (!data) {
         return <NotFoundData>Parcel not found</NotFoundData>
     }
@@ -77,16 +81,14 @@ const AllParcels = () => {
 
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
-                                            <button className="outline-none p-2 rounded-full border hover:bg-slate-50 text-xl">
+                                            <button
+                                                className="outline-none p-2 rounded-full border hover:bg-slate-50 text-xl">
                                                 <Icon icon="tabler:dots" />
                                             </button>
 
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent align="end" className="mt-1">
-                                            <DropdownMenuItem>
-                                                Assign to Agent
-                                            </DropdownMenuItem>
-                                            <DropdownMenuSeparator />
+                                            <Modal />
                                             <DropdownMenuItem>
                                                 <Link to={`#`}>Track the Parcel</Link>
                                             </DropdownMenuItem>
