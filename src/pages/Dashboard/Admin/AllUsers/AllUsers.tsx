@@ -21,8 +21,6 @@ import NotFoundData from "@/components/NotFoundData";
 const AllUsers = () => {
     const { data } = useGetUsersByRoleQuery('user');
 
-    console.log(data);
-
     if (!data) {
         return <NotFoundData>Users not found</NotFoundData>
     }
