@@ -6,6 +6,8 @@ import {
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useState } from "react";
 import InputWithLabel from "./Inputs/InputWithLabel";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { SelectLabel } from "@radix-ui/react-select";
 
 type TModalProps = {
     assigningAgentRole: string;
@@ -15,7 +17,7 @@ type TModalProps = {
 }
 
 export function Modal({ ...props }: TModalProps) {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(true);
 
     return (
         <Dialog open={isModalOpen}>
@@ -27,7 +29,7 @@ export function Modal({ ...props }: TModalProps) {
                     <span>Assign to {props.assigningAgentRole} Agent</span>
                 </button>
             </DialogTrigger>
-            <DialogContent className="w-full md:max-w-[425px]">
+            <DialogContent className="w-full md:max-w-[450px]">
 
                 <div>
                     <h1 className="text-xl text-center mb-5 font-bold text-black-100">Assigning to {props.assigningAgentRole} Agent</h1>
@@ -71,6 +73,38 @@ export function Modal({ ...props }: TModalProps) {
                             value={props.district}
                             isDisabled={true}
                         />
+
+                        {/* Assign to Agent */}
+                        <div className="space-y-2">
+                            <label
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                htmlFor={'assign-to-agent'}
+                            >
+                                {'Assign to Agent'}
+                            </label>
+                            <Select>
+                                <SelectTrigger className="w-full py-6">
+                                    <SelectValue placeholder={`Select Agent for ${props.assigningAgentRole}`} />
+                                </SelectTrigger>
+                                <SelectContent className="">
+                                    <SelectItem
+                                        className="py-3 cursor-pointer"
+                                        value={'Arif'}>
+                                        Arif
+                                    </SelectItem>
+                                    <SelectItem
+                                        className="py-3 cursor-pointer"
+                                        value={'Hridoy'}>
+                                        Hridoy
+                                    </SelectItem>
+                                    <SelectItem
+                                        className="py-3 cursor-pointer"
+                                        value={'Turan'}>
+                                        Turan
+                                    </SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
                     </div>
 
                 </div>
