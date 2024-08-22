@@ -15,7 +15,7 @@ type TModalProps = {
 }
 
 export function Modal({ ...props }: TModalProps) {
-    const [isModalOpen, setIsModalOpen] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const { parcelId, assigningAgentRole, district } = props;
 
     return (
@@ -31,20 +31,8 @@ export function Modal({ ...props }: TModalProps) {
             <DialogContent className="w-full md:max-w-[450px]">
 
                 <div>
-                    <h1 className="text-xl text-center mb-5 font-bold text-black-100">Assigning to {assigningAgentRole} Agent</h1>
                     <div className="space-y-5">
-                        {/* Assigning Agent Role */}
-                        <InputWithLabel
-                            type=""
-                            id="assigning-role-for-agent"
-                            label="Assigning Agent Role"
-                            placeholder=""
-                            value={assigningAgentRole}
-                            isDisabled={true}
-                        />
-
-
-
+                        <h1 className="text-xl text-center mb-5 font-bold text-black-100">Assigning to {assigningAgentRole} Agent</h1>
                         {/* District*/}
                         <InputWithLabel
                             type=""
@@ -55,6 +43,15 @@ export function Modal({ ...props }: TModalProps) {
                             isDisabled={true}
                         />
 
+                        {/* Assigning Agent Role */}
+                        <InputWithLabel
+                            type=""
+                            id="assigning-role-for-agent"
+                            label="Assigning Agent Role"
+                            placeholder=""
+                            value={assigningAgentRole}
+                            isDisabled={true}
+                        />
                         {/* Assign to Agent */}
                         <div className="space-y-2">
                             <label
