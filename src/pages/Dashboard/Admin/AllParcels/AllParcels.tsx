@@ -98,8 +98,7 @@ const AllParcels = () => {
                                                                 i === 0 && item.title === 'Pickup Agent Assigned' ?
                                                                     <Modal
                                                                         key={i}
-                                                                        fullAddress={parcel.senderAddress.fullAddress}
-                                                                        subDistrict={parcel.senderAddress.subDistrict}
+                                                                        parcelId={parcel._id}
                                                                         district={parcel.senderAddress.district}
                                                                         assigningAgentRole="Pickup"
                                                                     />

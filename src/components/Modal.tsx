@@ -6,18 +6,17 @@ import {
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useState } from "react";
 import InputWithLabel from "./Inputs/InputWithLabel";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { SelectLabel } from "@radix-ui/react-select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 type TModalProps = {
+    parcelId: string;
     assigningAgentRole: string;
-    fullAddress: string;
-    subDistrict: string;
     district: string;
 }
 
 export function Modal({ ...props }: TModalProps) {
     const [isModalOpen, setIsModalOpen] = useState(true);
+    const { parcelId, assigningAgentRole, district } = props;
 
     return (
         <Dialog open={isModalOpen}>
@@ -26,13 +25,13 @@ export function Modal({ ...props }: TModalProps) {
                     onClick={() => setIsModalOpen(true)}
                     className="relative flex w-full  select-none items-center rounded-sm py-2 cursor-pointer pl-8 pr-2 text-sm outline-none hover:bg-slate-100 focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50">
                     <span className="absolute left-3  text-black-100"><Icon icon="solar:alt-arrow-down-line-duotone" /></span>
-                    <span>Assign to {props.assigningAgentRole} Agent</span>
+                    <span>Assign to {assigningAgentRole} Agent</span>
                 </button>
             </DialogTrigger>
             <DialogContent className="w-full md:max-w-[450px]">
 
                 <div>
-                    <h1 className="text-xl text-center mb-5 font-bold text-black-100">Assigning to {props.assigningAgentRole} Agent</h1>
+                    <h1 className="text-xl text-center mb-5 font-bold text-black-100">Assigning to {assigningAgentRole} Agent</h1>
                     <div className="space-y-5">
                         {/* Assigning Agent Role */}
                         <InputWithLabel
@@ -40,37 +39,19 @@ export function Modal({ ...props }: TModalProps) {
                             id="assigning-role-for-agent"
                             label="Assigning Agent Role"
                             placeholder=""
-                            value={props.assigningAgentRole}
+                            value={assigningAgentRole}
                             isDisabled={true}
                         />
 
-                        {/* Full Address */}
-                        <InputWithLabel
-                            type=""
-                            id="sender-full-address"
-                            label="Sender Full Address"
-                            placeholder=""
-                            value={props.fullAddress}
-                            isDisabled={true}
-                        />
 
-                        {/* Sub-District*/}
-                        <InputWithLabel
-                            type=""
-                            id="sender-sub-district"
-                            label="Sender Sub-District"
-                            placeholder=""
-                            value={props.subDistrict}
-                            isDisabled={true}
-                        />
 
-                        {/* Sub-District*/}
+                        {/* District*/}
                         <InputWithLabel
                             type=""
-                            id="sender-district"
-                            label="Sender District"
+                            id={`${assigningAgentRole.toLowerCase}-district`}
+                            label={`${assigningAgentRole} District`}
                             placeholder=""
-                            value={props.district}
+                            value={district}
                             isDisabled={true}
                         />
 
@@ -84,7 +65,7 @@ export function Modal({ ...props }: TModalProps) {
                             </label>
                             <Select>
                                 <SelectTrigger className="w-full py-6">
-                                    <SelectValue placeholder={`Select Agent for ${props.assigningAgentRole}`} />
+                                    <SelectValue placeholder={`Select Agent for ${assigningAgentRole}`} />
                                 </SelectTrigger>
                                 <SelectContent className="">
                                     <SelectItem
