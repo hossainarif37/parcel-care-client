@@ -30,7 +30,7 @@ const AllParcels = () => {
     if (isLoading) {
         return <Loading paddingY="py-40" textColor="text-primary" textSize="text-4xl" />
     }
-    
+
     if (!data) {
         return <NotFoundData>Parcel not found</NotFoundData>
     }
@@ -96,7 +96,13 @@ const AllParcels = () => {
                                                         remainingStatus.map((item, i) => {
                                                             return (
                                                                 i === 0 && item.title === 'Pickup Agent Assigned' ?
-                                                                    <Modal />
+                                                                    <Modal
+                                                                        key={i}
+                                                                        fullAddress={parcel.senderAddress.fullAddress}
+                                                                        subDistrict={parcel.senderAddress.subDistrict}
+                                                                        district={parcel.senderAddress.district}
+                                                                        assigningAgentRole="Pickup"
+                                                                    />
                                                                     :
                                                                     i === 0 ? (
                                                                         <SelectItem
