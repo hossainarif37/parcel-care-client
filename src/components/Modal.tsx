@@ -9,6 +9,9 @@ import InputWithLabel from "./Inputs/InputWithLabel";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { useGetAgentsByDistrictQuery } from "@/redux/api/endpoints/userApi";
 import { SelectLabel } from "@radix-ui/react-select";
+import { useUpdateParcelInfoMutation } from "@/redux/api/endpoints/parcelApi";
+import { TErrorData } from "@/types/types";
+import toast from "react-hot-toast";
 
 type TModalProps = {
     parcelId: string;
@@ -22,18 +25,36 @@ type TAgent = {
     profilePicture: string;
 }
 
-type TErrorData = {
-    status: number;
-    data: {
-        message: string;
-        success: boolean
-    }
-}
 
 export function Modal({ ...props }: TModalProps) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { parcelId, assigningAgentRole, district } = props;
     const { data, error } = useGetAgentsByDistrictQuery(district);
+    const [updateParcelInfo, { isLoading }] = useUpdateParcelInfoMutation();
+    const [selectedAgentId, setSelectedAgentId] = useState<string>('');
+    console.log(selectedAgentId);
+
+    const hanldeAssignAgent = () => {
+        if (!selectedAgentId) {
+            return toast.error('Please select an agent');
+        }
+        const body = {
+            deliveryStatus: `${assigningAgentRole} Agent Assigned`,
+            assignedAgent: selectedAgentId,
+            assignedAgentRole: assigningAgentRole.toLowerCase()
+        }
+
+        updateParcelInfo({ parcelId, body }).unwrap()
+            .then((res) => {
+                console.log(res);
+                setIsModalOpen(false);
+                toast.success(`${assigningAgentRole} agent assigned successfully`)
+            })
+            .catch((err: TErrorData) => {
+                toast.error(err.data.message);
+                console.log(err.data.message);
+            })
+    }
 
     return (
         <Dialog open={isModalOpen}>
@@ -77,7 +98,7 @@ export function Modal({ ...props }: TModalProps) {
                             >
                                 {'Assign to Agent'}
                             </label>
-                            <Select>
+                            <Select onValueChange={(value) => setSelectedAgentId(value)}>
                                 <SelectTrigger className="w-full py-6">
                                     <SelectValue placeholder={`Select Agent for ${assigningAgentRole}`} />
                                 </SelectTrigger>
@@ -91,7 +112,7 @@ export function Modal({ ...props }: TModalProps) {
                                             <SelectItem
                                                 key={agent._id}
                                                 className="py-3 cursor-pointer pl-2"
-                                                value={agent.name}
+                                                value={agent._id}
                                             >
                                                 <div className="flex gap-x-3 items-center">
                                                     <img className="w-7 h-7 rounded-full" src={agent.profilePicture} alt="" /> <span> {agent.name}</span>
@@ -103,11 +124,11 @@ export function Modal({ ...props }: TModalProps) {
                             </Select>
                         </div>
                     </div>
-
                 </div>
 
-
-                <button className="btn btn-primary mt-2" onClick={() => setIsModalOpen(false)} type="button">Save changes</button>
+                <button disabled={isLoading} className="btn btn-primary disabled:btn-disabled mt-2 flex justify-center" onClick={hanldeAssignAgent} type="button">
+                    {isLoading ? <Icon className="animate-spin text-2xl" icon="mingcute:loading-fill" /> : <span>Save changes</span>}
+                </button>
             </DialogContent>
         </Dialog>
     )

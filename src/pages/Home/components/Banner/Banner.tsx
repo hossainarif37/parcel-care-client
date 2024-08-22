@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import banner from "../../../../assets/images/banner.jpg"
 import CircleShape from "../../../../components/CircleShape";
-import Button from "../../../../components/Buttons/Button";
 import { useSelector } from "react-redux";
 import { IRootState } from "@/types/types";
 
@@ -9,10 +8,10 @@ const Banner = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
     return (
         <div
-            className="min-h-screen flex flex-col gap-y-10 md:gap-y-0 md:flex-row justify-between"
+            className="flex flex-col gap-y-10 md:gap-y-0 md:flex-row justify-between"
         >
             {/* Left Side */}
-            <div className="w-full md:w-1/2 mt-20 md:pl-28  px-5 md:px-0 md:pt-40 relative">
+            <div className="w-full md:w-1/2 mt-20 md:pl-28 px-5 md:px-0 md:pt-40 relative">
                 <h1 className="text-3xl md:text-6xl font-semibold text-black-50 md:flex md:flex-col gap-y-0 md:gap-y-4">
                     <span>The Best Ever Courier</span> <span>Service In The World</span>
                 </h1>
@@ -31,13 +30,13 @@ const Banner = () => {
                     <CircleShape width="w-5" height="h-5" bottom="bottom-40" right="right-32" />
                     <CircleShape width="w-16" height="h-16" bottom="bottom-10" right="right-40" />
                 </div>
-
             </div>
 
             {/* Right Side */}
             <img
                 className="md:w-[900px] -z-10"
-                src={banner} alt="" />
+                src={banner} alt=""
+            />
 
         </div>
     );

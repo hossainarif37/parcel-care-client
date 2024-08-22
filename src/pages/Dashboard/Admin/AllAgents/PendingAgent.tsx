@@ -54,7 +54,7 @@ const PendingAgent = () => {
 
     return (
         <div>
-            <div className="mih-h-screen p-5 shadow-md rounded-xl">
+            <div className="min-h-screen p-5 shadow-md rounded-xl">
                 <h1 className="text-2xl font-bold text-black-100 mb-5">Pending Agents</h1>
                 <Table className="">
                     <TableHeader>
