@@ -10,6 +10,13 @@ const userApi = baseApi.injectEndpoints({
             providesTags: ['User']
         }),
 
+        getAgentsByDistrict: builder.query({
+            query: (district) => ({
+                url: `/users/agents?district=${district}`,
+                method: 'GET'
+            }),
+        }),
+
         updateUserInfo: builder.mutation({
             query: ({ userId, body }) => ({
                 url: `/users/${userId}/profile`,
@@ -45,4 +52,4 @@ const userApi = baseApi.injectEndpoints({
     })
 })
 
-export const { useCurrentUserQuery, useLazyCurrentUserQuery, useUpdateUserInfoMutation, useGetPendingAgentsQuery, useUpdatedAgentRequestStatusMutation, useGetUsersByRoleQuery } = userApi;
+export const { useCurrentUserQuery, useLazyCurrentUserQuery, useUpdateUserInfoMutation, useGetPendingAgentsQuery, useUpdatedAgentRequestStatusMutation, useGetUsersByRoleQuery, useGetAgentsByDistrictQuery } = userApi;

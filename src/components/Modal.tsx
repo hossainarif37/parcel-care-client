@@ -7,6 +7,8 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { useState } from "react";
 import InputWithLabel from "./Inputs/InputWithLabel";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { useGetAgentsByDistrictQuery } from "@/redux/api/endpoints/userApi";
+import { SelectLabel } from "@radix-ui/react-select";
 
 type TModalProps = {
     parcelId: string;
@@ -14,9 +16,24 @@ type TModalProps = {
     district: string;
 }
 
+type TAgent = {
+    _id: string;
+    name: string;
+    profilePicture: string;
+}
+
+type TErrorData = {
+    status: number;
+    data: {
+        message: string;
+        success: boolean
+    }
+}
+
 export function Modal({ ...props }: TModalProps) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { parcelId, assigningAgentRole, district } = props;
+    const { data, error } = useGetAgentsByDistrictQuery(district);
 
     return (
         <Dialog open={isModalOpen}>
@@ -64,22 +81,24 @@ export function Modal({ ...props }: TModalProps) {
                                 <SelectTrigger className="w-full py-6">
                                     <SelectValue placeholder={`Select Agent for ${assigningAgentRole}`} />
                                 </SelectTrigger>
-                                <SelectContent className="">
-                                    <SelectItem
-                                        className="py-3 cursor-pointer"
-                                        value={'Arif'}>
-                                        Arif
-                                    </SelectItem>
-                                    <SelectItem
-                                        className="py-3 cursor-pointer"
-                                        value={'Hridoy'}>
-                                        Hridoy
-                                    </SelectItem>
-                                    <SelectItem
-                                        className="py-3 cursor-pointer"
-                                        value={'Turan'}>
-                                        Turan
-                                    </SelectItem>
+                                <SelectContent className="flex">
+
+                                    {
+                                        error && <SelectLabel className="py-3 px-2 text-red-500 cursor-default">{(error as TErrorData).data.message}</SelectLabel>
+                                    }
+                                    {
+                                        data?.agents?.map((agent: TAgent) => (
+                                            <SelectItem
+                                                key={agent._id}
+                                                className="py-3 cursor-pointer pl-2"
+                                                value={agent.name}
+                                            >
+                                                <div className="flex gap-x-3 items-center">
+                                                    <img className="w-7 h-7 rounded-full" src={agent.profilePicture} alt="" /> <span> {agent.name}</span>
+                                                </div>
+                                            </SelectItem>
+                                        ))
+                                    }
                                 </SelectContent>
                             </Select>
                         </div>
