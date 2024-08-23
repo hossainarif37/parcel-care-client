@@ -1,4 +1,4 @@
-import { useGetAllParcelsQuery } from "@/redux/api/endpoints/parcelApi";
+import { useGetAllParcelsQuery, useUpdateParcelInfoMutation } from "@/redux/api/endpoints/parcelApi";
 import {
     Table,
     TableBody,
@@ -22,10 +22,14 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { trackingData } from "@/constants/trackingData";
 import Loading from "@/components/Loading";
 import { Modal } from "@/components/Modal";
+import { useState } from "react";
+import toast from "react-hot-toast";
+
 
 const AllParcels = () => {
     const { data, isLoading } = useGetAllParcelsQuery(undefined);
-    // const [selectOpen, setSelectOpen] = useState(false);
+    const [updateDeliveryStatus] = useUpdateParcelInfoMutation();
+    const [selectedDeliveryStatus, setSelectedDeliveryStatus] = useState('');
 
     if (isLoading) {
         return <Loading paddingY="py-40" textColor="text-primary" textSize="text-4xl" />
@@ -33,6 +37,18 @@ const AllParcels = () => {
 
     if (!data) {
         return <NotFoundData>Parcel not found</NotFoundData>
+    }
+
+    const handleUpdateDeliveryStatus = (value: string, parcelId: string) => {
+        updateDeliveryStatus({ parcelId, body: { deliveryStatus: value } }).unwrap()
+            .then(() => {
+                toast.success("Delivery status updated successfully");
+                setSelectedDeliveryStatus(value);
+            })
+            .catch((err) => {
+                toast.error(err.data.message);
+                console.log(err);
+            })
     }
 
     return (
@@ -69,7 +85,7 @@ const AllParcels = () => {
                                         {formateDate(parcel.bookingDate, true)}
                                     </TableCell>
                                     <TableCell className="font-medium">
-                                        <Select>
+                                        <Select onValueChange={(value) => handleUpdateDeliveryStatus(value, parcel._id)}>
                                             <SelectTrigger className="w-[180px]">
                                                 <SelectValue placeholder={parcel.deliveryStatus} />
                                             </SelectTrigger>
