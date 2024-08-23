@@ -7,7 +7,8 @@ const transactionApi = baseApi.injectEndpoints({
                 url: '/payment/transaction',
                 method: 'POST',
                 body
-            })
+            }),
+            invalidatesTags: ['Parcel']
         })
     })
 })

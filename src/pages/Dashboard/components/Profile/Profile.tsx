@@ -27,8 +27,91 @@ const Profile = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
     const dispatch = useDispatch();
     const [updateUserInfo] = useUpdateUserInfoMutation();
-    const [isEditClicked, setIsEditClicked] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+
+    const [image, setImage] = useState<File | null>(null);
+    const [imageUrl, setImageUrl] = useState("");
+    const [tempImageUrl, setTempImageUrl] = useState('');
+    const [imageUploadLoading, setImageUploadLoading] = useState(false);
+
+    const generateUniqueIdentifier = (file: File): string => {
+        // You can use a combination of file properties to create a unique identifier
+        return `${file.name}_${file.size}_${file.lastModified}`;
+    };
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files![0];
+        console.log('file', file);
+        setImage(file);
+
+        // Convert the image to base64 URL for temporary preview
+        const reader = new FileReader();
+        reader.onload = () => {
+            if (reader.result !== null) {
+                const base64String = reader.result as string;
+                setTempImageUrl(base64String);
+            }
+        };
+        reader.readAsDataURL(file);
+    };
+
+    const handleUploadImage = async () => {
+        try {
+            const uniqueIdentifier = generateUniqueIdentifier(image!);
+            setImageUploadLoading(true);
+            const cloudName = 'dhtilaehp';
+            const uploadPreset = 'xjvhtoge';
+            // Create a FormData object
+            const formData = new FormData();
+            formData.append('file', image!);
+            formData.append('upload_preset', uploadPreset); // Replace with your upload preset
+            formData.append('cloud_name', cloudName); // Replace with your cloud name
+            formData.append('public_id', uniqueIdentifier); // Use the unique identifier as the public_id
+
+            // Make a POST request to Cloudinary's upload API
+            const response = await fetch(
+                `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+                {
+                    method: 'POST',
+                    body: formData
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            updateUserInfo({ userId: user?._id, body: { profilePicture: data.secure_url } }).unwrap()
+                .then(({ user }) => {
+                    toast.success('Image uploaded successfully!');
+                    dispatch(updateUser({ user: user }));
+
+                    handleRemoveFile();
+                    // Return the secure URL of the uploaded image
+                    setImageUrl(data.secure_url);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+
+
+
+        } catch (error) {
+            console.error('Error uploading image to Cloudinary:', error);
+        }
+        finally {
+            setImageUploadLoading(false);
+        }
+    }
+
+    const handleRemoveFile = () => {
+        setTempImageUrl('');
+        setImage(null);
+        // Clear the input value to remove the selected file
+        (document.getElementById("upload-image") as HTMLInputElement).value = '';
+    }
 
     // List of fields considered for profile completion calculation
     const requiredFields = ['name', 'email', 'profilePicture', 'phoneNumber', 'fullAddress', 'subDistrict', 'district'];
@@ -132,7 +215,6 @@ const Profile = () => {
             error: ({ data }) => data?.message || 'Update failed'
         });
 
-        setIsEditClicked(false);
     }
 
     useEffect(() => {
@@ -150,23 +232,52 @@ const Profile = () => {
             <div className="max-w-4xl mx-auto py-10 px-5 md:px-20 border rounded-md  mb-5">
                 {/* Image area */}
                 <div className="flex flex-col gap-y-5 md:gap-y-0 mb-5 md:flex-row items-center justify-center gap-x-5">
-                    <img className="w-28 md:w-40 md:h-40 shadow ring-4 ring-secondary ring-opacity-60 ring-offset-2 h-28  object-cover rounded-full" alt="user image" src={user?.profilePicture ? user.profilePicture : blank_avatar} />
+                    <div className="shadow ring-4 ring-secondary ring-opacity-60 ring-offset-2 rounded-full overflow-hidden" >
+                        <img className="w-28 md:w-40 md:h-40  h-28  object-contain scale-125 rounded-full" alt="user image" src={tempImageUrl ? tempImageUrl : user?.profilePicture || blank_avatar} />
+                    </div>
 
                     <div className="flex justify-start items-center flex-col gap-3">
                         {/* Upload Image Button */}
-                        <button
-                            type='button'
-                            className={`btn-primary w-full py-3 px-14 flex justify-center gap-x-2`}
-                        >
-                            <span className='text-2xl'><Icon icon="lucide:image-plus" /></span>
-                            <span>Upload New Image</span>
-                        </button>
+                        <input
+                            onChange={handleImageChange}
+                            className="hidden" type="file" name="upload-image" id="upload-image"
+                        />
+                        {
+                            !tempImageUrl ?
+                                <label
+                                    htmlFor="upload-image"
+                                    className={`btn-primary cursor-pointer w-full py-3 px-14 flex justify-center gap-x-2`}
+                                >
+                                    <span className='text-2xl'><Icon icon="lucide:image-plus" /></span>
+                                    <span>Choose Photo</span>
+                                </label>
+                                :
+                                <button
+                                    onClick={handleUploadImage}
+                                    type="button"
+                                    className={`btn-green rounded-lg w-full py-3 px-14 flex justify-center gap-x-2`}
+                                >
+                                    {
+                                        imageUploadLoading
+                                            ? <Icon className="animate-spin text-2xl" icon="mingcute:loading-fill" />
+                                            :
+
+                                            <>
+                                                <span className='text-2xl'><Icon icon="carbon:save" /></span>
+                                                <span> Save Changes</span>
+                                            </>
+                                    }
+
+                                </button>
+                        }
 
                         <button
+                            onClick={handleRemoveFile}
                             type="button"
                             className={`btn-delete w-full py-3 px-14 flex justify-center gap-x-2`}
                         >
-                            Remove Picture
+                            <span className='text-2xl'><Icon icon="fluent:delete-20-regular" /></span>
+                            <span> Remove Picture</span>
                         </button>
                     </div>
                 </div>
@@ -307,36 +418,15 @@ const Profile = () => {
                         </div>
                     </div>
 
-                    {
-                        isEditClicked ?
-                            <div className="flex justify-end gap-x-3">
-                                <button
-                                    onClick={() => setIsEditClicked(false)}
-                                    type="button"
-                                    className="btn-accent py-3 px-10 rounded-md"
-                                >
-                                    Cancel
-                                </button>
 
-                                <button
-                                    type="submit"
-                                    className="btn-primary py-3 px-10 rounded-md"
-                                >
-                                    Save Changes
-                                </button>
-                            </div>
-
-                            :
-
-                            <button
-                                onClick={() => setIsEditClicked(true)}
-                                type="button"
-                                className="btn-secondary text-white font-semibold py-3 px-10 rounded-md ml-auto"
-                            >
-                                Edit
-                            </button>
-
-                    }
+                    <div className="flex justify-end gap-x-3">
+                        <button
+                            type="submit"
+                            className="btn-primary py-3 px-10 rounded-md"
+                        >
+                            Save Changes
+                        </button>
+                    </div>
                 </form>
             </div>
 

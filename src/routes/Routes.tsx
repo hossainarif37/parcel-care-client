@@ -27,6 +27,7 @@ import ParcelTracking from "@/pages/Dashboard/User/ParcelTracking/ParcelTracking
 import MyReviews from "@/pages/Dashboard/Agent/MyReviews/MyReviews";
 import AgentProfile from "@/pages/Dashboard/Agent/AgentProfile/AgentProfile";
 import PendingAgent from "@/pages/Dashboard/Admin/AllAgents/PendingAgent";
+import PaymentSuccess from "@/pages/Dashboard/User/Payment/PaymentSuccess";
 
 
 export const router = createBrowserRouter([
@@ -67,6 +68,10 @@ export const router = createBrowserRouter([
                     {
                         path: '/dashboard/user/my-parcels/:parcelId/payment',
                         element: <Payment />
+                    },
+                    {
+                        path: '/dashboard/user/my-parcels/:parcelId/payment-success',
+                        element: <PaymentSuccess />
                     },
                     {
                         path: '/dashboard/user/my-parcels/:parcelId/transaction-details',

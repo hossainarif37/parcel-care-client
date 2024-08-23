@@ -21,11 +21,14 @@ body {
     .btn-secondary{
         @apply text-white bg-secondary border-0 rounded-lg focus:outline-none transition duration-150 ease-in-out active:scale-90;
     }
+    .btn-green{
+        @apply text-white bg-gradient-to-r from-green-400 to-green-600 border-0 rounded-lg focus:outline-none transition duration-150 ease-in-out active:scale-90;
+    }
     .btn-accent{
         @apply text-white bg-black-50 border-0 rounded-lg focus:outline-none transition duration-150 ease-in-out active:scale-90;
     }
     .btn-delete{
-        @apply text-white bg-red-400 border-0 rounded-lg focus:outline-none transition duration-150 ease-in-out active:scale-90;
+        @apply text-white bg-gradient-to-r from-red-500 to-red-400 border-0 rounded-lg focus:outline-none transition duration-150 ease-in-out active:scale-90;
     }
     .gradient{
         @apply bg-gradient-to-r from-secondary to-primary;
@@ -43,7 +46,6 @@ body {
     }
     
 }
-
 
 
 input:-webkit-autofill,

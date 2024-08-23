@@ -54,9 +54,9 @@ const ParcelTracking = () => {
                 <form onSubmit={handleSubmit(handleSearch)} className="relative flex max-w-3xl mx-auto mt-12 rounded-l-lg border">
                     <input
                         {...register('parcelId', { required: 'Parcel ID is required' })}
-                        type="text" className="outline-none py-5 pl-14 pr-5 w-full text-lg rounded-lg text-black-50" placeholder="Enter Parcel ID" />
+                        type="text" className="outline-none py-3 md:py-5 pl-14 pr-5 w-full text-lg rounded-lg text-black-50" placeholder="Enter Parcel ID" />
                     <Icon icon="iconamoon:search-thin" className="absolute top-1/2 -translate-y-1/2 left-5 text-2xl text-black-100" />
-                    <button type="submit" className=" text-xl font-semibold gradient py-5 px-10 text-white rounded-r-lg">Search</button>
+                    <button type="submit" className=" md:text-xl font-semibold gradient py-1 md:py-5 px-5 md:px-10 text-white rounded-r-lg">Search</button>
                 </form>
 
                 {
@@ -65,15 +65,15 @@ const ParcelTracking = () => {
                 }
                 {
                     parcel && !error &&
-                    <div className="mt-14  max-w-7xl mx-auto space-y-10">
+                    <div className="mt-14  max-w-7xl mx-auto space-y-20">
                         {/* Shipment Details */}
                         <section>
                             <h1 className="text-2xl mb-5 font-semibold text-black-50">Shipment Details</h1>
-                            <div className="border flex justify-between p-10 rounded-xl">
+                            <div className="border shadow-md flex flex-col md:flex-row md:justify-between p-10 rounded-xl space-y-7 md:space-y-0">
                                 {/* Pickup Info */}
-                                <div className="w-1/2">
+                                <div className="md:w-1/2">
                                     <h2 className="text-xl font-semibold text-black-100">Pickup Info</h2>
-                                    <div className="mt-5 space-y-1">
+                                    <div className="mt-2 md:mt-5 space-y-1">
                                         <p><span className="font-semibold text-black-100">Sender Name:</span> {parcel?.senderName}</p>
                                         <p><span className="font-semibold text-black-100">Sender Address:</span> {parcel?.senderAddress?.fullAddress}, {parcel?.senderAddress?.subDistrict}, {parcel?.senderAddress?.district} </p>
 
@@ -82,9 +82,9 @@ const ParcelTracking = () => {
                                 </div>
 
                                 {/* Delivery Info */}
-                                <div className="w-1/2">
-                                    <h2 className="text-xl font-semibold text-right text-black-100">Delivery Info</h2>
-                                    <div className="mt-5 space-y-1">
+                                <div className="md:w-1/2">
+                                    <h2 className="text-xl font-semibold md:text-right text-black-100">Delivery Info</h2>
+                                    <div className="mt-2 md:mt-5 space-y-1">
                                         <p><span className="font-semibold text-black-100">Recipient Name:</span> {parcel?.receiverName}</p>
                                         <p><span className="font-semibold text-black-100">Recipient Address:</span> {parcel?.deliveryAddress?.fullAddress}, {parcel?.deliveryAddress?.subDistrict}, {parcel?.deliveryAddress?.district}</p>
 
@@ -96,9 +96,9 @@ const ParcelTracking = () => {
 
                         {/* Tracking Details */}
                         <section>
-                            <h1 className="text-2xl mb-5 font-semibold text-black-50">Tracking Details</h1>
+                            <h1 className="text-2xl mb-7 font-semibold text-black-50 text-center">Tracking Details</h1>
 
-                            <div className="border rounded-xl">
+                            <div className=" rounded-xl">
                                 <TrackingDetails parcel={parcel} />
                             </div>
                         </section>

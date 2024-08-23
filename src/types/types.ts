@@ -47,7 +47,7 @@ export interface IParcel {
         status: 'Order Placed' | 'Pickup Agent Assigned' | 'Parcel Collected' | 'In Transit' | 'Delivery Hub Reached' | 'Delivery Agent Assigned' | 'Out For Delivery' | 'Delivered';
         updatedAt: Date;
     }>,
-    assignedAgentId?: string;
+    assignedAgent?: string;
     assignedAgentRole?: 'pickup' | 'delivery';
     bookingDate: Date;
 }
@@ -72,3 +72,11 @@ export type SelectOptionType = {
     value: string;
     label: string;
 };
+
+export type TErrorData = {
+    status: number;
+    data: {
+        message: string;
+        success: boolean
+    }
+}

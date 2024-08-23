@@ -26,7 +26,7 @@ const TrackingDetails: React.FC<TrackingDetailsProps> = ({ parcel }) => {
     }, []);
 
     return (
-        <VerticalTimeline>
+        <VerticalTimeline lineColor="#f1f1f1">
             {
                 trackingData.map((item, i) => {
                     return (
