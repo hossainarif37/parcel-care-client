@@ -67,7 +67,7 @@ export function Modal({ ...props }: TModalProps) {
                 </button>
             </DialogTrigger>
             <DialogContent className="w-full md:max-w-[450px]">
-
+                <button onClick={() => setIsModalOpen(false)} type="button" className="cursor-pointer text-2xl text-black-100 hover:text-black absolute top-4 right-4 hover:"><Icon icon="iconamoon:close-light" /></button>
                 <div>
                     <div className="space-y-5">
                         <h1 className="text-xl text-center mb-5 font-bold text-black-100">Assigning to {assigningAgentRole} Agent</h1>
