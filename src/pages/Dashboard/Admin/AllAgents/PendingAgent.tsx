@@ -28,6 +28,7 @@ import { UserType } from "@/types/types";
 import toast from "react-hot-toast";
 import { baseApi } from "@/redux/api/baseApi";
 import { useDispatch } from "react-redux";
+import NotFoundData from "@/components/NotFoundData";
 
 const PendingAgent = () => {
     const { data } = useGetPendingAgentsQuery(undefined);
@@ -50,7 +51,11 @@ const PendingAgent = () => {
         })
     };
 
+    console.log(data);
 
+    if (!data) {
+        return <NotFoundData>Pending Agent not found</NotFoundData>
+    }
 
     return (
         <div>
