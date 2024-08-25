@@ -50,8 +50,8 @@ export const formateDate = (date: Date, isFullMonth = false) => {
 export const filteredTrackingData = (parcelData: IParcel) => {
   const trackingArr = [];
   for (const item of trackingData) {
-    if (item.title === parcelData?.deliveryStatusHistory[item.id]?.status) {
-      trackingArr.push({ ...item, updatedAt: parcelData?.deliveryStatusHistory[item.id].updatedAt });
+    if (item.title === parcelData?.shipmentStatusHistory[item.id]?.status) {
+      trackingArr.push({ ...item, updatedAt: parcelData?.shipmentStatusHistory[item.id].updatedAt });
     }
   }
   return trackingArr;

@@ -39,7 +39,7 @@ export function Modal({ ...props }: TModalProps) {
             return toast.error('Please select an agent');
         }
         const body = {
-            deliveryStatus: `${assigningAgentRole} Agent Assigned`,
+            shipmentStatus: `${assigningAgentRole} Agent Assigned`,
             assignedAgent: selectedAgentId,
             assignedAgentRole: assigningAgentRole.toLowerCase()
         }

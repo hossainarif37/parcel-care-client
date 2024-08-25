@@ -28,8 +28,8 @@ import toast from "react-hot-toast";
 
 const AllParcels = () => {
     const { data, isLoading } = useGetAllParcelsQuery(undefined);
-    const [updateDeliveryStatus] = useUpdateParcelInfoMutation();
-    const [selectedDeliveryStatus, setSelectedDeliveryStatus] = useState('');
+    const [updateShipmentStatus] = useUpdateParcelInfoMutation();
+    const [selectedShipmentStatus, setSelectedShipmentStatus] = useState('');
 
     if (isLoading) {
         return <Loading paddingY="py-40" textColor="text-primary" textSize="text-4xl" />
@@ -39,11 +39,11 @@ const AllParcels = () => {
         return <NotFoundData>Parcel not found</NotFoundData>
     }
 
-    const handleUpdateDeliveryStatus = (value: string, parcelId: string) => {
-        updateDeliveryStatus({ parcelId, body: { deliveryStatus: value } }).unwrap()
+    const handleupdateShipmentStatus = (value: string, parcelId: string) => {
+        updateShipmentStatus({ parcelId, body: { shipmentStatus: value } }).unwrap()
             .then(() => {
-                toast.success("Delivery status updated successfully");
-                setSelectedDeliveryStatus(value);
+                toast.success("Shipment status updated successfully");
+                setSelectedShipmentStatus(value);
             })
             .catch((err) => {
                 toast.error(err.data.message);
@@ -64,7 +64,7 @@ const AllParcels = () => {
                             <TableHead>Parcel Type</TableHead>
                             <TableHead>Price</TableHead>
                             <TableHead>Booking Date</TableHead>
-                            <TableHead>Delivery Status</TableHead>
+                            <TableHead>Shipment Status</TableHead>
                             <TableHead>Payment Status</TableHead>
                             <TableHead className="text-right">Action</TableHead>
                         </TableRow>
@@ -72,7 +72,7 @@ const AllParcels = () => {
                     <TableBody>
                         {data?.parcels?.map((parcel: IParcel) => {
                             const remainingStatus = trackingData.filter(item =>
-                                !parcel.deliveryStatusHistory.some(({ status }) => item.title.includes(status))
+                                !parcel.shipmentStatusHistory.some(({ status }) => item.title.includes(status))
                             );
                             return (
                                 <TableRow key={parcel._id} className="text-black-50">
@@ -85,14 +85,14 @@ const AllParcels = () => {
                                         {formateDate(parcel.bookingDate, true)}
                                     </TableCell>
                                     <TableCell className="font-medium">
-                                        <Select onValueChange={(value) => handleUpdateDeliveryStatus(value, parcel._id)}>
+                                        <Select onValueChange={(value) => handleupdateShipmentStatus(value, parcel._id)}>
                                             <SelectTrigger className="w-[180px]">
-                                                <SelectValue placeholder={parcel.deliveryStatus} />
+                                                <SelectValue placeholder={parcel.shipmentStatus} />
                                             </SelectTrigger>
                                             <SelectContent>
                                                 <SelectGroup>
                                                     {
-                                                        parcel.deliveryStatusHistory.map((item, i) => (
+                                                        parcel.shipmentStatusHistory.map((item, i) => (
                                                             <SelectLabel
                                                                 key={i}
                                                                 className="flex gap-2 cursor-default"

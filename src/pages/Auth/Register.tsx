@@ -22,11 +22,13 @@ const Register = () => {
     const dispatch = useDispatch();
     const handleRegister = (data: IFormInput) => {
         let registerResponse = null;
+        console.log(data);
 
         if (data.agentRequestStatus) {
+            console.log(28);
             registerResponse = registerUser({ ...data, agentRequestStatus: 'pending', role: 'agent' }).unwrap();
         } else {
-            registerResponse = registerUser(data).unwrap();
+            registerResponse = registerUser({ ...data, agentRequestStatus: undefined }).unwrap();
         }
 
         toast.promise(registerResponse, {
