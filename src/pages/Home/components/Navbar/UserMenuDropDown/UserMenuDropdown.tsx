@@ -19,7 +19,9 @@ const UserMenuDropdown = () => {
             <ul className={`${userDropdownStyles.userProfileDropdown}`}>
                 <li>
                     <Link
-                        to={`#`}
+                        to={`
+                            /dashboard${isNormalUser && 'user' || isAgentUser && 'agent' || isAdminUser && 'admin'}/profile
+                            `}
                         title="Profile"
                     >
                         <span><Icon icon="gg:profile" /></span>

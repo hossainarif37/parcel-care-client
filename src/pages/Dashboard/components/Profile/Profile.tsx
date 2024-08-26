@@ -382,7 +382,7 @@ const Profile = () => {
                                             message: 'Maximum length 100 characters'
                                         },
                                         minLength: {
-                                            value: 10,
+                                            value: 6,
                                             message: 'Minimum length 10 characters'
                                         }
                                     })

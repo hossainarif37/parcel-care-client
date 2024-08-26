@@ -24,7 +24,7 @@ const DashboardLayout = () => {
             <main className="flex-1 min-h-screen w-full bg-white ">
                 {
                     (user?.agentRequestStatus === 'pending' && !user.isProfileComplete) &&
-                    <p className="bg-red-400 py-1 text-white text-center">Your agent request is pending due to incomplete profile. Complete all fields to enable processing.</p>
+                    <p className="bg-red-400 py-1 text-white text-center">Your agent request is pending due to incomplete profile. Complete all fields to enable review processing.</p>
                 }
                 {
                     (user?.agentRequestStatus === 'pending' && user.isProfileComplete) &&
