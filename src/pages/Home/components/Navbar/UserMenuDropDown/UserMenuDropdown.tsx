@@ -19,9 +19,9 @@ const UserMenuDropdown = () => {
             <ul className={`${userDropdownStyles.userProfileDropdown}`}>
                 <li>
                     <Link
-                        to={`
-                            /dashboard${isNormalUser && 'user' || isAgentUser && 'agent' || isAdminUser && 'admin'}/profile
-                            `}
+                        to={
+                            `/dashboard${isNormalUser && '/user' || isAgentUser && '/agent' || isAdminUser && '/admin'}/profile`
+                        }
                         title="Profile"
                     >
                         <span><Icon icon="gg:profile" /></span>
@@ -31,7 +31,8 @@ const UserMenuDropdown = () => {
                 <li>
                     <Link
                         to={
-                            `/dashboard${isNormalUser && '/user/my-parcels' || isAdminUser && '/admin/overview' || (isAgentUser && user.agentRequestStatus !== 'pending' ? '/agent/delivery-list' : '/agent/profile')}`
+                            `/dashboard${isNormalUser && '/user/my-parcels' || isAdminUser && '/admin/overview' || (isAgentUser && (user.agentRequestStatus !== 'pending' && user.agentRequestStatus !== 'rejected') ? '/agent/delivery-list' : '/agent/profile')
+                            }`
                         }
                         title="Settings"
                     >

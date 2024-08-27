@@ -1,0 +1,3 @@
+.resubmitBtn:hover > svg {
+    @apply translate-x-1 duration-100
+}

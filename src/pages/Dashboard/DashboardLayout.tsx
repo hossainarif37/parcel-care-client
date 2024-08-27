@@ -4,14 +4,21 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../types/types";
 import { toggleDashboard } from "../../redux/slices/navbar/navbarSlice";
+import { useUpdatedAgentRequestStatusMutation } from "@/redux/api/endpoints/userApi";
+import dashboardLayoutStyles from './dashboardLayout.module.css';
 
 const DashboardLayout = () => {
     const { isDashboardToggle } = useSelector((state: IRootState) => state.navbarSlice);
     const { user } = useSelector((state: IRootState) => state.userSlice);
+    const [updateAgentRequestStatus] = useUpdatedAgentRequestStatusMutation();
     const dispatch = useDispatch();
     const { pathname } = useLocation();
     const handleDashboardToggle = () => {
         dispatch(toggleDashboard());
+    }
+
+    const handleResubmitRequest = () => {
+
     }
 
     return (
@@ -30,6 +37,10 @@ const DashboardLayout = () => {
                     (user?.agentRequestStatus === 'pending' && user.isProfileComplete) &&
                     <p className="bg-blue-400 py-1 text-white text-center">Your agent request is under review for admin approval.</p>
                 }
+                {
+                    (user?.agentRequestStatus === 'rejected' && user.isProfileComplete) && <p className="bg-red-400 py-1 flex items-center justify-center text-white text-center">Your agent request has been rejected.
+                        <button onClick={handleResubmitRequest} className={`flex items-center gap-x-1 btn-primary py-1 px-3 active:scale-95 overflow-hidden rounded-lg ml-2 ${dashboardLayoutStyles.resubmitBtn}`}>Request for Another Review <Icon className="text-xl" icon="solar:arrow-right-linear" /></button></p>
+                }
                 <div className="px-7 py-7">
                     {/* Dashboard Toggle Button */}
                     <div className="block md:hidden">
@@ -41,7 +52,7 @@ const DashboardLayout = () => {
                     </div>
 
                     {
-                        user?.agentRequestStatus === 'pending' && pathname !== '/dashboard/agent/profile' ? <h1 className="text-red-400 text-xl text-center mt-10">You don't have permission to navigate to this location!</h1>
+                        user?.agentRequestStatus === 'pending' || user?.agentRequestStatus === 'rejected' && pathname !== '/dashboard/agent/profile' ? <h1 className="text-red-400 text-xl text-center mt-10">You don't have permission to navigate to this location!</h1>
                             :
                             <Outlet />
                     }
