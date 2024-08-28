@@ -50,7 +50,7 @@ const MyParcels = () => {
                             <TableHead>Parcel Type</TableHead>
                             <TableHead>Price</TableHead>
                             <TableHead>Booking Date</TableHead>
-                            <TableHead>Delivery Status</TableHead>
+                            <TableHead>Shipment Status</TableHead>
                             <TableHead>Payment Status</TableHead>
                             <TableHead className="text-right">Action</TableHead>
                         </TableRow>
@@ -66,7 +66,7 @@ const MyParcels = () => {
                                 <TableCell className="font-medium">
                                     {formateDate(parcel.bookingDate, true)}
                                 </TableCell>
-                                <TableCell className="font-medium">{parcel.deliveryStatus}</TableCell>
+                                <TableCell className="font-medium">{parcel.shipmentStatus}</TableCell>
                                 <TableCell className={"font-medium"}><span className={`${parcel.paymentStatus === 'Unpaid' ? 'text-red-500 bg-red-100' : 'text-green-600 bg-green-100'} font-semibold py-1 px-3 rounded-full`}>{parcel.paymentStatus}</span></TableCell>
                                 <TableCell className="font-medium text-center relative overflow-visible">
 

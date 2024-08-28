@@ -129,8 +129,6 @@ const Profile = () => {
     // Calculate completion percentage and format it as an integer percentage
     const completionPercentage = Math.round(filledFieldsCount / totalFields * 100);
 
-    console.log(completionPercentage);
-
     //------------- District Functionality Area -------------//
     // Find initial selected district from districtsData based on user's district
     const userDistrict = districtsData.find(district => district.district === user?.district);
@@ -190,7 +188,6 @@ const Profile = () => {
 
     const handleUpdateProfileInfo = (data: IFormInput) => {
         // Check if selectedDistrict and selectedSubDistrict are defined and add them to the data object
-        console.log('Clicked');
         // Check if a district is selected but no sub-district is selected
         if (selectedDistrict && !selectedSubDistrict) {
             // Set an error for the sub-district field
@@ -382,7 +379,7 @@ const Profile = () => {
                                             message: 'Maximum length 100 characters'
                                         },
                                         minLength: {
-                                            value: 10,
+                                            value: 6,
                                             message: 'Minimum length 10 characters'
                                         }
                                     })

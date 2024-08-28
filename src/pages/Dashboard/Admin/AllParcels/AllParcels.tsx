@@ -1,4 +1,4 @@
-import { useGetAllParcelsQuery } from "@/redux/api/endpoints/parcelApi";
+import { useGetAllParcelsQuery, useUpdateParcelInfoMutation } from "@/redux/api/endpoints/parcelApi";
 import {
     Table,
     TableBody,
@@ -22,10 +22,14 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { trackingData } from "@/constants/trackingData";
 import Loading from "@/components/Loading";
 import { Modal } from "@/components/Modal";
+import { useState } from "react";
+import toast from "react-hot-toast";
+
 
 const AllParcels = () => {
     const { data, isLoading } = useGetAllParcelsQuery(undefined);
-    // const [selectOpen, setSelectOpen] = useState(false);
+    const [updateShipmentStatus] = useUpdateParcelInfoMutation();
+    const [selectedShipmentStatus, setSelectedShipmentStatus] = useState('');
 
     if (isLoading) {
         return <Loading paddingY="py-40" textColor="text-primary" textSize="text-4xl" />
@@ -33,6 +37,18 @@ const AllParcels = () => {
 
     if (!data) {
         return <NotFoundData>Parcel not found</NotFoundData>
+    }
+
+    const handleupdateShipmentStatus = (value: string, parcelId: string) => {
+        updateShipmentStatus({ parcelId, body: { shipmentStatus: value } }).unwrap()
+            .then(() => {
+                toast.success("Shipment status updated successfully");
+                setSelectedShipmentStatus(value);
+            })
+            .catch((err) => {
+                toast.error(err.data.message);
+                console.log(err);
+            })
     }
 
     return (
@@ -48,7 +64,7 @@ const AllParcels = () => {
                             <TableHead>Parcel Type</TableHead>
                             <TableHead>Price</TableHead>
                             <TableHead>Booking Date</TableHead>
-                            <TableHead>Delivery Status</TableHead>
+                            <TableHead>Shipment Status</TableHead>
                             <TableHead>Payment Status</TableHead>
                             <TableHead className="text-right">Action</TableHead>
                         </TableRow>
@@ -56,7 +72,7 @@ const AllParcels = () => {
                     <TableBody>
                         {data?.parcels?.map((parcel: IParcel) => {
                             const remainingStatus = trackingData.filter(item =>
-                                !parcel.deliveryStatusHistory.some(({ status }) => item.title.includes(status))
+                                !parcel.shipmentStatusHistory.some(({ status }) => item.title.includes(status))
                             );
                             return (
                                 <TableRow key={parcel._id} className="text-black-50">
@@ -69,14 +85,14 @@ const AllParcels = () => {
                                         {formateDate(parcel.bookingDate, true)}
                                     </TableCell>
                                     <TableCell className="font-medium">
-                                        <Select>
+                                        <Select onValueChange={(value) => handleupdateShipmentStatus(value, parcel._id)}>
                                             <SelectTrigger className="w-[180px]">
-                                                <SelectValue placeholder={parcel.deliveryStatus} />
+                                                <SelectValue placeholder={parcel.shipmentStatus} />
                                             </SelectTrigger>
                                             <SelectContent>
                                                 <SelectGroup>
                                                     {
-                                                        parcel.deliveryStatusHistory.map((item, i) => (
+                                                        parcel.shipmentStatusHistory.map((item, i) => (
                                                             <SelectLabel
                                                                 key={i}
                                                                 className="flex gap-2 cursor-default"

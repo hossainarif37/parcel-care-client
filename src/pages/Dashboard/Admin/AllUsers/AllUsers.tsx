@@ -22,7 +22,7 @@ const AllUsers = () => {
     const { data } = useGetUsersByRoleQuery('user');
 
     if (!data) {
-        return <NotFoundData>Users not found</NotFoundData>
+        return <NotFoundData>User not found</NotFoundData>
     }
     return (
         <div>

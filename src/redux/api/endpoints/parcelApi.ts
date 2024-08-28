@@ -43,9 +43,16 @@ const parcelApi = baseApi.injectEndpoints({
             }),
 
             invalidatesTags: ['Parcel']
+        }),
+
+        getAssignedParcelsByAgentId: builder.query({
+            query: ({ agentId, assignedRole }) => ({
+                url: `/parcel-booking/assigned-parcels/${agentId}?assignedAgentRole=${assignedRole}`,
+                method: 'GET'
+            }),
         })
     })
 })
 
 
-export const { useBookAParcelMutation, useGetBookingParcelsByUserIdQuery, useGetABookedParcelByIdQuery, useLazyGetABookedParcelByIdQuery, useGetAllParcelsQuery, useUpdateParcelInfoMutation } = parcelApi;
+export const { useBookAParcelMutation, useGetBookingParcelsByUserIdQuery, useGetABookedParcelByIdQuery, useLazyGetABookedParcelByIdQuery, useGetAllParcelsQuery, useUpdateParcelInfoMutation, useGetAssignedParcelsByAgentIdQuery } = parcelApi;

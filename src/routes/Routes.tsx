@@ -28,6 +28,7 @@ import MyReviews from "@/pages/Dashboard/Agent/MyReviews/MyReviews";
 import AgentProfile from "@/pages/Dashboard/Agent/AgentProfile/AgentProfile";
 import PendingAgent from "@/pages/Dashboard/Admin/AllAgents/PendingAgent";
 import PaymentSuccess from "@/pages/Dashboard/User/Payment/PaymentSuccess";
+import MyPickupList from "@/pages/Dashboard/Agent/MyPickupList/MyPickupList";
 
 
 export const router = createBrowserRouter([
@@ -107,7 +108,7 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: '/dashboard/agent/pickup-list',
-                        element: <MyDeliveryList />
+                        element: <MyPickupList />
                     },
                     {
                         path: '/dashboard/agent/my-reviews',
