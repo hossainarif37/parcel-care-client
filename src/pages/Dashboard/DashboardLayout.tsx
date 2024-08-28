@@ -39,7 +39,7 @@ const DashboardLayout = () => {
                 }
                 {
                     (user?.agentRequestStatus === 'rejected' && user.isProfileComplete) && <p className="bg-red-400 py-1 flex items-center justify-center text-white text-center">Your agent request has been rejected.
-                        <button onClick={handleResubmitRequest} className={`flex items-center gap-x-1 btn-primary py-1 px-3 active:scale-95 overflow-hidden rounded-lg ml-2 ${dashboardLayoutStyles.resubmitBtn}`}>Request for Another Review <Icon className="text-xl" icon="solar:arrow-right-linear" /></button></p>
+                        <button onClick={handleResubmitRequest} className={`flex items-center underline active:scale-95 overflow-hidden rounded-lg ml-2 ${dashboardLayoutStyles.resubmitBtn}`}>Request for Another Review <Icon className="text-xl" icon="solar:arrow-right-linear" /></button></p>
                 }
                 <div className="px-7 py-7">
                     {/* Dashboard Toggle Button */}
