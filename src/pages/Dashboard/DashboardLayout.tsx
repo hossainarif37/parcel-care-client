@@ -2,15 +2,17 @@ import { Outlet, useLocation } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useDispatch, useSelector } from "react-redux";
-import { IRootState } from "../../types/types";
+import { IRootState, TErrorData } from "../../types/types";
 import { toggleDashboard } from "../../redux/slices/navbar/navbarSlice";
-import { useUpdatedAgentRequestStatusMutation } from "@/redux/api/endpoints/userApi";
+import { useResubmitAgentRequestMutation } from "@/redux/api/endpoints/userApi";
 import dashboardLayoutStyles from './dashboardLayout.module.css';
+import toast from "react-hot-toast";
+import { updateUser } from "@/redux/slices/user/userSlice";
 
 const DashboardLayout = () => {
     const { isDashboardToggle } = useSelector((state: IRootState) => state.navbarSlice);
     const { user } = useSelector((state: IRootState) => state.userSlice);
-    const [updateAgentRequestStatus] = useUpdatedAgentRequestStatusMutation();
+    const [resubmitAgentRequest] = useResubmitAgentRequestMutation();
     const dispatch = useDispatch();
     const { pathname } = useLocation();
     const handleDashboardToggle = () => {
@@ -18,7 +20,15 @@ const DashboardLayout = () => {
     }
 
     const handleResubmitRequest = () => {
-
+        resubmitAgentRequest({ userId: user?._id, body: { agentRequestStatus: 'pending' } }).unwrap()
+            .then(res => {
+                console.log('Request for another review update:', res);
+                toast.success(res.message);
+                dispatch(updateUser({ user: res.user }));
+            }).catch((err: TErrorData) => {
+                console.log(err);
+                toast.error(err.data.message)
+            })
     }
 
     return (
@@ -52,7 +62,7 @@ const DashboardLayout = () => {
                     </div>
 
                     {
-                        user?.agentRequestStatus === 'pending' || user?.agentRequestStatus === 'rejected' && pathname !== '/dashboard/agent/profile' ? <h1 className="text-red-400 text-xl text-center mt-10">You don't have permission to navigate to this location!</h1>
+                        (user?.agentRequestStatus === 'pending' || user?.agentRequestStatus === 'rejected') && pathname !== '/dashboard/agent/profile' ? <h1 className="text-red-400 text-xl text-center mt-10">You don't have permission to navigate to this location!</h1>
                             :
                             <Outlet />
                     }

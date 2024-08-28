@@ -42,6 +42,14 @@ const userApi = baseApi.injectEndpoints({
             }),
         }),
 
+        resubmitAgentRequest: builder.mutation({
+            query: ({ userId, body }) => ({
+                url: `/users/${userId}/agent-request-status/resubmit`,
+                method: 'PUT',
+                body
+            })
+        }),
+
         getUsersByRole: builder.query({
             query: (role) => ({
                 url: `/users?role=${role}`,
@@ -52,4 +60,4 @@ const userApi = baseApi.injectEndpoints({
     })
 })
 
-export const { useCurrentUserQuery, useLazyCurrentUserQuery, useUpdateUserInfoMutation, useGetPendingAgentsQuery, useUpdatedAgentRequestStatusMutation, useGetUsersByRoleQuery, useGetAgentsByDistrictQuery } = userApi;
+export const { useCurrentUserQuery, useLazyCurrentUserQuery, useUpdateUserInfoMutation, useGetPendingAgentsQuery, useUpdatedAgentRequestStatusMutation, useGetUsersByRoleQuery, useGetAgentsByDistrictQuery, useResubmitAgentRequestMutation } = userApi;
