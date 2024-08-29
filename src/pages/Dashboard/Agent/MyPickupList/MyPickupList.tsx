@@ -96,6 +96,7 @@ const MyPickupList = () => {
                                                     {
                                                         remainingStatus.length > 0 &&
                                                         remainingStatus.map((item, i) => {
+                                                            console.log(99, item);
                                                             return (
                                                                 i === 0 && item.title === 'Pickup Agent Assigned' ?
                                                                     <Modal
@@ -105,14 +106,14 @@ const MyPickupList = () => {
                                                                         assigningAgentRole="Pickup"
                                                                     />
                                                                     :
-                                                                    i === 0 ? (
+                                                                    i === 0 && item.id !== 5 && item.id !== 6 && item.id !== 7 && item.id !== 8 ? (
                                                                         <SelectItem
                                                                             className="py-2 cursor-pointer"
                                                                             key={i} value={item.title}>
                                                                             {item.title}
                                                                         </SelectItem>
                                                                     ) : (
-                                                                        <SelectLabel className={`${i === 0 ? 'cursor-pointer' : 'cursor-not-allowed'}`} key={i}>
+                                                                        <SelectLabel className={'cursor-not-allowed'} key={i}>
                                                                             {item.title}
                                                                         </SelectLabel>
                                                                     )
