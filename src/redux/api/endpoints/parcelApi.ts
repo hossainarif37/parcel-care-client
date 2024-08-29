@@ -50,6 +50,8 @@ const parcelApi = baseApi.injectEndpoints({
                 url: `/parcel-booking/assigned-parcels/${agentId}?assignedAgentRole=${assignedRole}`,
                 method: 'GET'
             }),
+
+            providesTags: ['Parcel']
         })
     })
 })
