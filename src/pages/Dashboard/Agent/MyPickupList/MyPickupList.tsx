@@ -119,7 +119,7 @@ const MyPickupList = () => {
                                                                         assigningAgentRole="Pickup"
                                                                     />
                                                                     :
-                                                                    i === 0 && item.id !== 5 && item.id !== 6 && item.id !== 7 && item.id !== 8 ? (
+                                                                    i === 0 && item.id !== 4 && item.id !== 5 && item.id !== 6 && item.id !== 7 ? (
                                                                         <SelectItem
                                                                             className="py-2 cursor-pointer"
                                                                             key={i} value={item.title}>

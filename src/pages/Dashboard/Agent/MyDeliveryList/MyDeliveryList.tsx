@@ -1,5 +1,5 @@
 import Loading from "@/components/Loading";
-import { useGetAssignedParcelsByAgentIdQuery } from "@/redux/api/endpoints/parcelApi";
+import { useGetAssignedParcelsByAgentIdQuery, useUpdateParcelInfoMutation } from "@/redux/api/endpoints/parcelApi";
 import { IParcel, IRootState } from "@/types/types";
 import { useSelector } from "react-redux";
 import {
@@ -23,10 +23,13 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { Modal } from "@/components/Modal";
 import { Link } from "react-router-dom";
 import NotFoundData from "@/components/NotFoundData";
+import toast from "react-hot-toast";
 
 const MyDeliveryList = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
     const { data, isLoading, error } = useGetAssignedParcelsByAgentIdQuery({ agentId: user?._id, assignedRole: 'delivery' });
+
+    const [updateShipmentStatus] = useUpdateParcelInfoMutation();
 
     if (isLoading) {
         return <Loading />
@@ -34,6 +37,17 @@ const MyDeliveryList = () => {
 
     if (!data) {
         return <NotFoundData>Parcel not found</NotFoundData>
+    }
+
+    const handleUpdateShipmentStatus = (value: string, parcelId: string) => {
+        updateShipmentStatus({ parcelId, body: { shipmentStatus: value } }).unwrap()
+            .then(() => {
+                toast.success("Shipment status updated successfully");
+            })
+            .catch((err) => {
+                toast.error(err.data.message);
+                console.log(err);
+            })
     }
     console.log(data);
     console.log(error);
@@ -71,7 +85,7 @@ const MyDeliveryList = () => {
                                         {formateDate(parcel.bookingDate, true)}
                                     </TableCell>
                                     <TableCell className="font-medium">
-                                        <Select>
+                                        <Select onValueChange={(value) => handleUpdateShipmentStatus(value, parcel._id)}>
                                             <SelectTrigger className="w-[180px]">
                                                 <SelectValue placeholder={parcel.shipmentStatus} />
                                             </SelectTrigger>
