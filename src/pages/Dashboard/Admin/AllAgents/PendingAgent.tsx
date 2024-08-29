@@ -1,4 +1,4 @@
-import { useGetPendingAgentsQuery, useUpdatedAgentRequestStatusMutation } from "@/redux/api/endpoints/userApi";
+import { useGetPendingAgentsQuery, useUpdateAgentRequestStatusMutation } from "@/redux/api/endpoints/userApi";
 import {
     Table,
     TableBody,
@@ -33,7 +33,7 @@ import Loading from "@/components/Loading";
 
 const PendingAgent = () => {
     const { data, isLoading } = useGetPendingAgentsQuery(undefined);
-    const [updateAgentRequestStatus] = useUpdatedAgentRequestStatusMutation();
+    const [updateAgentRequestStatus] = useUpdateAgentRequestStatusMutation();
     const dispatch = useDispatch();
     const handleAgentRequestStatus = (value: string, userId: string) => {
         const updateResponse = updateAgentRequestStatus({ userId, body: { agentRequestStatus: value } }).unwrap();

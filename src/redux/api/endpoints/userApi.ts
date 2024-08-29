@@ -34,7 +34,7 @@ const userApi = baseApi.injectEndpoints({
             providesTags: ['Pending Agent']
         }),
 
-        updatedAgentRequestStatus: builder.mutation({
+        updateAgentRequestStatus: builder.mutation({
             query: ({ userId, body }) => ({
                 url: `/users/${userId}/agent-request-status`,
                 method: 'PUT',
@@ -60,4 +60,4 @@ const userApi = baseApi.injectEndpoints({
     })
 })
 
-export const { useCurrentUserQuery, useLazyCurrentUserQuery, useUpdateUserInfoMutation, useGetPendingAgentsQuery, useUpdatedAgentRequestStatusMutation, useGetUsersByRoleQuery, useGetAgentsByDistrictQuery, useResubmitAgentRequestMutation } = userApi;
+export const { useCurrentUserQuery, useLazyCurrentUserQuery, useUpdateUserInfoMutation, useGetPendingAgentsQuery, useUpdateAgentRequestStatusMutation, useGetUsersByRoleQuery, useGetAgentsByDistrictQuery, useResubmitAgentRequestMutation } = userApi;

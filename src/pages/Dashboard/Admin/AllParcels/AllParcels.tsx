@@ -111,12 +111,12 @@ const AllParcels = () => {
                                                         remainingStatus.length > 0 &&
                                                         remainingStatus.map((item, i) => {
                                                             return (
-                                                                i === 0 && item.title === 'Pickup Agent Assigned' ?
+                                                                i === 0 && ((item.title === 'Pickup Agent Assigned') || (item.title === 'Delivery Agent Assigned')) ?
                                                                     <Modal
                                                                         key={i}
                                                                         parcelId={parcel._id}
                                                                         district={parcel.senderAddress.district}
-                                                                        assigningAgentRole="Pickup"
+                                                                        assigningAgentRole={`${item.title.includes('Pickup') ? 'Pickup' : 'Delivery'}`}
                                                                     />
                                                                     :
                                                                     i === 0 ? (
