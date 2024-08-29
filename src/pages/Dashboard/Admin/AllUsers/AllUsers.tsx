@@ -18,8 +18,13 @@ import { Link } from "react-router-dom";
 import { UserType } from "@/types/types";
 import { useGetUsersByRoleQuery } from "@/redux/api/endpoints/userApi";
 import NotFoundData from "@/components/NotFoundData";
+import Loading from "@/components/Loading";
 const AllUsers = () => {
-    const { data } = useGetUsersByRoleQuery('user');
+    const { data, isLoading } = useGetUsersByRoleQuery('user');
+
+    if (isLoading) {
+        return <Loading />
+    }
 
     if (!data) {
         return <NotFoundData>User not found</NotFoundData>

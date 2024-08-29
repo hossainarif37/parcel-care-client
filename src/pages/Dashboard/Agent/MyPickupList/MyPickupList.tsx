@@ -29,7 +29,7 @@ const MyPickupList = () => {
     const { data, isLoading, error } = useGetAssignedParcelsByAgentIdQuery({ agentId: user?._id, assignedRole: 'pickup' });
 
     if (isLoading) {
-        return <Loading paddingY="py-40" textColor="text-primary" textSize="text-4xl" />
+        return <Loading />
     }
 
     if (!data) {

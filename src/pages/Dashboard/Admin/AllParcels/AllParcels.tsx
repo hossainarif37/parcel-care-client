@@ -32,14 +32,14 @@ const AllParcels = () => {
     const [selectedShipmentStatus, setSelectedShipmentStatus] = useState('');
 
     if (isLoading) {
-        return <Loading paddingY="py-40" textColor="text-primary" textSize="text-4xl" />
+        return <Loading />
     }
 
     if (!data) {
         return <NotFoundData>Parcel not found</NotFoundData>
     }
 
-    const handleupdateShipmentStatus = (value: string, parcelId: string) => {
+    const handleUpdateShipmentStatus = (value: string, parcelId: string) => {
         updateShipmentStatus({ parcelId, body: { shipmentStatus: value } }).unwrap()
             .then(() => {
                 toast.success("Shipment status updated successfully");
@@ -85,7 +85,7 @@ const AllParcels = () => {
                                         {formateDate(parcel.bookingDate, true)}
                                     </TableCell>
                                     <TableCell className="font-medium">
-                                        <Select onValueChange={(value) => handleupdateShipmentStatus(value, parcel._id)}>
+                                        <Select onValueChange={(value) => handleUpdateShipmentStatus(value, parcel._id)}>
                                             <SelectTrigger className="w-[180px]">
                                                 <SelectValue placeholder={parcel.shipmentStatus} />
                                             </SelectTrigger>

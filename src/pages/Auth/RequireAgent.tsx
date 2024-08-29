@@ -21,7 +21,7 @@ const RequireAgent = ({ children }: { children: ReactNode }) => {
     }, [isAuthenticated, user, location, navigate, userLoading]);
 
     if (userLoading) {
-        return <Loading paddingY="py-20 md:py-40" textColor="text-primary" textSize="text-4xl" />
+        return <Loading />
     }
     if (user?.role === 'agent') {
         return children;

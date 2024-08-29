@@ -29,9 +29,10 @@ import toast from "react-hot-toast";
 import { baseApi } from "@/redux/api/baseApi";
 import { useDispatch } from "react-redux";
 import NotFoundData from "@/components/NotFoundData";
+import Loading from "@/components/Loading";
 
 const PendingAgent = () => {
-    const { data } = useGetPendingAgentsQuery(undefined);
+    const { data, isLoading } = useGetPendingAgentsQuery(undefined);
     const [updateAgentRequestStatus] = useUpdatedAgentRequestStatusMutation();
     const dispatch = useDispatch();
     const handleAgentRequestStatus = (value: string, userId: string) => {
@@ -51,7 +52,10 @@ const PendingAgent = () => {
         })
     };
 
-    console.log(data);
+    if (isLoading) {
+        return <Loading />
+    }
+
 
     if (!data) {
         return <NotFoundData>Pending Agent not found</NotFoundData>

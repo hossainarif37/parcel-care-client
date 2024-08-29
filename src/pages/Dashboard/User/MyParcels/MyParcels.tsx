@@ -21,7 +21,6 @@ import {
 import { formateDate } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import NotFoundData from "@/components/NotFoundData";
-import { useEffect } from "react";
 
 
 const MyParcels = () => {
@@ -29,7 +28,7 @@ const MyParcels = () => {
     const { data, isLoading } = useGetBookingParcelsByUserIdQuery(user?._id);
 
     if (isLoading) {
-        return <Loading paddingY="py-20" textColor="text-primary" textSize="4xl" />
+        return <Loading />
     }
 
     if (!data) {
