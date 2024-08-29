@@ -136,7 +136,7 @@ const MyPickupList = () => {
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent align="end" className="mt-1">
                                                 <DropdownMenuItem>
-                                                    <Link to={`#`}>Track the Parcel</Link>
+                                                    <Link to={`/dashboard/agent/parcel-tracking?parcelId=${parcel._id}`}>Track the Parcel</Link>
                                                 </DropdownMenuItem>
                                                 <DropdownMenuItem>
                                                     <Link to={`#`}>View Details</Link>

@@ -46,8 +46,8 @@ const ParcelTracking = () => {
             <div>
                 {/* Parcel Tracking Header */}
                 <div className="text-center space-y-3">
-                    <h1 className="text-3xl font-semibold text-black-50">Track Your Parcel</h1>
-                    <p className="text-xl text-black-100">Now you can easily track your parcel</p>
+                    <h1 className="text-3xl font-semibold text-black-50">Track the Parcel</h1>
+                    <p className="text-xl text-black-100">Now you can easily track the parcel</p>
                 </div>
 
                 {/* Parcel Tracking Form */}
