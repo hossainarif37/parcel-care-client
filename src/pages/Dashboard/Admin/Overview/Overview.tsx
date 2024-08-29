@@ -1,7 +1,7 @@
 
 const Overview = () => {
     return (
-        <div>
+        <div className="min-h-screen">
             Overview
         </div>
     );

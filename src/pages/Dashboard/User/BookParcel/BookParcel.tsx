@@ -10,6 +10,7 @@ import { useBookAParcelMutation } from "../../../../redux/api/endpoints/parcelAp
 import toast from "react-hot-toast";
 import { getValidDistrictSelection, getValidSubDistrictSelection } from "@/lib/utils";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { useNavigate } from "react-router-dom";
 
 type IFormInput = {
     senderName: string;
@@ -28,6 +29,7 @@ const BookParcel = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
     const [bookAParcel, { isLoading }] = useBookAParcelMutation();
     console.log(isLoading);
+    const navigate = useNavigate();
 
     const parcelTypeOptions = [
         { value: 'Document', label: 'Document' },
@@ -240,19 +242,26 @@ const BookParcel = () => {
             requestedDeliveryDate: data.requestedDeliveryDate
         }
 
-        const bookingResponse = bookAParcel(parcelBookingData).unwrap();
-        toast.promise(bookingResponse, {
-            loading: 'Loading',
-            success: ({ message }) => {
-                console.log(242, bookingResponse);
-                return message;
-            },
-            error: ({ data }) => {
+        const bookingResponse = bookAParcel(parcelBookingData).unwrap()
+            .then(({ message, parcel }) => {
+                toast.success(message, { duration: 2000 });
+                setTimeout(() => {
+                    navigate({ pathname: `/dashboard/user/my-parcels/${parcel._id}/payment` }, {
+                        state: {
+                            senderId: parcel.senderId,
+                            parcelId: parcel._id,
+                            senderName: parcel.senderName,
+                            senderEmail: parcel.senderEmail,
+                            price: parcel.price,
+                            parcelType: parcel.parcelType
+                        }
+                    })
+                }, 2000);
+            })
+            .catch(({ data }) => {
                 console.log(246, bookingResponse);
-                return data.message || 'Parcel booking failed'
-            }
-        });
-
+                toast.error(data.message || 'Parcel booking failed')
+            })
     }
 
     useEffect(() => {

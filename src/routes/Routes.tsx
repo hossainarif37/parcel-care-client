@@ -111,6 +111,10 @@ export const router = createBrowserRouter([
                         element: <MyPickupList />
                     },
                     {
+                        path: '/dashboard/agent/parcel-tracking',
+                        element: <ParcelTracking />
+                    },
+                    {
                         path: '/dashboard/agent/my-reviews',
                         element: <MyReviews />
                     },
@@ -134,6 +138,10 @@ export const router = createBrowserRouter([
                     {
                         path: '/dashboard/admin/all-parcels',
                         element: <AllParcels />
+                    },
+                    {
+                        path: '/dashboard/admin/parcel-tracking',
+                        element: <ParcelTracking />
                     },
                     {
                         path: '/dashboard/admin/all-users',

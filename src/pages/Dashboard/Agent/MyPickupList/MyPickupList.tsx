@@ -1,5 +1,5 @@
 import Loading from "@/components/Loading";
-import { useGetAssignedParcelsByAgentIdQuery } from "@/redux/api/endpoints/parcelApi";
+import { useGetAssignedParcelsByAgentIdQuery, useUpdateParcelInfoMutation } from "@/redux/api/endpoints/parcelApi";
 import { IParcel, IRootState } from "@/types/types";
 import { useSelector } from "react-redux";
 import {
@@ -23,17 +23,30 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { Modal } from "@/components/Modal";
 import { Link } from "react-router-dom";
 import NotFoundData from "@/components/NotFoundData";
+import toast from "react-hot-toast";
 
 const MyPickupList = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
     const { data, isLoading, error } = useGetAssignedParcelsByAgentIdQuery({ agentId: user?._id, assignedRole: 'pickup' });
+    const [updateShipmentStatus] = useUpdateParcelInfoMutation();
 
     if (isLoading) {
-        return <Loading paddingY="py-40" textColor="text-primary" textSize="text-4xl" />
+        return <Loading />
     }
 
     if (!data) {
         return <NotFoundData>Parcel not found</NotFoundData>
+    }
+
+    const handleUpdateShipmentStatus = (value: string, parcelId: string) => {
+        updateShipmentStatus({ parcelId, body: { shipmentStatus: value } }).unwrap()
+            .then(() => {
+                toast.success("Shipment status updated successfully");
+            })
+            .catch((err) => {
+                toast.error(err.data.message);
+                console.log(err);
+            })
     }
     console.log(data);
     console.log(error);
@@ -71,7 +84,7 @@ const MyPickupList = () => {
                                         {formateDate(parcel.bookingDate, true)}
                                     </TableCell>
                                     <TableCell className="font-medium">
-                                        <Select>
+                                        <Select onValueChange={(value) => handleUpdateShipmentStatus(value, parcel._id)}>
                                             <SelectTrigger className="w-[180px]">
                                                 <SelectValue placeholder={parcel.shipmentStatus} />
                                             </SelectTrigger>
@@ -96,6 +109,7 @@ const MyPickupList = () => {
                                                     {
                                                         remainingStatus.length > 0 &&
                                                         remainingStatus.map((item, i) => {
+                                                            console.log(99, item);
                                                             return (
                                                                 i === 0 && item.title === 'Pickup Agent Assigned' ?
                                                                     <Modal
@@ -105,14 +119,14 @@ const MyPickupList = () => {
                                                                         assigningAgentRole="Pickup"
                                                                     />
                                                                     :
-                                                                    i === 0 ? (
+                                                                    i === 0 && item.id !== 4 && item.id !== 5 && item.id !== 6 && item.id !== 7 ? (
                                                                         <SelectItem
                                                                             className="py-2 cursor-pointer"
                                                                             key={i} value={item.title}>
                                                                             {item.title}
                                                                         </SelectItem>
                                                                     ) : (
-                                                                        <SelectLabel className={`${i === 0 ? 'cursor-pointer' : 'cursor-not-allowed'}`} key={i}>
+                                                                        <SelectLabel className={'cursor-not-allowed'} key={i}>
                                                                             {item.title}
                                                                         </SelectLabel>
                                                                     )
@@ -136,7 +150,7 @@ const MyPickupList = () => {
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent align="end" className="mt-1">
                                                 <DropdownMenuItem>
-                                                    <Link to={`#`}>Track the Parcel</Link>
+                                                    <Link to={`/dashboard/agent/parcel-tracking?parcelId=${parcel._id}`}>Track the Parcel</Link>
                                                 </DropdownMenuItem>
                                                 <DropdownMenuItem>
                                                     <Link to={`#`}>View Details</Link>

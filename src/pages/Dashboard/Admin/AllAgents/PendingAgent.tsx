@@ -1,4 +1,4 @@
-import { useGetPendingAgentsQuery, useUpdatedAgentRequestStatusMutation } from "@/redux/api/endpoints/userApi";
+import { useGetPendingAgentsQuery, useUpdateAgentRequestStatusMutation } from "@/redux/api/endpoints/userApi";
 import {
     Table,
     TableBody,
@@ -29,10 +29,11 @@ import toast from "react-hot-toast";
 import { baseApi } from "@/redux/api/baseApi";
 import { useDispatch } from "react-redux";
 import NotFoundData from "@/components/NotFoundData";
+import Loading from "@/components/Loading";
 
 const PendingAgent = () => {
-    const { data } = useGetPendingAgentsQuery(undefined);
-    const [updateAgentRequestStatus] = useUpdatedAgentRequestStatusMutation();
+    const { data, isLoading } = useGetPendingAgentsQuery(undefined);
+    const [updateAgentRequestStatus] = useUpdateAgentRequestStatusMutation();
     const dispatch = useDispatch();
     const handleAgentRequestStatus = (value: string, userId: string) => {
         const updateResponse = updateAgentRequestStatus({ userId, body: { agentRequestStatus: value } }).unwrap();
@@ -51,7 +52,10 @@ const PendingAgent = () => {
         })
     };
 
-    console.log(data);
+    if (isLoading) {
+        return <Loading />
+    }
+
 
     if (!data) {
         return <NotFoundData>Pending Agent not found</NotFoundData>

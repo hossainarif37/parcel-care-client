@@ -18,9 +18,14 @@ import {
 import { Link } from "react-router-dom";
 import { UserType } from "@/types/types";
 import NotFoundData from "@/components/NotFoundData";
+import Loading from "@/components/Loading";
 
 const AllAgents = () => {
-    const { data } = useGetUsersByRoleQuery('agent');
+    const { data, isLoading } = useGetUsersByRoleQuery('agent');
+
+    if (isLoading) {
+        return <Loading />
+    }
 
     if (!data) {
         return <NotFoundData>Agent not found</NotFoundData>
@@ -28,7 +33,7 @@ const AllAgents = () => {
 
     return (
         <div>
-            <div className="min-h-screen p-5 shadow-md border rounded-xl">
+            <div className="min-h-screen p-5 shadow-md rounded-xl">
                 <h1 className="text-2xl font-bold text-black-100 mb-5">Agents</h1>
                 <Table className="">
                     <TableHeader>

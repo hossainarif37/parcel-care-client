@@ -32,6 +32,11 @@ export const agentMenuLinks = [
         icon: "carbon:delivery-add",
     },
     {
+        title: "Tracking",
+        path: "/dashboard/agent/parcel-tracking",
+        icon: "carbon:delivery-parcel",
+    },
+    {
         title: "My Reviews",
         path: "/dashboard/agent/my-reviews",
         icon: 'ic:round-reviews',
@@ -52,6 +57,11 @@ export const adminMenuLinks = [
         title: "Parcels",
         path: "/dashboard/admin/all-parcels",
         icon: "ph:package",
+    },
+    {
+        title: "Tracking",
+        path: "/dashboard/admin/parcel-tracking",
+        icon: "carbon:delivery-parcel",
     },
     {
         title: "Users",

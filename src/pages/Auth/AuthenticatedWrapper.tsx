@@ -18,7 +18,7 @@ const AuthenticatedWrapper = ({ children }: { children: ReactNode }) => {
     }, [isAdminUser, isAgentUser, isNormalUser, navigate, user, userLoading]);
 
     if (userLoading) {
-        return <Loading paddingY="py-20 md:py-40" textColor="text-primary" textSize="text-4xl" />
+        return <Loading />
     }
     if (!user && !userLoading) {
         return children;
