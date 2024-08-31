@@ -49,8 +49,7 @@ const MyDeliveryList = () => {
                 console.log(err);
             })
     }
-    console.log(data);
-    console.log(error);
+
     return (
         <div>
             <div className="min-h-screen p-5 shadow-md rounded-xl">

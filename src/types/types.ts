@@ -80,3 +80,12 @@ export type TErrorData = {
         success: boolean
     }
 }
+
+export type TTrackingData = {
+    id: number;
+    icon: string;
+    title: string;
+    description: string
+}
+
+export type TShipmentStatus = 'Order Placed' | 'Pickup Agent Assigned' | 'Parcel Collected' | 'In Transit' | 'Delivery Hub Reached' | 'Delivery Agent Assigned' | 'Out For Delivery' | 'Delivered'
