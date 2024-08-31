@@ -1,4 +1,4 @@
-import { useGetAllParcelsQuery, useUpdateParcelInfoMutation } from "@/redux/api/endpoints/parcelApi";
+import { useGetAllParcelsQuery } from "@/redux/api/endpoints/parcelApi";
 import {
     Table,
     TableBody,
@@ -18,18 +18,14 @@ import NotFoundData from "@/components/NotFoundData";
 import { IParcel } from "@/types/types";
 import { formateDate } from "@/lib/utils";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { trackingData } from "@/constants/trackingData";
 import Loading from "@/components/Loading";
-import { Modal } from "@/components/Modal";
-import { useState } from "react";
-import toast from "react-hot-toast";
+import ShipmentStatusSelect from "@/components/ShipmentStatusSelect";
 
 
 const AllParcels = () => {
     const { data, isLoading } = useGetAllParcelsQuery(undefined);
-    const [updateShipmentStatus] = useUpdateParcelInfoMutation();
-    const [selectedShipmentStatus, setSelectedShipmentStatus] = useState('');
+
+
 
     if (isLoading) {
         return <Loading />
@@ -39,17 +35,7 @@ const AllParcels = () => {
         return <NotFoundData>Parcel not found</NotFoundData>
     }
 
-    const handleUpdateShipmentStatus = (value: string, parcelId: string) => {
-        updateShipmentStatus({ parcelId, body: { shipmentStatus: value } }).unwrap()
-            .then(() => {
-                toast.success("Shipment status updated successfully");
-                setSelectedShipmentStatus(value);
-            })
-            .catch((err) => {
-                toast.error(err.data.message);
-                console.log(err);
-            })
-    }
+
 
     return (
         <div>
@@ -71,9 +57,7 @@ const AllParcels = () => {
                     </TableHeader>
                     <TableBody>
                         {data?.parcels?.map((parcel: IParcel) => {
-                            const remainingStatus = trackingData.filter(item =>
-                                !parcel.shipmentStatusHistory.some(({ status }) => item.title.includes(status))
-                            );
+
                             return (
                                 <TableRow key={parcel._id} className="text-black-50">
                                     <TableCell className="font-medium">{parcel._id}</TableCell>
@@ -85,57 +69,9 @@ const AllParcels = () => {
                                         {formateDate(parcel.bookingDate, true)}
                                     </TableCell>
                                     <TableCell className="font-medium">
-                                        <Select onValueChange={(value) => handleUpdateShipmentStatus(value, parcel._id)}>
-                                            <SelectTrigger className="w-[180px]">
-                                                <SelectValue placeholder={parcel.shipmentStatus} />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectGroup>
-                                                    {
-                                                        parcel.shipmentStatusHistory.map((item, i) => (
-                                                            <SelectLabel
-                                                                key={i}
-                                                                className="flex gap-2 cursor-default"
-                                                            >
-                                                                <span className="text-green-500 mt-1 absolute left-2 text-lg">
-                                                                    <Icon icon="teenyicons:tick-circle-solid" />
-                                                                </span>
-                                                                <div className="flex flex-col">
-                                                                    <span className="">{item.status}</span>
-                                                                    <span className="text-xs">{formateDate(item.updatedAt)}</span>
-                                                                </div>
-                                                            </SelectLabel>
-                                                        ))
-                                                    }
-                                                    {
-                                                        remainingStatus.length > 0 &&
-                                                        remainingStatus.map((item, i) => {
-                                                            return (
-                                                                i === 0 && ((item.title === 'Pickup Agent Assigned') || (item.title === 'Delivery Agent Assigned')) ?
-                                                                    <Modal
-                                                                        key={i}
-                                                                        parcelId={parcel._id}
-                                                                        district={parcel.senderAddress.district}
-                                                                        assigningAgentRole={`${item.title.includes('Pickup') ? 'Pickup' : 'Delivery'}`}
-                                                                    />
-                                                                    :
-                                                                    i === 0 ? (
-                                                                        <SelectItem
-                                                                            className="py-2 cursor-pointer"
-                                                                            key={i} value={item.title}>
-                                                                            {item.title}
-                                                                        </SelectItem>
-                                                                    ) : (
-                                                                        <SelectLabel className={`${i === 0 ? 'cursor-pointer' : 'cursor-not-allowed'}`} key={i}>
-                                                                            {item.title}
-                                                                        </SelectLabel>
-                                                                    )
-                                                            );
-                                                        })
-                                                    }
-                                                </SelectGroup>
-                                            </SelectContent>
-                                        </Select>
+                                        <ShipmentStatusSelect
+                                            parcel={parcel}
+                                        />
                                     </TableCell>
                                     <TableCell className={"font-medium"}><span className={`${parcel.paymentStatus === 'Unpaid' ? 'text-red-500 bg-red-100' : 'text-green-600 bg-green-100'} font-semibold py-1 px-3 rounded-full`}>{parcel.paymentStatus}</span></TableCell>
                                     <TableCell className="font-medium text-center relative overflow-visible">

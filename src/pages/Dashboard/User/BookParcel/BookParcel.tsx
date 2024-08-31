@@ -64,7 +64,17 @@ const BookParcel = () => {
 
     // Register the field separately
     const parcelWeightRegister = register('parcelWeight', {
-        required: 'Parcel weight is required'
+        required: 'Parcel weight is required',
+        validate: {
+            positiveNumber: (value) => {
+                const stringValue = typeof value === 'number' ? value.toString() : value;
+
+                const parsedValue = parseFloat(stringValue);
+
+                const isValid = !isNaN(parsedValue) && parsedValue > 0;
+                return isValid || 'Weight must be greater than 0';
+            }
+        }
     });
 
     // Create a combined onChange handler
@@ -245,18 +255,18 @@ const BookParcel = () => {
         const bookingResponse = bookAParcel(parcelBookingData).unwrap()
             .then(({ message, parcel }) => {
                 toast.success(message, { duration: 2000 });
-                setTimeout(() => {
-                    navigate({ pathname: `/dashboard/user/my-parcels/${parcel._id}/payment` }, {
-                        state: {
-                            senderId: parcel.senderId,
-                            parcelId: parcel._id,
-                            senderName: parcel.senderName,
-                            senderEmail: parcel.senderEmail,
-                            price: parcel.price,
-                            parcelType: parcel.parcelType
-                        }
-                    })
-                }, 2000);
+                // setTimeout(() => {
+                //     navigate({ pathname: `/dashboard/user/my-parcels/${parcel._id}/payment` }, {
+                //         state: {
+                //             senderId: parcel.senderId,
+                //             parcelId: parcel._id,
+                //             senderName: parcel.senderName,
+                //             senderEmail: parcel.senderEmail,
+                //             price: parcel.price,
+                //             parcelType: parcel.parcelType
+                //         }
+                //     })
+                // }, 1000);
             })
             .catch(({ data }) => {
                 console.log(246, bookingResponse);
