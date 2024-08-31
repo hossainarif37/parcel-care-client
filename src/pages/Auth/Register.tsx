@@ -17,7 +17,7 @@ interface IFormInput {
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
-    const [registerUser] = useRegisterMutation();
+    const [registerUser, { isLoading }] = useRegisterMutation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const handleRegister = (data: IFormInput) => {
@@ -45,6 +45,7 @@ const Register = () => {
         });
 
     }
+
     return (
         <form
             onSubmit={handleSubmit(handleRegister)}
@@ -125,6 +126,7 @@ const Register = () => {
 
                 {/* //*Submit Button */}
                 <Button
+                    disabled={isLoading}
                     type="submit"
                     styles="btn-primary"
                 >
