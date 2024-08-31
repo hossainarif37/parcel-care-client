@@ -1,5 +1,5 @@
 import Loading from "@/components/Loading";
-import { useGetAssignedParcelsByAgentIdQuery, useUpdateParcelInfoMutation } from "@/redux/api/endpoints/parcelApi";
+import { useGetAssignedParcelsByAgentIdQuery } from "@/redux/api/endpoints/parcelApi";
 import { IParcel, IRootState } from "@/types/types";
 import { useSelector } from "react-redux";
 import {
@@ -16,19 +16,15 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { trackingData } from "@/constants/trackingData";
 import { formateDate } from "@/lib/utils";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Modal } from "@/components/Modal";
 import { Link } from "react-router-dom";
 import NotFoundData from "@/components/NotFoundData";
-import toast from "react-hot-toast";
+import ShipmentStatusSelect from "@/components/ShipmentStatusSelect";
 
 const MyPickupList = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
     const { data, isLoading, error } = useGetAssignedParcelsByAgentIdQuery({ agentId: user?._id, assignedRole: 'pickup' });
-    const [updateShipmentStatus] = useUpdateParcelInfoMutation();
 
     if (isLoading) {
         return <Loading />
@@ -38,18 +34,6 @@ const MyPickupList = () => {
         return <NotFoundData>Parcel not found</NotFoundData>
     }
 
-    const handleUpdateShipmentStatus = (value: string, parcelId: string) => {
-        updateShipmentStatus({ parcelId, body: { shipmentStatus: value } }).unwrap()
-            .then(() => {
-                toast.success("Shipment status updated successfully");
-            })
-            .catch((err) => {
-                toast.error(err.data.message);
-                console.log(err);
-            })
-    }
-    console.log(data);
-    console.log(error);
     return (
         <div>
             <div className="min-h-screen p-5 shadow-md rounded-xl">
@@ -70,9 +54,6 @@ const MyPickupList = () => {
                     </TableHeader>
                     <TableBody>
                         {data?.parcels?.map((parcel: IParcel) => {
-                            const remainingStatus = trackingData.filter(item =>
-                                !parcel.shipmentStatusHistory.some(({ status }) => item.title.includes(status))
-                            );
                             return (
                                 <TableRow key={parcel._id} className="text-black-50">
                                     <TableCell className="font-medium">{parcel._id}</TableCell>
@@ -84,58 +65,7 @@ const MyPickupList = () => {
                                         {formateDate(parcel.bookingDate, true)}
                                     </TableCell>
                                     <TableCell className="font-medium">
-                                        <Select onValueChange={(value) => handleUpdateShipmentStatus(value, parcel._id)}>
-                                            <SelectTrigger className="w-[180px]">
-                                                <SelectValue placeholder={parcel.shipmentStatus} />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectGroup>
-                                                    {
-                                                        parcel.shipmentStatusHistory.map((item, i) => (
-                                                            <SelectLabel
-                                                                key={i}
-                                                                className="flex gap-2 cursor-default"
-                                                            >
-                                                                <span className="text-green-500 mt-1 absolute left-2 text-lg">
-                                                                    <Icon icon="teenyicons:tick-circle-solid" />
-                                                                </span>
-                                                                <div className="flex flex-col">
-                                                                    <span className="">{item.status}</span>
-                                                                    <span className="text-xs">{formateDate(item.updatedAt)}</span>
-                                                                </div>
-                                                            </SelectLabel>
-                                                        ))
-                                                    }
-                                                    {
-                                                        remainingStatus.length > 0 &&
-                                                        remainingStatus.map((item, i) => {
-                                                            console.log(99, item);
-                                                            return (
-                                                                i === 0 && item.title === 'Pickup Agent Assigned' ?
-                                                                    <Modal
-                                                                        key={i}
-                                                                        parcelId={parcel._id}
-                                                                        district={parcel.senderAddress.district}
-                                                                        assigningAgentRole="Pickup"
-                                                                    />
-                                                                    :
-                                                                    i === 0 && item.id !== 4 && item.id !== 5 && item.id !== 6 && item.id !== 7 ? (
-                                                                        <SelectItem
-                                                                            className="py-2 cursor-pointer"
-                                                                            key={i} value={item.title}>
-                                                                            {item.title}
-                                                                        </SelectItem>
-                                                                    ) : (
-                                                                        <SelectLabel className={'cursor-not-allowed'} key={i}>
-                                                                            {item.title}
-                                                                        </SelectLabel>
-                                                                    )
-                                                            );
-                                                        })
-                                                    }
-                                                </SelectGroup>
-                                            </SelectContent>
-                                        </Select>
+                                        <ShipmentStatusSelect parcel={parcel} />
                                     </TableCell>
                                     <TableCell className={"font-medium"}><span className={`${parcel.paymentStatus === 'Unpaid' ? 'text-red-500 bg-red-100' : 'text-green-600 bg-green-100'} font-semibold py-1 px-3 rounded-full`}>{parcel.paymentStatus}</span></TableCell>
                                     <TableCell className="font-medium text-center relative overflow-visible">

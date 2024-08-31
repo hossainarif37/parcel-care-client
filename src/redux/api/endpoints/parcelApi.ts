@@ -7,7 +7,9 @@ const parcelApi = baseApi.injectEndpoints({
                 url: '/parcel-booking',
                 method: 'POST',
                 body
-            })
+            }),
+
+            invalidatesTags: ['Parcel']
         }),
 
         getBookingParcelsByUserId: builder.query({
