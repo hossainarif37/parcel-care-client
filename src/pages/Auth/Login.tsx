@@ -15,7 +15,7 @@ interface IFormInput {
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
 
-    const [login] = useLoginMutation();
+    const [login, { isLoading }] = useLoginMutation();
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
@@ -38,10 +38,7 @@ const Login = () => {
     }
 
     return (
-        <form
-            onSubmit={handleSubmit(handleLogin)}
-        >
-
+        <form onSubmit={handleSubmit(handleLogin)}>
             <div className="flex flex-col gap-y-7 mb-5">
                 {/*//* Email */}
                 <div>
@@ -83,6 +80,7 @@ const Login = () => {
 
                 {/* //*Submit Button */}
                 <Button
+                    disabled={isLoading}
                     type="submit"
                     styles="btn-primary"
                 >

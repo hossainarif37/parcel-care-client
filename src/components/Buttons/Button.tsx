@@ -4,7 +4,8 @@ interface ButtonProps {
     children: ReactNode;
     styles: 'btn-primary' | 'btn-secondary' | 'btn-accent' | 'btn-delete';
     type: "submit" | "reset" | "button";
-    width?: 'w-full'
+    width?: 'w-full',
+    disabled?: boolean
 }
 
 const Button = ({ children, styles, width, type, ...restProps }: ButtonProps) => {
