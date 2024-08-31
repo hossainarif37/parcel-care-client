@@ -7,20 +7,30 @@ import Button from "../../components/Buttons/Button";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { setUser } from "@/redux/slices/user/userSlice";
+import { useState } from "react";
 
 interface IFormInput {
     name: string;
     email: string;
     password: string;
+    confirmPassword: string;
     agentRequestStatus?: boolean
 }
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const [registerUser, { isLoading }] = useRegisterMutation();
+    const [confirmPasswordError, setConfirmPasswordError] = useState<string>('');
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const handleRegister = (data: IFormInput) => {
+        const { password, confirmPassword } = data;
+        if (password !== confirmPassword) {
+            setConfirmPasswordError('Password is not matched with Confirm Password!')
+            return;
+        }
+        setConfirmPasswordError('');
+
         let registerResponse = null;
         console.log(data);
 
@@ -112,6 +122,21 @@ const Register = () => {
                     />
                     {/*//! error */}
                     <p className="error">{errors?.password?.message}</p>
+                </div>
+
+                {/*//* Confirm Password */}
+                <div>
+                    <Input
+                        label='Confirm Password'
+                        type='password'
+                        id='confirm-password'
+                        register={{
+                            ...register('confirmPassword', { required: 'Confirm Password is required' })
+                        }}
+                    />
+                    {/*//! error */}
+                    <p className="error">{errors?.confirmPassword?.message}</p>
+                    {confirmPasswordError && <p className="error">{confirmPasswordError}</p>}
                 </div>
 
                 <div className="flex items-center gap-x-2">
