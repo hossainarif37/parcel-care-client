@@ -64,6 +64,11 @@ export const adminMenuLinks = [
         icon: "carbon:delivery-parcel",
     },
     {
+        title: "Transactions",
+        path: "/dashboard/admin/transactions",
+        icon: "ph:currency-dollar",
+    },
+    {
         title: "Users",
         path: "/dashboard/admin/all-users",
         icon: "mynaui:users",

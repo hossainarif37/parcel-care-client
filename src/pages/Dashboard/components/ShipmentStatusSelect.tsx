@@ -4,10 +4,10 @@ import { useUpdateParcelInfoMutation } from "@/redux/api/endpoints/parcelApi";
 import { IParcel, TShipmentStatus, TTrackingData } from "@/types/types";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import toast from "react-hot-toast";
-import { Modal } from "./Modal";
 import { useEffect, useState } from "react";
 import { trackingData } from "@/constants/trackingData";
 import { useLocation } from "react-router-dom";
+import { Modal } from "@/components/Modal";
 
 const ShipmentStatusSelect = ({ parcel }: { parcel: IParcel }) => {
     const [updateShipmentStatus] = useUpdateParcelInfoMutation();
