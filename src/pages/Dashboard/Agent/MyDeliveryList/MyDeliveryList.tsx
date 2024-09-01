@@ -1,5 +1,5 @@
 import Loading from "@/components/Loading";
-import { useGetAssignedParcelsByAgentIdQuery, useUpdateParcelInfoMutation } from "@/redux/api/endpoints/parcelApi";
+import { useGetAssignedParcelsByAgentIdQuery } from "@/redux/api/endpoints/parcelApi";
 import { IParcel, IRootState } from "@/types/types";
 import { useSelector } from "react-redux";
 import {
@@ -16,21 +16,15 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { trackingData } from "@/constants/trackingData";
 import { formateDate } from "@/lib/utils";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Modal } from "@/components/Modal";
 import { Link } from "react-router-dom";
 import NotFoundData from "@/components/NotFoundData";
-import toast from "react-hot-toast";
-import ShipmentStatusSelect from "@/components/ShipmentStatusSelect";
+import ShipmentStatusSelect from "../../components/ShipmentStatusSelect";
 
 const MyDeliveryList = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
-    const { data, isLoading, error } = useGetAssignedParcelsByAgentIdQuery({ agentId: user?._id, assignedRole: 'delivery' });
-
-    const [updateShipmentStatus] = useUpdateParcelInfoMutation();
+    const { data, isLoading } = useGetAssignedParcelsByAgentIdQuery({ agentId: user?._id, assignedRole: 'delivery' });
 
     if (isLoading) {
         return <Loading />
@@ -38,17 +32,6 @@ const MyDeliveryList = () => {
 
     if (!data) {
         return <NotFoundData>Parcel not found</NotFoundData>
-    }
-
-    const handleUpdateShipmentStatus = (value: string, parcelId: string) => {
-        updateShipmentStatus({ parcelId, body: { shipmentStatus: value } }).unwrap()
-            .then(() => {
-                toast.success("Shipment status updated successfully");
-            })
-            .catch((err) => {
-                toast.error(err.data.message);
-                console.log(err);
-            })
     }
 
     return (
@@ -71,9 +54,6 @@ const MyDeliveryList = () => {
                     </TableHeader>
                     <TableBody>
                         {data?.parcels?.map((parcel: IParcel) => {
-                            const remainingStatus = trackingData.filter(item =>
-                                !parcel.shipmentStatusHistory.some(({ status }) => item.title.includes(status))
-                            );
                             return (
                                 <TableRow key={parcel._id} className="text-black-50">
                                     <TableCell className="font-medium">{parcel._id}</TableCell>

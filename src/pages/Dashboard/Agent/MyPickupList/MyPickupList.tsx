@@ -20,11 +20,11 @@ import { formateDate } from "@/lib/utils";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Link } from "react-router-dom";
 import NotFoundData from "@/components/NotFoundData";
-import ShipmentStatusSelect from "@/components/ShipmentStatusSelect";
+import ShipmentStatusSelect from "../../components/ShipmentStatusSelect";
 
 const MyPickupList = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
-    const { data, isLoading, error } = useGetAssignedParcelsByAgentIdQuery({ agentId: user?._id, assignedRole: 'pickup' });
+    const { data, isLoading } = useGetAssignedParcelsByAgentIdQuery({ agentId: user?._id, assignedRole: 'pickup' });
 
     if (isLoading) {
         return <Loading />
