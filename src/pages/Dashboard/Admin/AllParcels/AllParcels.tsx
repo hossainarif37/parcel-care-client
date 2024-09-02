@@ -19,7 +19,7 @@ import { IParcel } from "@/types/types";
 import { formateDate } from "@/lib/utils";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Loading from "@/components/Loading";
-import ShipmentStatusSelect from "@/components/ShipmentStatusSelect";
+import ShipmentStatusSelect from "../../components/ShipmentStatusSelect";
 
 
 const AllParcels = () => {

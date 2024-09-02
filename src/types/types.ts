@@ -89,3 +89,13 @@ export type TTrackingData = {
 }
 
 export type TShipmentStatus = 'Order Placed' | 'Pickup Agent Assigned' | 'Parcel Collected' | 'In Transit' | 'Delivery Hub Reached' | 'Delivery Agent Assigned' | 'Out For Delivery' | 'Delivered'
+
+export interface ITransaction {
+    _id: string;
+    parcel: string;
+    sender: string;
+    amount: number;
+    transactionId: string;
+    paymentMethod: string;
+    createdAt: Date;
+}

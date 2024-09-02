@@ -8,10 +8,18 @@ const transactionApi = baseApi.injectEndpoints({
                 method: 'POST',
                 body
             }),
-            invalidatesTags: ['Parcel']
-        })
+            invalidatesTags: ['Parcel', 'Transaction']
+        }),
+
+        getAllTransactions: builder.query({
+            query: () => ({
+                url: '/payment/transactions',
+                method: 'GET'
+            }),
+            providesTags: ['Transaction']
+        }),
     })
 })
 
 
-export const { useSaveTransactionMutation } = transactionApi;
+export const { useSaveTransactionMutation, useGetAllTransactionsQuery } = transactionApi;

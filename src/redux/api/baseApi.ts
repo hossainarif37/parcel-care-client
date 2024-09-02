@@ -16,6 +16,6 @@ export const baseApi = createApi({
             return headers;
         },
     }),
-    tagTypes: ['Pending Agent', 'Agent', 'User', 'Parcel'],
+    tagTypes: ['Pending Agent', 'Agent', 'User', 'Parcel', 'Transaction'],
     endpoints: () => ({}),
 })

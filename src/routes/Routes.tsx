@@ -29,6 +29,7 @@ import AgentProfile from "@/pages/Dashboard/Agent/AgentProfile/AgentProfile";
 import PendingAgent from "@/pages/Dashboard/Admin/AllAgents/PendingAgent";
 import PaymentSuccess from "@/pages/Dashboard/User/Payment/PaymentSuccess";
 import MyPickupList from "@/pages/Dashboard/Agent/MyPickupList/MyPickupList";
+import Transactions from "@/pages/Dashboard/Admin/Transactions/Transactions";
 
 
 export const router = createBrowserRouter([
@@ -142,6 +143,10 @@ export const router = createBrowserRouter([
                     {
                         path: '/dashboard/admin/parcel-tracking',
                         element: <ParcelTracking />
+                    },
+                    {
+                        path: "/dashboard/admin/transactions",
+                        element: <Transactions />
                     },
                     {
                         path: '/dashboard/admin/all-users',
