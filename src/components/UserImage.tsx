@@ -6,11 +6,11 @@ import { toggleProfileDropdown } from "../redux/slices/navbar/navbarSlice";
 
 type UserImagePropsTypes = {
     profilePicture?: string;
-    customWidth: string;
+    customSize: string;
     isProfileDropdownBtn?: boolean;
 }
 
-const UserImage = ({ profilePicture, customWidth, isProfileDropdownBtn }: UserImagePropsTypes) => {
+const UserImage = ({ profilePicture, customSize, isProfileDropdownBtn }: UserImagePropsTypes) => {
 
     const dispatch = useDispatch();
 
@@ -20,7 +20,6 @@ const UserImage = ({ profilePicture, customWidth, isProfileDropdownBtn }: UserIm
         isProfileDropdownBtn && dispatch(toggleProfileDropdown());
     }
 
-
     return (
         <>
             <div
@@ -28,8 +27,8 @@ const UserImage = ({ profilePicture, customWidth, isProfileDropdownBtn }: UserIm
                 className="relative cursor-pointer group" title="Profile"
             >
 
-                <div className="rounded-full ring-4 ring-secondary">
-                    <img className={`${customWidth} relative cursor-pointer group`} src={profilePicture ? profilePicture : profile_blank_image} alt="" />
+                <div className="rounded-full ring-4 ring-secondary overflow-hidden">
+                    <img className={`${customSize} relative cursor-pointer group`} src={profilePicture ? profilePicture : profile_blank_image} alt="" />
                 </div>
 
                 {(isProfileDropdown && isProfileDropdownBtn) && <UserMenuDropdown />}

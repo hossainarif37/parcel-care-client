@@ -41,7 +41,7 @@ const Navbar = () => {
 
                 {
                     user ?
-                        <UserImage customWidth="w-10" isProfileDropdownBtn={true} /> :
+                        <UserImage customSize="w-10" isProfileDropdownBtn={true} profilePicture={user?.profilePicture} /> :
                         <li >
                             <Link
                                 className={`'bg-gray-200 rounded py-2 block w-full'}`} to='/login'>
