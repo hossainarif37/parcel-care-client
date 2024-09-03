@@ -27,8 +27,8 @@ const UserImage = ({ profilePicture, customSize, isProfileDropdownBtn }: UserIma
                 className="relative cursor-pointer group" title="Profile"
             >
 
-                <div className="rounded-full ring-4 ring-secondary overflow-hidden">
-                    <img className={`${customSize} relative cursor-pointer group`} src={profilePicture ? profilePicture : profile_blank_image} alt="" />
+                <div className={`rounded-full ${customSize} ring-4 ring-secondary overflow-hidden`}>
+                    <img className={`w-full h-full scale-125 relative object-contain cursor-pointer group`} src={profilePicture ? profilePicture : profile_blank_image} alt="" />
                 </div>
 
                 {(isProfileDropdown && isProfileDropdownBtn) && <UserMenuDropdown />}

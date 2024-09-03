@@ -52,7 +52,7 @@ const Sidebar = () => {
             <div className="mt-auto">
                 <hr className="py-3" />
                 <div className="flex gap-x-4 items-center mb-5">
-                    <UserImage customSize="w-10" />
+                    <UserImage customSize="w-10 h-10" profilePicture={user?.profilePicture} />
                     <div className="text-black-50">
                         <p className="text-secondary font-semibold">{user?.name}</p>
                         <p className="font-semibold text-sm">{user?.role} {user?.role === 'agent' && user?.agentRequestStatus !== 'accepted' && <span className="error">({user?.agentRequestStatus})</span>}</p>
