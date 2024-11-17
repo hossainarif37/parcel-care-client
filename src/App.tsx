@@ -27,7 +27,7 @@ const App = () => {
 
 
   return (
-    <div>
+    <div className="min-h-screen max-w-[1920px] mx-auto">
       {!isAuthPage && <Navbar />}
       <main
         onClick={handleProfileDropdown}

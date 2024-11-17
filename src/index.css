@@ -47,6 +47,19 @@ body {
     
 }
 
+body::-webkit-scrollbar {
+    width: 8px;
+}
+body::-webkit-scrollbar-track {
+    box-shadow: inset 10 10 #f1f1f1;
+    border-radius: 50px;
+    background:#f1f1f1;
+}
+body::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #1057c2c0 0%, #960bc083 100%);
+    border-radius: 10px;
+}
+
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,

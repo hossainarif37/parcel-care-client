@@ -6,21 +6,23 @@ import { useSelector } from "react-redux";
 import { IRootState } from "../../../../types/types";
 import MobileNav from "./MobileNav";
 import Logo from "./Logo";
+import useWindowScroll from "@/hooks/useWindowScroll";
 
 const Navbar = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
     const location = useLocation();
 
     const isDashboardPage = location.pathname.includes('/dashboard');
+    const isScrolled = useWindowScroll(50);
 
 
     return (
-        <div className={`w-full ${isDashboardPage && 'hidden'} absolute px-5 md:px-28 py-5 flex justify-between items-center z-10 bg-transparent`}>
+        <div className={`w-full duration-300 ${isScrolled && 'bg-white/70 backdrop-blur'} ${isDashboardPage && 'hidden'} sticky top-0 px-5 md:px-28 py-3 xl:py-5 flex justify-between items-center z-10 bg-transparent`}>
             {/* Logo */}
             <Logo />
 
             {/* Desktop */}
-            <ul className="md:text-white hidden  font-semibold md:flex justify-center items-center gap-x-10">
+            <ul className={`${isScrolled ? 'text-black-100' : 'text-white'} hidden font-semibold md:flex justify-center items-center text-sm xl:text-base gap-x-10`}>
                 {
                     navLinks?.map((link, i) => (
                         <ActiveLink
