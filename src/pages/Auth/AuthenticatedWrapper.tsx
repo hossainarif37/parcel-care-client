@@ -20,6 +20,7 @@ const AuthenticatedWrapper = ({ children }: { children: ReactNode }) => {
     if (userLoading) {
         return <Loading />
     }
+    
     if (!user && !userLoading) {
         return children;
     }

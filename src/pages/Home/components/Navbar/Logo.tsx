@@ -8,10 +8,10 @@ const Logo = () => {
         <div>
             <Link to='/' className={`text-2xl md:text-${isDashboardPage ? 3 : 4}xl font-bold flex items-center gap-x-1`}>
                 <div className="text-secondary text-3xl md:text-5xl">
-                    <Icon icon="hugeicons:delivery-truck-02" />
+                    <Icon icon="carbon:delivery-parcel" />
                 </div>
-                <div>
-                    <span className="text-primary">Parcel</span><span className="text-secondary">Care</span>
+                <div className="bg-clip-text bg-gradient-to-tr from-primary to-secondary text-transparent">
+                    ParcelCare
                 </div>
             </Link>
         </div>

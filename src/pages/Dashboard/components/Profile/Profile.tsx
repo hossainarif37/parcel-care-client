@@ -64,9 +64,9 @@ const Profile = () => {
             // Create a FormData object
             const formData = new FormData();
             formData.append('file', image!);
-            formData.append('upload_preset', uploadPreset); // Replace with your upload preset
-            formData.append('cloud_name', cloudName); // Replace with your cloud name
-            formData.append('public_id', uniqueIdentifier); // Use the unique identifier as the public_id
+            formData.append('upload_preset', uploadPreset);
+            formData.append('cloud_name', cloudName); 
+            formData.append('public_id', uniqueIdentifier); 
 
             // Make a POST request to Cloudinary's upload API
             const response = await fetch(
