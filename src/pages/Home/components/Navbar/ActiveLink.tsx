@@ -11,7 +11,7 @@ const ActiveLink = ({ title, path }: ActiveLinkProps) => {
     return (
         <li >
             <Link
-                className={`${pathname === path && 'rounded font-bold py-2 block w-full'}`} to={path}>
+                className={`lg:text-xs lg:font-medium xl:text-base ${pathname === path && 'rounded font-bold py-2 block w-full'}`} to={path}>
                 {title}
             </Link>
         </li>

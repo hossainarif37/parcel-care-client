@@ -25,7 +25,7 @@ const Navbar = () => {
             <Logo />
 
             {/* Desktop */}
-            <ul className={`${isScrolled ? 'text-black-100' : 'text-white'} hidden font-semibold md:flex justify-center items-center text-sm xl:text-base gap-x-10`}>
+            <ul className={`${isScrolled ? 'text-black-100' : 'text-white'} hidden font-semibold md:flex justify-center items-center text-sm xl:text-base gap-x-8 xl:gap-x-12`}>
                 {
                     navLinks?.map((link, i) => (
                         <ActiveLink
@@ -58,7 +58,8 @@ const Navbar = () => {
                         :
                         <li >
                             <Link
-                                className={`'bg-gray-200 rounded py-2 block w-full'}`} to='/login'>
+                                className="md:text-xs md:font-medium xl:text-base"
+                                to='/login'>
                                 Login
                             </Link>
                         </li>

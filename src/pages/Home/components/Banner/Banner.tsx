@@ -12,7 +12,7 @@ const Banner = () => {
         <div className={`flex flex-col md:-translate-y-24 gap-y-10 md:gap-y-0 md:flex-row justify-between`}>
             {/* Left Side */}
             <div className="w-full md:w-1/2 md:pl-28 px-5 md:px-0 md:pt-40 xl:pt-60 relative">
-                <h1 className="text-3xl lg:text-7xl font-bold md:flex md:flex-col text-transparent bg-clip-text bg-gradient-to-r from-[#212121] to-primary">
+                <h1 className="text-3xl lg:text-6xl xl:text-7xl font-bold md:flex md:flex-col text-transparent bg-clip-text bg-gradient-to-r from-[#212121] to-primary">
                     The Best Ever <br className="hidden md:block"/> Courier Service <br className="hidden md:block"/> In The World
                 </h1>
                 <p className="md:pr-48 text-sm md:text-base xl:text-xl text-accent  my-5 xl:my-10">
@@ -46,7 +46,7 @@ const Banner = () => {
 
             {/* Right Side */}
             <img
-                className="lg:w-[600px] h-full xl:w-[900px] -z-10"
+                className="lg:w-[700px] h-full xl:w-[900px] -z-10"
                 src={banner} alt=""
             />
 
