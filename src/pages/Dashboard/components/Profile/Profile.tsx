@@ -243,7 +243,7 @@ const Profile = () => {
                             !tempImageUrl ?
                                 <label
                                     htmlFor="upload-image"
-                                    className={`btn-primary cursor-pointer w-full py-3 px-14 flex justify-center gap-x-2`}
+                                    className={`btn-primary cursor-pointer w-full py-3 md:px-14 flex justify-center gap-x-2`}
                                 >
                                     <span className='text-2xl'><Icon icon="lucide:image-plus" /></span>
                                     <span>Choose Photo</span>
@@ -252,7 +252,7 @@ const Profile = () => {
                                 <button
                                     onClick={handleUploadImage}
                                     type="button"
-                                    className={`btn-green rounded-lg w-full py-3 px-14 flex justify-center gap-x-2`}
+                                    className={`btn-green rounded-lg w-full py-3 md:px-14 flex justify-center gap-x-2`}
                                 >
                                     {
                                         imageUploadLoading
@@ -271,7 +271,7 @@ const Profile = () => {
                         <button
                             onClick={handleRemoveFile}
                             type="button"
-                            className={`btn-delete w-full py-3 px-14 flex justify-center gap-x-2`}
+                            className={`btn-delete w-full py-3 md:px-14 flex justify-center gap-x-2`}
                         >
                             <span className='text-2xl'><Icon icon="fluent:delete-20-regular" /></span>
                             <span> Remove Picture</span>
