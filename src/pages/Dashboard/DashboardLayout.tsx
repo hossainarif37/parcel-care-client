@@ -33,7 +33,7 @@ const DashboardLayout = () => {
 
     return (
         <div className="relative flex">
-            <aside className={`${isDashboardToggle ? 'translate-x-0' : '-translate-x-80'} md:translate-x-0 duration-300 z-10 h-screen fixed md:sticky inset-y-0 left-0 md:min-w-60 flex flex-col border-r py-5 px-7 bg-white-50 border-white-100`}>
+            <aside className={`${isDashboardToggle ? 'translate-x-0' : '-translate-x-80'} md:translate-x-0 duration-300 z-30 h-screen fixed md:sticky top-0 left-0 md:min-w-60 flex flex-col border-r py-5 px-7 bg-white-50 border-white-100 overflow-y-auto`}>
                 <Sidebar />
             </aside>
 
@@ -87,7 +87,7 @@ const DashboardLayout = () => {
             {/* Overlay */}
             {isDashboardToggle && <div
                 onClick={() => dispatch(toggleDashboard(false))}
-                className={`absolute bg-opacity-50 backdrop-blur-sm w-full h-full top-0 transition-opacity duration-500 ease-in-out`}
+                className={`absolute z-20 bg-opacity-50 backdrop-blur-sm w-full h-full top-0 bottom-0 transition-opacity duration-500 ease-in-out`}
             ></div>}
         </div>
     );
