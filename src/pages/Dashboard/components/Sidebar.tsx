@@ -22,7 +22,7 @@ const Sidebar = () => {
     const path = location.pathname;
 
     return (
-        <aside className="fixed h-full md:sticky inset-y-0 left-0 md:min-w-72 flex flex-col md:h-screen border-r py-5 px-7 bg-white-50 border-white-100">
+        <>
             {/* Logo */}
             <div className="flex justify-between items-center gap-x-2">
                 <Logo />
@@ -36,13 +36,15 @@ const Sidebar = () => {
             <hr className="my-5" />
 
             {/* Dashboard Sidebar Menu Links */}
-            <ul className="flex flex-col gap-y-2">
+            <ul className="flex flex-col gap-y-1 xl:gap-y-2">
                 {menuLinks.map((category) => (
                     <li
                         className={`${user?.role === 'agent' && user?.agentRequestStatus !== 'accepted' && category.title !== 'Profile' && 'hidden '}`}
                         key={category.title}>
-                        <Link to={category.path} className={`flex p-3 rounded-lg gap-x-2 items-center ${category.path === path && 'gradient text-white'}`}>
-                        <span className={`text-2xl ${(category.title === 'Pending Agents' || category.title === 'Transactions') && category.path !== path && 'text-black-100'}`}><Icon icon={category.icon} /></span>
+                        <Link to={category.path} className={`flex p-2 xl:p-3 rounded-lg gap-x-2 items-center text-xs xl:text-base ${category.path === path && 'gradient text-white'}`}>
+                            <span className={`text-2xl ${(category.title === 'Pending Agents' || category.title === 'Transactions') && category.path !== path && 'text-black-100'}`}>
+                                <Icon icon={category.icon} />
+                            </span>
                             <span>{category.title}</span>
                         </Link>
                     </li>
@@ -50,18 +52,18 @@ const Sidebar = () => {
             </ul>
 
             <div className="mt-auto">
-                <hr className="py-3" />
+                <hr className="py-2 xl:py-3" />
                 <div className="flex gap-x-4 items-center mb-5">
-                    <UserImage customSize="w-10 h-10" profilePicture={user?.profilePicture} />
+                    <UserImage className="w-8 h-8 xl:w-10 xl:h-10" profilePicture={user?.profilePicture} />
                     <div className="text-black-50">
-                        <p className="text-secondary font-semibold">{user?.name}</p>
-                        <p className="font-semibold text-sm">{user?.role} {user?.role === 'agent' && user?.agentRequestStatus !== 'accepted' && <span className="error">({user?.agentRequestStatus})</span>}</p>
+                        <p className="text-secondary text-sm xl:text-base font-semibold">{user?.name}</p>
+                        <p className="font-semibold text-xs xl:text-sm">{user?.role} {user?.role === 'agent' && user?.agentRequestStatus !== 'accepted' && <span className="error">({user?.agentRequestStatus})</span>}</p>
                     </div>
                 </div>
 
-                <LogoutButton className="logoutButton" />
+                <LogoutButton className="border rounded-full shadow-md"/>
             </div>
-        </aside>
+        </>
     );
 };
 

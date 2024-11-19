@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../../redux/api/endpoints/authApi";
 import toast from "react-hot-toast";
 import Input from "../../components/Inputs/Input";
-import Button from "../../components/Buttons/Button";
+import PrimaryButton from "../../components/Buttons/PrimaryButton";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { setUser } from "@/redux/slices/user/userSlice";
@@ -150,13 +150,12 @@ const Register = () => {
                 </div>
 
                 {/* //*Submit Button */}
-                <Button
+                <PrimaryButton
                     disabled={isLoading}
                     type="submit"
-                    styles="btn-primary"
                 >
                     Register
-                </Button>
+                </PrimaryButton>
 
             </div>
 

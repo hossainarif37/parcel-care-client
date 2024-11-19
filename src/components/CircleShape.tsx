@@ -1,17 +1,11 @@
 // src/components/common/CircleShape.tsx
 
+import { cn } from '@/lib/utils';
 import React from 'react';
 
-type CircleShapeType = {
-    width: string;
-    height: string;
-    bottom: string;
-    right: string;
-}
-
-const CircleShape: React.FC<CircleShapeType> = ({ width, height, bottom, right }) => {
+const CircleShape = ({ className }:{className:string}) => {
     return (
-        <div className={`absolute ${width} ${height} ${bottom} ${right}  rounded-full gradient`}>
+        <div className={cn(`absolute rounded-full gradient`, className)}>
         </div>
     );
 };

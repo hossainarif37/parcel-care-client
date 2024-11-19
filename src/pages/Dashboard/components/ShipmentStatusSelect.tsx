@@ -40,7 +40,7 @@ const ShipmentStatusSelect = ({ parcel }: { parcel: IParcel }) => {
         <div className="relative">
             {/* Select (Functional but Invisible) */}
             <Select onValueChange={(value: TShipmentStatus) => handleUpdateShipmentStatus(value, parcel._id)}>
-                <SelectTrigger className={`w-[180px] ${selectedShipmentStatus ? 'opacity-0 absolute' : 'opacity-100 relative'} inset-0 z-10 pointer-events-auto`}>
+                <SelectTrigger className={`w-[180px] text-xs xl:text-sm  ${selectedShipmentStatus ? 'opacity-0 absolute' : 'opacity-100 relative'} inset-0 z-10 pointer-events-auto`}>
                     <SelectValue placeholder={parcel.shipmentStatus} />
                 </SelectTrigger>
                 <SelectContent>

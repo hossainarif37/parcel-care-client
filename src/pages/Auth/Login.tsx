@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import Button from "../../components/Buttons/Button";
+import PrimaryButton from "../../components/Buttons/PrimaryButton";
 import { useLoginMutation } from "../../redux/api/endpoints/authApi";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/slices/user/userSlice";
@@ -79,13 +79,12 @@ const Login = () => {
                 </div>
 
                 {/* //*Submit Button */}
-                <Button
+                <PrimaryButton
                     disabled={isLoading}
                     type="submit"
-                    styles="btn-primary"
                 >
                     Login
-                </Button>
+                </PrimaryButton>
 
             </div>
             {/*//* Navigate to Register page */}
