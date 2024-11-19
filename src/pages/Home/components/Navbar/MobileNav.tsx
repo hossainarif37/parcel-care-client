@@ -6,6 +6,7 @@ import CloseMenuButton from "../../../../components/Buttons/CloseMenuButton";
 import { navLinks } from "../../../../constants/navLinks";
 import ActiveLink from "./ActiveLink";
 import LogoutButton from "@/components/Buttons/LogoutButton";
+import PrimaryButton from "@/components/Buttons/PrimaryButton";
 
 const MobileNav = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
@@ -52,7 +53,7 @@ const MobileNav = () => {
                             {/* Logout */}
                             <LogoutButton className="border rounded-full shadow-md"/>
                         </> :
-                        <Link to='/login'>Login</Link>
+                        <Link to='/login'><PrimaryButton className="mx-auto">Login</PrimaryButton></Link>
                 }
             </ul>
         </div>
