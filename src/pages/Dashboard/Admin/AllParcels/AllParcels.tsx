@@ -68,6 +68,7 @@ const AllParcels = () => {
                                     <TableCell className="font-medium">
                                         {formateDate(parcel.bookingDate, true)}
                                     </TableCell>
+                                    {/* ShipmentStatus */}
                                     <TableCell className="font-medium">
                                         <ShipmentStatusSelect
                                             parcel={parcel}
@@ -79,7 +80,7 @@ const AllParcels = () => {
                                         <DropdownMenu>
                                             <DropdownMenuTrigger asChild>
                                                 <button
-                                                    className="outline-none p-2 rounded-full border hover:bg-slate-50 text-xl">
+                                                    className="outline-none p-1 rounded-full border hover:bg-slate-50 text-xl">
                                                     <Icon icon="tabler:dots" />
                                                 </button>
 
