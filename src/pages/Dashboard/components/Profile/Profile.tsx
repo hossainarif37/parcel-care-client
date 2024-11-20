@@ -59,8 +59,11 @@ const Profile = () => {
         try {
             const uniqueIdentifier = generateUniqueIdentifier(image!);
             setImageUploadLoading(true);
-            const cloudName = 'dhtilaehp';
-            const uploadPreset = 'xjvhtoge';
+            const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+            const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+            if (!cloudName || !uploadPreset) {
+                throw new Error('Cloudinary credentials are missing.');
+            }
             // Create a FormData object
             const formData = new FormData();
             formData.append('file', image!);
