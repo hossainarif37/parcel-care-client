@@ -1,8 +1,8 @@
 
 const NotFoundData = ({ children }: { children: string }) => {
     return (
-        <div className="flex justify-center py-20">
-            <h1 className="text-4xl font-semibold text-black-100">{children}</h1>
+        <div className="min-h-screen flex justify-center items-center">
+            <h1 className="text-2xl xl:text-4xl font-medium text-black-50">{children}!</h1>
         </div>
     );
 };

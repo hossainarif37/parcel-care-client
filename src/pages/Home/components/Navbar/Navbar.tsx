@@ -52,7 +52,7 @@ const Navbar = () => {
                             title="Profile"
                             ref={dropdownRef}
                         >
-                            <UserImage className="w-10 h-10" profilePicture={user?.profilePicture} />
+                            <UserImage className="w-8 h-8 xl:w-10 xl:h-10" profilePicture={user?.profilePicture} />
                             <UserMenuDropdown className={`origin-top duration-200 ${isDropdown ? 'scale-y-100' : 'scale-y-0'}`} />
                         </div>
                         :

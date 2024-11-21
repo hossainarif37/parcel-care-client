@@ -233,7 +233,7 @@ const Profile = () => {
                 {/* Image area */}
                 <div className="flex flex-col gap-y-5 md:gap-y-0 mb-5 md:flex-row items-center justify-center gap-x-5">
                     <div className="shadow ring-4 ring-secondary ring-opacity-60 ring-offset-2 rounded-full overflow-hidden" >
-                        <img className="w-28 md:w-40 md:h-40  h-28  object-contain scale-125 rounded-full" alt="user image" src={tempImageUrl ? tempImageUrl : user?.profilePicture || blank_avatar} />
+                        <img className="w-28 md:w-32 xl:w-40 md:h-32 xl:h-40  h-28  object-contain scale-125 rounded-full" alt="user image" src={tempImageUrl ? tempImageUrl : user?.profilePicture || blank_avatar} />
                     </div>
 
                     <div className="flex justify-start items-center flex-col gap-3">
@@ -246,7 +246,7 @@ const Profile = () => {
                             !tempImageUrl ?
                                 <label
                                     htmlFor="upload-image"
-                                    className={`btn-primary cursor-pointer w-full py-3 px-5 md:px-14 flex justify-center gap-x-2`}
+                                    className={`btn-primary cursor-pointer w-full md:w-[200px] xl:w-[270px] h-[44px] xl:h-[50px] flex justify-center items-center gap-x-2`}
                                 >
                                     <span className='text-2xl'><Icon icon="lucide:image-plus" /></span>
                                     <span>Choose Photo</span>
@@ -255,7 +255,7 @@ const Profile = () => {
                                 <button
                                     onClick={handleUploadImage}
                                     type="button"
-                                    className={`btn-green rounded-lg w-full py-3 px-5 md:px-14 flex justify-center gap-x-2`}
+                                    className={`btn-green rounded-lg w-full md:w-[200px] xl:w-[270px] h-[44px] xl:h-[50px] flex justify-center items-center gap-x-2`}
                                 >
                                     {
                                         imageUploadLoading
@@ -274,7 +274,7 @@ const Profile = () => {
                         <button
                             onClick={handleRemoveFile}
                             type="button"
-                            className={`btn-delete w-full py-3 px-5 md:px-14 flex justify-center gap-x-2`}
+                            className={`btn-delete w-full md:w-[200px] xl:w-[270px] h-[44px] xl:h-[50px] flex justify-center items-center gap-x-2`}
                         >
                             <span className='text-2xl'><Icon icon="fluent:delete-20-regular" /></span>
                             <span> Remove Picture</span>
