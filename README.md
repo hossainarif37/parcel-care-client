@@ -88,19 +88,3 @@ This project was built to:
 
 5. **Access the app**:
     Open browser at `http://localhost:3000`
-
-### **Prerequisites**
-- Node.js (v14.0.0+)
-- npm (v6.0.0+)
-- Backend server running
-
-### **Troubleshooting**
-- Ensure backend server is running
-- Verify environment variables
-- Check network connections
-
----
-
-## 📝 Additional Notes
-- Requires active backend server
-- Internet connection needed for external services
