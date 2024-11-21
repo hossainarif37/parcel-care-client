@@ -22,8 +22,8 @@ export const userSlice = createSlice({
             state.isAuthenticated = false;
             state.userLoading = false;
         },
-        setLoading: (state) => {
-            state.userLoading = false;
+        setLoading: (state, { payload }) => {
+            state.userLoading = payload;
         },
         updateUser: (state, { payload }) => {
             state.user = payload.user;

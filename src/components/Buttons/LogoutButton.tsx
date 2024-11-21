@@ -19,7 +19,7 @@ const LogoutButton = ({ className }: LogoutButtonPropsType) => {
             }}
 
         >
-            <Icon icon="material-symbols:logout" className="text-lg" />
+            <Icon icon="material-symbols:logout"  />
             <span>Logout</span>
         </button>
     );

@@ -12,6 +12,7 @@ import { SelectLabel } from "@radix-ui/react-select";
 import { useUpdateParcelInfoMutation } from "@/redux/api/endpoints/parcelApi";
 import { TErrorData } from "@/types/types";
 import toast from "react-hot-toast";
+import PrimaryButton from "./Buttons/PrimaryButton";
 
 type TModalProps = {
     parcelId: string;
@@ -126,9 +127,9 @@ export function Modal({ ...props }: TModalProps) {
                     </div>
                 </div>
 
-                <button disabled={isLoading} className="btn btn-primary disabled:btn-disabled mt-2 flex justify-center" onClick={hanldeAssignAgent} type="button">
+                <PrimaryButton disabled={isLoading} className="disabled:btn-disabled mt-2 flex justify-center" onClick={hanldeAssignAgent} type="button">
                     {isLoading ? <Icon className="animate-spin text-2xl" icon="mingcute:loading-fill" /> : <span>Save changes</span>}
-                </button>
+                </PrimaryButton>
             </DialogContent>
         </Dialog>
     )

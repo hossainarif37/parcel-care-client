@@ -17,6 +17,8 @@ const AuthenticatedWrapper = ({ children }: { children: ReactNode }) => {
         }
     }, [isAdminUser, isAgentUser, isNormalUser, navigate, user, userLoading]);
 
+    console.log('From AuthenticatedWrapper: ',userLoading);
+
     if (userLoading) {
         return <Loading />
     }
