@@ -49,7 +49,6 @@ This project was built to:
 ---
 
 ## 🔗 Project Links
-- **Frontend Repository**: [https://github.com/hossainarif37/parcel-care-client](https://github.com/hossainarif37/parcel-care-client)
 - **Backend Repository**: [https://github.com/hossainarif37/parcel-care-server](https://github.com/hossainarif37/parcel-care-server)
 - **Live Demo**: [ParcelCare Live Demo](https://parcel-care.vercel.app)
 
