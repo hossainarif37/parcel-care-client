@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { IRootState } from "./types/types";
 import Loading from "./components/Loading";
 import Navbar from "./components/layouts/Navbar/Navbar";
+import Footer from "@/components/layouts/Footer/Footer";
 
 const App = () => {
   const location = useLocation();
@@ -38,6 +39,7 @@ const App = () => {
       <main onClick={handleProfileDropdown}>
         <Outlet />
       </main>
+      {!isAuthPage && <Footer />}
     </div>
   );
 };

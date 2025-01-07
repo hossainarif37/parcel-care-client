@@ -20,7 +20,7 @@ const Navbar = () => {
     const dropdownRef = useOutsideClick(isDropdown, setIsDropdown);
 
     return (
-        <div className={`w-full duration-300 ${isScrolled && 'bg-white/80 backdrop-blur'} ${isDashboardPage && 'hidden'} sticky top-0 px-5 md:px-28 py-3 xl:py-5 flex justify-between items-center z-10 bg-transparent`}>
+        <div className={`w-full duration-300 ${isScrolled && 'bg-white/70 backdrop-blur-lg'} ${isDashboardPage && 'hidden'} sticky top-0 px-5 md:px-28 py-3 xl:py-5 flex justify-between items-center z-10 bg-transparent`}>
             {/* Logo */}
             <Logo />
 

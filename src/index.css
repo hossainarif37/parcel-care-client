@@ -34,6 +34,23 @@ body {
         @apply bg-gradient-to-r from-secondary to-primary;
     }
 
+    .gradient-to-t {
+    @apply bg-gradient-to-t from-[#ffffff] to-[#F0F7F3]
+  }
+
+    .gradient-to-r {
+    @apply bg-gradient-to-r from-[#ffffff] to-[#F0F7F3]
+  }
+
+  .gradient-to-b {
+    @apply bg-gradient-to-b  from-[#ffffff] to-[#F0F7F3]
+  }
+
+
+  .gradient-to-l {
+    @apply bg-gradient-to-l from-[#ffffff] to-[#F0F7F3]
+  }
+
     .input {
         @apply border w-full p-3 outline-none text-gray-700 rounded
     }
