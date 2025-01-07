@@ -14,8 +14,8 @@ import UserImage from "@/components/UserImage";
 const Navbar = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
     const location = useLocation();
-    const [isDropdown, setIsDropdown] = useState(false);
     const isDashboardPage = location.pathname.includes('/dashboard');
+    const [isDropdown, setIsDropdown] = useState(false);
     const isScrolled = useWindowScroll(50);
     const dropdownRef = useOutsideClick(isDropdown, setIsDropdown);
 

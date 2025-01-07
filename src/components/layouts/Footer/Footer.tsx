@@ -1,12 +1,15 @@
 import { Phone } from 'lucide-react';
 import { FC } from 'react';
 import Logo from '../Navbar/Logo';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Footer: FC = () => {
     const currentYear = new Date().getFullYear();
+    const location = useLocation();
+    const isDashboardPage = location.pathname.includes('/dashboard');
+
     return (
-        <footer className="gradient-to-t pt-20" >
+        <footer className={`gradient-to-t pt-20 ${isDashboardPage && 'hidden'}`} >
             <div className="container mx-auto px-6">
                 <div className="grid md:grid-cols-4 gap-12">
                     <div>
