@@ -26,7 +26,7 @@ This project demonstrates my expertise in **full-stack web development** and inc
 
 ## 🛠️ Technologies I Used
 - **Frontend**: React.js, Tailwind CSS
-- **State Management**: Redux
+- **State Management**: Redux Toolkit
 - **Backend**: Node.js, Express.js (see [backend repository](https://github.com/hossainarif37/parcel-care-server))
 - **Authentication**: JWT
 - **Payment Integration**: Stripe
