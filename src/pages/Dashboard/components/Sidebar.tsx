@@ -6,7 +6,7 @@ import UserImage from "../../../components/UserImage";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import LogoutButton from "../../../components/Buttons/LogoutButton";
 import { toggleDashboard } from "../../../redux/slices/navbar/navbarSlice";
-import Logo from "../../Home/components/Navbar/Logo";
+import Logo from "@/components/layouts/Navbar/Logo";
 
 const Sidebar = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
@@ -61,7 +61,7 @@ const Sidebar = () => {
                     </div>
                 </div>
 
-                <LogoutButton className="border rounded-full shadow-md"/>
+                <LogoutButton className="border rounded-full shadow-md" />
             </div>
         </>
     );

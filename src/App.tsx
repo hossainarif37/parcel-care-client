@@ -1,18 +1,18 @@
 import { Outlet, useLocation } from "react-router-dom";
-import Navbar from "./pages/Home/components/Navbar/Navbar";
 import useGetUser from "./hooks/useGetUser";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleDashboard, toggleNav, toggleProfileDropdown } from "./redux/slices/navbar/navbarSlice";
 import { useEffect } from "react";
 import { IRootState } from "./types/types";
 import Loading from "./components/Loading";
+import Navbar from "./components/layouts/Navbar/Navbar";
 
 const App = () => {
   const location = useLocation();
   const isDashboardPage = location.pathname.includes('/dashboard');
   const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
   const dispatch = useDispatch();
-  const {userLoading} = useSelector((state:IRootState)=>state.userSlice);
+  const { userLoading } = useSelector((state: IRootState) => state.userSlice);
 
   // Get the current user
   useGetUser();
@@ -29,7 +29,7 @@ const App = () => {
   }
 
   if (userLoading) {
-    return <Loading/>
+    return <Loading />
   }
 
   return (

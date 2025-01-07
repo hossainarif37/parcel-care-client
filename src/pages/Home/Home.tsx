@@ -1,4 +1,5 @@
 import Banner from "./components/Banner/Banner";
+import CallToAction from "./components/CTA/CallToAction";
 import WhyChooseUs from "./components/WhyChooseUs/WhyChooseUs";
 
 const Home = () => {
@@ -6,6 +7,7 @@ const Home = () => {
         <div>
             <Banner />
             <WhyChooseUs />
+            <CallToAction />
         </div>
     );
 };

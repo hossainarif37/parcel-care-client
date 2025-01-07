@@ -2,9 +2,9 @@ import userDropdownStyles from "./userMenuDropdown.module.css"
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react"
-import { IRootState } from "../../../../../types/types";
-import LogoutButton from "../../../../../components/Buttons/LogoutButton";
 import { cn } from "@/lib/utils";
+import { IRootState } from "@/types/types";
+import LogoutButton from "@/components/Buttons/LogoutButton";
 
 const UserMenuDropdown = ({ className }: { className?: string }) => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
