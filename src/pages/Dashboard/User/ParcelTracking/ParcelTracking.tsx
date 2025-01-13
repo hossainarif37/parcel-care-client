@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
 import TrackingDetails from "./TrackingDetails";
+import { MapPin, Phone, User } from "lucide-react";
+import { Package } from "lucide-react";
 
 interface IFormInput {
     parcelId: string
@@ -67,28 +69,87 @@ const ParcelTracking = () => {
                     parcel && !error &&
                     <div className="mt-14  max-w-7xl mx-auto space-y-20">
                         {/* Shipment Details */}
-                        <section>
-                            <h1 className="text-2xl mb-5 font-semibold text-black-50">Shipment Details</h1>
-                            <div className="border shadow-md flex flex-col md:flex-row md:justify-between p-10 rounded-xl space-y-7 md:space-y-0">
-                                {/* Pickup Info */}
-                                <div className="md:w-1/2">
-                                    <h2 className="text-xl font-semibold text-black-100">Pickup Info</h2>
-                                    <div className="mt-2 md:mt-5 space-y-1">
-                                        <p><span className="font-semibold text-black-100">Sender Name:</span> {parcel?.senderName}</p>
-                                        <p><span className="font-semibold text-black-100">Sender Address:</span> {parcel?.senderAddress?.fullAddress}, {parcel?.senderAddress?.subDistrict}, {parcel?.senderAddress?.district} </p>
+                        <section className="max-w-6xl mx-auto">
+                            <h1 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                                <Package className="w-6 h-6 text-blue-600" />
+                                Shipment Details
+                            </h1>
 
-                                        <p><span className="font-semibold text-black-100">Sender Phone:</span> +880{parcel?.senderPhoneNumber}</p>
+                            <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+                                <div className="p-6 md:p-8 grid md:grid-cols-2 gap-8 relative">
+                                    {/* Divider line */}
+                                    <div className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-px h-4/5 bg-gray-200" />
+
+                                    {/* Pickup Info */}
+                                    <div className="space-y-6">
+                                        <div className="flex items-center gap-2 text-blue-600">
+                                            <MapPin className="w-5 h-5" />
+                                            <h2 className="text-xl font-semibold">Pickup Information</h2>
+                                        </div>
+
+                                        <div className="space-y-4">
+                                            <div className="flex items-start gap-3">
+                                                <User className="w-5 h-5 text-gray-500 mt-1" />
+                                                <div>
+                                                    <p className="text-sm text-gray-500 font-medium">Sender Name</p>
+                                                    <p className="text-gray-800">{parcel.senderName}</p>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex items-start gap-3">
+                                                <MapPin className="w-5 h-5 text-gray-500 mt-1" />
+                                                <div>
+                                                    <p className="text-sm text-gray-500 font-medium">Pickup Address</p>
+                                                    <p className="text-gray-800">
+                                                        {parcel.senderAddress.fullAddress}, {parcel.senderAddress.subDistrict}, {parcel.senderAddress.district}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex items-start gap-3">
+                                                <Phone className="w-5 h-5 text-gray-500 mt-1" />
+                                                <div>
+                                                    <p className="text-sm text-gray-500 font-medium">Contact Number</p>
+                                                    <p className="text-gray-800">+880 {parcel.senderPhoneNumber}</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
 
-                                {/* Delivery Info */}
-                                <div className="md:w-1/2">
-                                    <h2 className="text-xl font-semibold md:text-right text-black-100">Delivery Info</h2>
-                                    <div className="mt-2 md:mt-5 space-y-1">
-                                        <p><span className="font-semibold text-black-100">Recipient Name:</span> {parcel?.receiverName}</p>
-                                        <p><span className="font-semibold text-black-100">Recipient Address:</span> {parcel?.deliveryAddress?.fullAddress}, {parcel?.deliveryAddress?.subDistrict}, {parcel?.deliveryAddress?.district}</p>
+                                    {/* Delivery Info */}
+                                    <div className="space-y-6">
+                                        <div className="flex items-center gap-2 text-green-600">
+                                            <MapPin className="w-5 h-5" />
+                                            <h2 className="text-xl font-semibold">Delivery Information</h2>
+                                        </div>
 
-                                        <p><span className="font-semibold text-black-100">Recipient Phone:</span> +880{parcel?.receiverPhoneNumber}</p>
+                                        <div className="space-y-4">
+                                            <div className="flex items-start gap-3">
+                                                <User className="w-5 h-5 text-gray-500 mt-1" />
+                                                <div>
+                                                    <p className="text-sm text-gray-500 font-medium">Recipient Name</p>
+                                                    <p className="text-gray-800">{parcel.receiverName}</p>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex items-start gap-3">
+                                                <MapPin className="w-5 h-5 text-gray-500 mt-1" />
+                                                <div>
+                                                    <p className="text-sm text-gray-500 font-medium">Delivery Address</p>
+                                                    <p className="text-gray-800">
+                                                        {parcel.deliveryAddress.fullAddress}, {parcel.deliveryAddress.subDistrict}, {parcel.deliveryAddress.district}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex items-start gap-3">
+                                                <Phone className="w-5 h-5 text-gray-500 mt-1" />
+                                                <div>
+                                                    <p className="text-sm text-gray-500 font-medium">Contact Number</p>
+                                                    <p className="text-gray-800">+880 {parcel.receiverPhoneNumber}</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -15,6 +15,7 @@ const DashboardLayout = () => {
     const [resubmitAgentRequest] = useResubmitAgentRequestMutation();
     const dispatch = useDispatch();
     const { pathname } = useLocation();
+    const isOverview = pathname === '/dashboard/admin/overview';
     const handleDashboardToggle = () => {
         dispatch(toggleDashboard());
     }
@@ -38,7 +39,7 @@ const DashboardLayout = () => {
             </aside>
 
             {/* Children */}
-            <main className="flex-1 min-h-screen w-full bg-white ">
+            <main className="flex-1 min-h-screen w-full">
                 {
                     (user?.agentRequestStatus === 'pending' && !user.isProfileComplete) &&
                     <p className="bg-red-400 py-1 text-white text-center">
@@ -62,7 +63,7 @@ const DashboardLayout = () => {
                         </button>
                     </p>
                 }
-                <div className="px-7 py-7 -z-10">
+                <div className={`${isOverview ? '' : 'px-7 py-7'} -z-10`}>
                     {/* Dashboard Toggle Button */}
                     <div className="block md:hidden">
                         <button className="text-black-50 text-4xl" onClick={handleDashboardToggle}>
@@ -80,7 +81,7 @@ const DashboardLayout = () => {
                             </h1>
                             :
                             <Outlet />
-                            
+
                     }
                 </div>
             </main>
