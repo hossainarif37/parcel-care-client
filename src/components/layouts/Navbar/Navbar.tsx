@@ -1,26 +1,26 @@
 import { Link, useLocation } from "react-router-dom";
-import { navLinks } from "../../../../constants/navLinks";
 import ActiveLink from "./ActiveLink";
-import UserImage from "../../../../components/UserImage";
 import { useSelector } from "react-redux";
-import { IRootState } from "../../../../types/types";
 import MobileNav from "./MobileNav";
 import Logo from "./Logo";
 import useWindowScroll from "@/hooks/useWindowScroll";
 import UserMenuDropdown from "./UserMenuDropDown/UserMenuDropdown";
 import { useState } from "react";
 import useOutsideClick from "@/hooks/useOutsideClick";
+import { IRootState } from "@/types/types";
+import { navLinks } from "@/constants/navLinks";
+import UserImage from "@/components/UserImage";
 
 const Navbar = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
     const location = useLocation();
-    const [isDropdown, setIsDropdown] = useState(false);
     const isDashboardPage = location.pathname.includes('/dashboard');
+    const [isDropdown, setIsDropdown] = useState(false);
     const isScrolled = useWindowScroll(50);
     const dropdownRef = useOutsideClick(isDropdown, setIsDropdown);
 
     return (
-        <div className={`w-full duration-300 ${isScrolled && 'bg-white/70 backdrop-blur'} ${isDashboardPage && 'hidden'} sticky top-0 px-5 md:px-28 py-3 xl:py-5 flex justify-between items-center z-10 bg-transparent`}>
+        <div className={`w-full duration-300 ${isScrolled && 'bg-white/70 backdrop-blur-lg'} ${isDashboardPage && 'hidden'} sticky top-0 px-5 md:px-28 py-3 xl:py-5 flex justify-between items-center z-10 bg-transparent`}>
             {/* Logo */}
             <Logo />
 

@@ -10,7 +10,6 @@ import { useBookAParcelMutation } from "../../../../redux/api/endpoints/parcelAp
 import toast from "react-hot-toast";
 import { getValidDistrictSelection, getValidSubDistrictSelection } from "@/lib/utils";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useNavigate } from "react-router-dom";
 
 type IFormInput = {
     senderName: string;
@@ -29,7 +28,6 @@ const BookParcel = () => {
     const { user } = useSelector((state: IRootState) => state.userSlice);
     const [bookAParcel, { isLoading }] = useBookAParcelMutation();
     console.log(isLoading);
-    const navigate = useNavigate();
 
     const parcelTypeOptions = [
         { value: 'Document', label: 'Document' },
@@ -59,7 +57,9 @@ const BookParcel = () => {
             setParcelWeightError('');
         }
 
-        setCalculatedPrice(weight * perKgPrice);
+        const calculate = (weight * perKgPrice).toFixed(2);
+
+        setCalculatedPrice(Number(calculate));
     };
 
     // Register the field separately
@@ -306,7 +306,6 @@ const BookParcel = () => {
 
                 {/* form section */}
                 <form onSubmit={handleSubmit(handleBookParcel)}>
-
                     {/* Sender Section */}
                     <div>
                         <h1 className="text-xl font-semibold text-black-50 mb-3">Sender Information</h1>
